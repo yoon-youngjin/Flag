@@ -4,21 +4,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:background="@drawable/btn"
+    android:backgroundTint="@null"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".SecondActivity">
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn"
+        android:backgroundTint="@null" >
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/spBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn"
+            android:gravity="top|left"
+            android:shadowColor="#FFFFFF"
+            android:text="스포츠\n 축구, 풋살, 농구 등\n 스포츠 매치"
+            android:textColor="@color/black"
+            android:textSize="13dp"
+            app:backgroundTint="@null"
+            app:strokeColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/espBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/btn"
+            android:gravity="top|left"
+            android:text="E-스포츠\n롤,피파, 오버워치 등\n E-스포츠 매치"
+            android:textColor="@color/black"
+            android:textSize="13dp"
+            app:backgroundTint="@null" />
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:id="@+id/addteamBtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Button" />
+        android:background="@drawable/btn"
+        android:gravity="top|left"
+        android:text="팀원 구하기\n 좋은 팀원을 구하고 싶으면 좋은 매너로 "
+        android:textColor="@color/black"
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        app:backgroundTint="@null" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Button" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/recordBtn"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn"
+            android:gravity="top|left"
+            android:text="전적보기"
+            android:textColor="@color/white"
+            android:textColorHighlight="#FFFFFF"
+            android:textStyle="bold"
+            app:backgroundTint="#73baff" />
+
+        <Button
+            android:id="@+id/comBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn"
+            android:gravity="top|left"
+            android:text="커뮤니티"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:backgroundTint="#73baff" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:background="#d7d7d7" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|left"
+        android:text="Flag엔 지금 어떤 매치가?\n 우리학교 진행중인 매치"
+        android:textColor="@color/black"
+        android:textSize="15dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

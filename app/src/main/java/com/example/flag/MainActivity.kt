@@ -2,7 +2,6 @@ package com.example.flag
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flag.databinding.ActivityMainBinding
 
@@ -25,16 +24,19 @@ class MainActivity : AppCompatActivity() {
 
         localDB= LocalDB(this, DATABASE_NAME,null, DATABASE_VERSION) // SQLite 모듈 생성
 
-        binding.btnLogin.setOnClickListener { view->
-            val id = binding.editId.text.toString()
-            val passwd = binding.editPw.text.toString()
-            val exist = localDB.logIn(id,passwd) // 로그인 실행
-            if(exist){ // 로그인 성공
-                val intent =Intent(this,SecondActivity::class.java)
-                startActivity(intent)
-            }else{ // 실패
-                Toast.makeText(this@MainActivity, "아이디나 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show()
-            }
+//        binding.btnLogin.setOnClickListener { view->
+//            val id = binding.editId.text.toString()
+//            val passwd = binding.editPw.text.toString()
+//            val exist = localDB.logIn(id,passwd) // 로그인 실행
+//            if(exist){ // 로그인 성공
+//                val intent =Intent(this,SecondActivity::class.java)
+//                startActivity(intent)
+//            }else{ // 실패
+//                Toast.makeText(this@MainActivity, "아이디나 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+        binding.btnLogin.setOnClickListener {
+            startActivity(Intent(this,SecondActivity::class.java))
         }
         binding.btnRegister.setOnClickListener { view->
             val intent =Intent(this,RegisterActivity::class.java)
