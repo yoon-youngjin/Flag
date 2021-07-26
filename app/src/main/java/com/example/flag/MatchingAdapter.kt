@@ -14,6 +14,7 @@ class MatchingAdapter (val data: ArrayList<ArrayList<MatchData>>) : RecyclerView
         val thirdView : CustomView = view.findViewById(R.id.thirditem)
 
 
+
     }
 
 
