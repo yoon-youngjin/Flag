@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.nshmura:recyclertablayout:1.5.0@aar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/fa5cfc25a7ecaf39bea25cf144023c30/jetified-recyclertablayout-1.5.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/fa5cfc25a7ecaf39bea25cf144023c30/jetified-recyclertablayout-1.5.0/res" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/fa5cfc25a7ecaf39bea25cf144023c30/jetified-recyclertablayout-1.5.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.nshmura/recyclertablayout/1.5.0/e92749a205d728dc1c713b178143c533f22819c5/recyclertablayout-1.5.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.nshmura/recyclertablayout/1.5.0/fa3984c8ac9fd9f25980724e97ff61c057bfaaac/recyclertablayout-1.5.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

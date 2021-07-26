@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#73baff" />
+
+    <TextView
+        android:id="@+id/matchtitle"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:text="   축구"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#73baff" />
+
+    <com.example.flag.CustomView
+        android:id="@+id/firstitem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:numberText="11vs11"
+        app:schoolText="건국대학교"
+        app:teamText="Ralo팀"
+        app:timeTitleText="10:00" />
+
+    <com.example.flag.CustomView
+        android:id="@+id/seconditem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:numberText="11vs11"
+        app:schoolText="건국대학교"
+        app:teamText="Ralo팀"
+        app:timeTitleText="10:00" />
+
+    <com.example.flag.CustomView
+        android:id="@+id/thirditem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:numberText="11vs11"
+        app:schoolText="건국대학교"
+        app:teamText="Ralo팀"
+        app:timeTitleText="10:00" />
+
+
+
+</LinearLayout>

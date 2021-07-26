@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/home_page"
+        android:title="Home"
+        android:icon="@drawable/house" />
+
+    <item android:id="@+id/match_page"
+        android:title="Match"
+        android:icon="@drawable/calendar" />
+
+    <item android:id="@+id/search_page"
+        android:title="Search"
+        android:icon="@drawable/search" />
+
+    <item android:id="@+id/user_page"
+        android:title="User"
+        android:icon="@drawable/user" />
+</menu>

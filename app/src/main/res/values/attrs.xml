@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomViewData">
+        <attr name="timeTitleText" format="reference|string" />
+        <attr name="schoolText" format="reference|string" />
+        <attr name="teamText" format="reference|string" />
+        <attr name="numberText" format="reference|string" />
+        <attr name="itemImg" format="reference|integer"/>
+    </declare-styleable>
+
+</resources>

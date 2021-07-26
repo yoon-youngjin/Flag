@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="10dp"
     tools:context=".SportsMatchFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,16 +12,49 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="스포츠 매치"
         android:textColor="@color/black"
         android:textSize="28dp"
         android:textStyle="bold" />
+    <!-- tabitem-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="394dp"
+        android:layout_height="62dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        tools:listitem="@layout/tabitem" />
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="134dp"
-        android:layout_height="3dp"
-        android:background="#73baff"
-        android:backgroundTint="#73baff" />
+    <!-- tabitem-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="394dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        tools:listitem="@layout/tabitem" />
+    <!-- tabitem-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView3"
+        android:layout_width="394dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        tools:listitem="@layout/tabitem" >
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <!-- matchitems-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/matchRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/matchitems" />
+
+
+
 
 </LinearLayout>
