@@ -13,7 +13,6 @@ class MatchingAdapter (val data: ArrayList<ArrayList<MatchData>>) : RecyclerView
         val secondView : CustomView = view.findViewById(R.id.seconditem)
         val thirdView : CustomView = view.findViewById(R.id.thirditem)
 
-
     }
 
 
