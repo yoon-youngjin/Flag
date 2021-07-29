@@ -95,6 +95,7 @@ class SportsMatchFragment : Fragment() {
                         data1.child("team").value.toString(),
                         "11:11",
                         false
+
                     )
                     item1.add(temp1)
                     val data2 = snapshot.child("1서울").child("data2")
