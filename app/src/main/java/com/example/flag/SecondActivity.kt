@@ -17,6 +17,7 @@ class SecondActivity : AppCompatActivity() {
     }
 
     fun init() {
+        setSupportActionBar(binding.toolbar)
         var data:ArrayList<Int> = arrayListOf<Int>(R.drawable.img2,R.drawable.img1)
         adapter = ViewPagerAdapter(data)
         binding.viewpager.adapter = adapter

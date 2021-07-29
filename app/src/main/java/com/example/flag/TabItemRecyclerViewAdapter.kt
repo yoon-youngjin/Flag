@@ -3,8 +3,7 @@ package com.example.flag
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 
 class TabItemRecyclerViewAdapter(val data: ArrayList<String>) : RecyclerView.Adapter<TabItemRecyclerViewAdapter.ViewHolder>() {
@@ -17,7 +16,13 @@ class TabItemRecyclerViewAdapter(val data: ArrayList<String>) : RecyclerView.Ada
 
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val idView: TextView = view.findViewById(R.id.tabicon)
+        val idView: ToggleButton = view.findViewById(R.id.tabicon)
+
+        init {
+            idView.setOnClickListener {
+                itemClickListener!!.OnItemClick(this,it)
+            }
+        }
 
 //        init {
 //            idView.setOnClickListener {
