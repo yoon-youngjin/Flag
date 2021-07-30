@@ -23,7 +23,14 @@ class SecondActivity : AppCompatActivity() {
         binding.viewpager.adapter = adapter
 
         binding.spBtn.setOnClickListener {
-            startActivity(Intent(this,MatchActivity::class.java))
+            val intent = Intent(this,MatchActivity::class.java)
+            intent.putExtra("matchevent","sports")
+            startActivity(intent)
+        }
+        binding.espBtn.setOnClickListener {
+            val intent = Intent(this,MatchActivity::class.java)
+            intent.putExtra("matchevent","esports")
+            startActivity(intent)
         }
 
 

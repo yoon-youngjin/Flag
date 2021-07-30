@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
-    android:background="@drawable/btn"
-    android:backgroundTint="@null"
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="8dp"
     tools:context=".SecondActivity">
-    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,9 +38,7 @@
         android:layout_height="170dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/btn"
-        android:backgroundTint="@null" >
-
-    </androidx.viewpager2.widget.ViewPager2>
+        android:backgroundTint="@color/white" />
 
 
     <LinearLayout
@@ -58,12 +56,17 @@
             android:layout_weight="1"
             android:background="@drawable/btn"
             android:gravity="top|left"
+            android:padding="8dp"
             android:shadowColor="#FFFFFF"
-            android:text="스포츠\n 축구, 풋살, 농구 등\n 스포츠 매치"
+            android:text="스포츠 \n 축구,농구,풋살 \n 매치는 이곳에"
             android:textColor="@color/black"
             android:textSize="13dp"
             app:backgroundTint="@null"
-            app:strokeColor="#FFFFFF" />
+            app:strokeColor="#FFFFFF">
+
+
+        </Button>
+
 
         <Button
             android:id="@+id/espBtn"
@@ -72,6 +75,7 @@
             android:layout_weight="1"
             android:background="@drawable/btn"
             android:gravity="top|left"
+            android:padding="8dp"
             android:text="E-스포츠\n롤,피파, 오버워치 등\n E-스포츠 매치"
             android:textColor="@color/black"
             android:textSize="13dp"
@@ -85,9 +89,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/btn"
         android:gravity="top|left"
+        android:padding="10dp"
         android:text="팀원 구하기\n 좋은 팀원을 구하고 싶으면 좋은 매너로 "
-        android:textColor="@color/black"
 
+        android:textColor="@color/black"
         app:backgroundTint="@null" />
 
     <LinearLayout
@@ -105,6 +110,7 @@
             android:layout_weight="1"
             android:background="@drawable/btn"
             android:gravity="top|left"
+            android:padding="10dp"
             android:text="전적보기"
             android:textColor="@color/white"
             android:textColorHighlight="#FFFFFF"
@@ -119,6 +125,7 @@
             android:layout_weight="1"
             android:background="@drawable/btn"
             android:gravity="top|left"
+            android:padding="10dp"
             android:text="커뮤니티"
             android:textColor="@color/white"
             android:textStyle="bold"
@@ -134,26 +141,71 @@
         android:background="#d7d7d7" />
 
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="top|left"
-        android:text="Flag엔 지금 어떤 매치가?\n 우리학교 진행중인 매치"
-        android:textColor="@color/black"
-        android:textSize="15dp" />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top|left"
+                android:text="Flag"
+                android:textColor="#73baff"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="엔 지금 어떤 매치가?"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="우리학교"
+                android:textColor="#689F38"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" 진행중인 매치"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--        android:id="@+id/bottom_navigation"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:layout_gravity="bottom"-->
-<!--        android:clickable="false"-->
-<!--        app:itemIconTint="@color/black"-->
-<!--        app:itemTextColor="@color/black"-->
-<!--        app:menu="@menu/navigation_items" />-->
+    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+    <!--        android:id="@+id/bottom_navigation"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="40dp"-->
+    <!--        android:layout_gravity="bottom"-->
+    <!--        android:clickable="false"-->
+    <!--        app:itemIconTint="@color/black"-->
+    <!--        app:itemTextColor="@color/black"-->
+    <!--        app:menu="@menu/navigation_items" />-->
 </LinearLayout>

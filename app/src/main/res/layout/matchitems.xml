@@ -30,29 +30,84 @@
         android:id="@+id/firstitem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
         app:numberText="11vs11"
         app:schoolText="건국대학교"
         app:teamText="Ralo팀"
-        app:timeTitleText="10:00" />
+        app:timeTitleText="10:00">
+
+    </com.example.flag.CustomView>
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#eaeaea" />
 
     <com.example.flag.CustomView
         android:id="@+id/seconditem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+
         app:numberText="11vs11"
         app:schoolText="건국대학교"
         app:teamText="Ralo팀"
-        app:timeTitleText="10:00" />
+        app:timeTitleText="10:00">
+
+
+    </com.example.flag.CustomView>
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#eaeaea" />
 
     <com.example.flag.CustomView
         android:id="@+id/thirditem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
         app:numberText="11vs11"
         app:schoolText="건국대학교"
         app:teamText="Ralo팀"
-        app:timeTitleText="10:00" />
+        app:timeTitleText="10:00">
 
+
+    </com.example.flag.CustomView>
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#eaeaea" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn"
+        android:gravity="center"
+        android:text="모두보기"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

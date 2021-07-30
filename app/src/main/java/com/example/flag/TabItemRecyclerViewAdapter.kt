@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TabItemRecyclerViewAdapter(val data: ArrayList<String>) : RecyclerView.Adapter<TabItemRecyclerViewAdapter.ViewHolder>() {
 
+
+
+
     interface OnItemClickListener {
         fun OnItemClick(holder: ViewHolder, view: View)
     }
@@ -34,6 +37,8 @@ class TabItemRecyclerViewAdapter(val data: ArrayList<String>) : RecyclerView.Ada
     }
 
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.tabitem, parent, false)
@@ -42,6 +47,10 @@ class TabItemRecyclerViewAdapter(val data: ArrayList<String>) : RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if(position==0) {
+            holder.idView.isChecked = true
+        }
+
         holder.idView.text = data[position]
 
     }

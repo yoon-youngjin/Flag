@@ -9,7 +9,18 @@ class MatchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMatchBinding.inflate(layoutInflater)
+        if(intent.getStringExtra("matchevent") == "sports") {
+            val fragment = supportFragmentManager.beginTransaction()
+            fragment.replace(R.id.framelayout,SportsMatchFragment())
+            fragment.commit()
+        }
+        else {
 
+            binding.espradio.isChecked = true
+            val fragment = supportFragmentManager.beginTransaction()
+            fragment.replace(R.id.framelayout,ESportsMatchFragment())
+            fragment.commit()
+        }
         setContentView(binding.root)
         init()
     }
