@@ -19,7 +19,7 @@ class AllActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
     fun init() {
-        adapter = AllMatchAdapter(data)
+
 
         binding.recycle.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         binding.recycle.adapter = adapter
