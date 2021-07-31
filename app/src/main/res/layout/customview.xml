@@ -23,8 +23,8 @@
 
         <ImageView
             android:id="@+id/mainImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginRight="10dp"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_android_black_24dp" />
