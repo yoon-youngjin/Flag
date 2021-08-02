@@ -7,7 +7,7 @@ import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 
 class TabItemRecyclerViewAdapter2(val data: ArrayList<String>) : RecyclerView.Adapter<TabItemRecyclerViewAdapter2.ViewHolder>() {
-
+    private var mSelectedItem = -1
 
 
 
@@ -21,22 +21,30 @@ class TabItemRecyclerViewAdapter2(val data: ArrayList<String>) : RecyclerView.Ad
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val idView: ToggleButton = view.findViewById(R.id.tabicon)
 
-        init {
+        fun bind_data(holder: ViewHolder, position: Int, selectedPosition:Int) {
+            val date = holder.idView
+
+            date.text = data[position]
+
+            if(selectedPosition==-1&&position==0)
+                holder.idView.isChecked = true
+            else
+                if(selectedPosition==position)
+                    holder.idView.isChecked = true
+                else
+                    holder.idView.isChecked = false
+
             idView.setOnClickListener {
                 itemClickListener!!.OnItemClick(this,it)
+                mSelectedItem = adapterPosition
+                notifyDataSetChanged()
             }
+
+
         }
 
-//        init {
-//            idView.setOnClickListener {
-//                itemClickListener!!.OnItemClick(this,it)
-//            }
-//
-//        }
 
     }
-
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -47,11 +55,7 @@ class TabItemRecyclerViewAdapter2(val data: ArrayList<String>) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if(position==0) {
-            holder.idView.isChecked = true
-        }
-
-        holder.idView.text = data[position]
+        holder.bind_data(holder,position,mSelectedItem)
 
     }
 

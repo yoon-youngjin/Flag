@@ -45,19 +45,18 @@ class AllMatchAdapter(val data: ArrayList<MatchData>) : RecyclerView.Adapter<All
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        holder.time.text = data[position].time
-        holder.group.text = data[position].time
-        holder.team.text = data[position].time
-        holder.time.text = data[position].time
-        holder.num.text = data[position].time
+        holder.group.text = data[position].group
+        holder.team.text = data[position].team
+        holder.num.text = data[position].num
 
         if(holder.group.text == "건국대학교") {
             holder.img.setImageResource(R.drawable.img33)
         }
         if(holder.group.text == "한양대학교") {
-            holder.img.setImageResource(R.drawable.img55)
+            holder.img.setImageResource(R.drawable.img44)
         }
         if(holder.group.text == "동국대학교") {
-            holder.img.setImageResource(R.drawable.img44)
+            holder.img.setImageResource(R.drawable.img55)
         }
 
 

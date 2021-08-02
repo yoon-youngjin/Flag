@@ -20,6 +20,7 @@ class SportsMatchFragment : Fragment() {
     lateinit var adapter2: TabItemRecyclerViewAdapter2
     lateinit var adapter3: TabItemRecyclerViewAdapter2
     lateinit var adapter4 : MatchingAdapter
+    var oldpos = 0
     lateinit var binding:FragmentSportsMatchBinding
     var rdb:FirebaseDatabase = FirebaseDatabase.getInstance()
     var mydatas = rdb.getReference("sportsData")
@@ -154,7 +155,9 @@ class SportsMatchFragment : Fragment() {
                 binding.recyclerView3.adapter = adapter3
 
                 adapter.itemClickListener = object : TabItemRecyclerViewAdapter.OnItemClickListener {
-                    override fun OnItemClick(holder: TabItemRecyclerViewAdapter.ViewHolder, view: View) {
+
+                    override fun OnItemClick(holder: TabItemRecyclerViewAdapter.ViewHolder, view: View, position:Int) {
+
                         data.clear()
                         datass.clear()
                         item1.clear()
