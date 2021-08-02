@@ -17,7 +17,6 @@ class TabItemRecyclerViewAdapter2(val data: ArrayList<String>) : RecyclerView.Ad
     var itemClickListener: OnItemClickListener? = null
 
 
-
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val idView: ToggleButton = view.findViewById(R.id.tabicon)
 
