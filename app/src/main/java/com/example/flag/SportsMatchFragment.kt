@@ -259,6 +259,8 @@ class SportsMatchFragment : Fragment() {
     private fun init() {
 
         binding.openBtn.setOnClickListener {
+            val intent = Intent(context,RoomActivity::class.java)
+            startActivity(intent)
 
         }
         //var datas = rdb.getReference("sportsData/18일/1축구")

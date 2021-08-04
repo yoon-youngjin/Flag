@@ -1,5 +1,67 @@
 <resources>
     <string name="app_name">Flag</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name ="group_name">
+        <item>건국대학교</item>
+        <item>홍익대학교</item>
+        <item>한양대학교</item>
+    </string-array>
+    <string-array name ="area_name">
+    <item>서울</item>
+    <item>경기</item>
+    </string-array>
+    <string-array name ="day_array">
+        <item>1일</item>
+        <item>2일</item>
+        <item>3일</item>
+        <item>4일</item>
+        <item>5일</item>
+        <item>6일</item>
+        <item>7일</item>
+        <item>8일</item>
+        <item>9일</item>
+        <item>10일</item>
+        <item>11일</item>
+        <item>12일</item>
+        <item>13일</item>
+        <item>14일</item>
+        <item>15일</item>
+        <item>16일</item>
+        <item>17일</item>
+
+    </string-array>
+
+    <string-array name ="time_array">
+        <item>8:00</item>
+        <item>8:30</item>
+        <item>9:00</item>
+        <item>9:30</item>
+        <item>10:00</item>
+        <item>10:30</item>
+        <item>11:00</item>
+        <item>11:30</item>
+        <item>12:00</item>
+        <item>12:30</item>
+        <item>13:00</item>
+        <item>13:30</item>
+        <item>14:00</item>
+        <item>14:30</item>
+        <item>15:00</item>
+        <item>15:30</item>
+        <item>16:00</item>
+        <item>16:30</item>
+        <item>17:00</item>
+        <item>17:30</item>
+        <item>18:00</item>
+        <item>18:30</item>
+        <item>19:00</item>
+        <item>19:30</item>
+        <item>20:00</item>
+        <item>20:30</item>
+        <item>21:00</item>
+        <item>21:30</item>
+        <item>22:00</item>
+
+
+    </string-array>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -5,6 +5,292 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="15dp"
     tools:context=".RoomActivity">
+
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginBottom="15dp">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imageView2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:srcCompat="@drawable/flag" />-->
+<!--        </LinearLayout>-->
+
+<!--    </androidx.appcompat.widget.Toolbar>-->
+
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/title2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="15dp"-->
+<!--        android:text="스포츠 매칭"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="28dp"-->
+<!--        android:textStyle="bold" />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="학교"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+
+            android:layout_marginBottom="15dp"
+            android:background="#eaeaea" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="팀명"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/teamEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:ems="10" />
+
+            <ImageButton
+                android:id="@+id/deleteBtn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="110dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/delete" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view5"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+
+            android:layout_marginBottom="15dp"
+            android:background="#eaeaea" />
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="지역"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <Spinner
+            android:id="@+id/spinner4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/view12"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="15dp"
+            android:background="#eaeaea" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="스포츠 종류"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/view9"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="15dp"
+            android:background="#eaeaea" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="날짜"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/view8"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="15dp"
+            android:background="#eaeaea" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="시간"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/view6"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+
+            android:layout_marginBottom="15dp"
+            android:background="#eaeaea" />
+
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <!--        <TextView-->
+<!--            android:id="@+id/textView9"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:text="장소"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="16dp" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+
+<!--            <EditText-->
+<!--                android:id="@+id/areaText"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:ems="10" />-->
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/deleteBtn2"-->
+<!--                android:layout_width="20dp"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:layout_marginLeft="110dp"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:scaleType="fitXY"-->
+<!--                android:visibility="invisible"-->
+<!--                app:srcCompat="@drawable/delete" />-->
+
+<!--        </LinearLayout>-->
+
+
+<!--        <View-->
+<!--            android:id="@+id/view7"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+
+<!--            android:layout_marginBottom="15dp"-->
+<!--            android:background="#eaeaea" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView10"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="실력"-->
+<!--            android:textColor="@color/black" />-->
+
+<!--        <RadioGroup-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/radioButton5"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:text="최상" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/radioButton4"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:text="상" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/radioButton3"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:text="중" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/radioButton2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:text="하" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/radioButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="최하" />-->
+<!--        </RadioGroup>-->
+
+
+    </LinearLayout>
+
 
 </LinearLayout>
