@@ -29,7 +29,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/matchImg"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center|center_horizontal|center_vertical"

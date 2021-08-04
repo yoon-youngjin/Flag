@@ -1,6 +1,7 @@
 package com.example.flag
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flag.databinding.ActivityAllBinding
@@ -25,23 +26,36 @@ class AllActivity : AppCompatActivity() {
         day = intent.getStringExtra("data").toString()
         event = intent.getStringExtra("data2").toString()
         area = intent.getStringExtra("data3").toString()
+
+        Log.i("day",day)
+        Log.i("event",event)
+        Log.i("area",area)
+
         binding.dataview.text = day.substring(1)
         init()
         setContentView(binding.root)
     }
     fun init() {
+        binding.matchtitle.text = event.substring(1)
+        if(event.substring(1)=="축구") {
+            binding.matchImg2.setImageResource(R.drawable.football)
+        }
+
+        if(event.substring(1)=="농구") {
+            binding.matchImg2.setImageResource(R.drawable.basketball)
+        }
         binding.recycle.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
 
-        val data = mydatas.child(day).child(event).child(area)
+
 
         val items:ArrayList<MatchData> = ArrayList()
 
-        mydatas.addValueEventListener(object :ValueEventListener{
+        mydatas.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val temp = snapshot.child(day).child(event).child(area).children
 
                 for(ds in temp) {
-                    items.add( MatchData(ds.child("time").value.toString(),
+                    items.add( MatchData(ds.key.toString(),ds.child("time").value.toString(),
                         ds.child("mainImg").value.toString(),
                         ds.child("group").value.toString(),
                         ds.child("team").value.toString(),

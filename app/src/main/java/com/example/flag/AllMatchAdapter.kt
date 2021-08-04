@@ -44,6 +44,7 @@ class AllMatchAdapter(val data: ArrayList<MatchData>) : RecyclerView.Adapter<All
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
        holder.time.text = data[position].time
         holder.group.text = data[position].group
         holder.team.text = data[position].team

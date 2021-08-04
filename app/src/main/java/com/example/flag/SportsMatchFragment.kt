@@ -9,10 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flag.databinding.FragmentSportsMatchBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
 
 class SportsMatchFragment : Fragment() {
@@ -20,15 +17,16 @@ class SportsMatchFragment : Fragment() {
     lateinit var adapter2: TabItemRecyclerViewAdapter2
     lateinit var adapter3: TabItemRecyclerViewAdapter2
     lateinit var adapter4 : MatchingAdapter
-    var oldpos = 0
+    lateinit var aaa :DatabaseReference
+
     lateinit var binding:FragmentSportsMatchBinding
     var rdb:FirebaseDatabase = FirebaseDatabase.getInstance()
     var mydatas = rdb.getReference("sportsData")
 
-    var datas = rdb.getReference("sportsData/11일/1축구")
+    var datas = rdb.getReference("sportsData/11일")
 
     var area :String = "1서울"
-    var event:String = "1축구"
+    var event:String = "0전체"
     var day:String = "11일"
 
 
@@ -44,40 +42,49 @@ class SportsMatchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSportsMatchBinding.inflate(layoutInflater,container,false)
+        givemeAllData(area)
+
+        initData()
+        init()
+        return binding.root
+         }
+
+    private fun givemeAllData(area:String) {
         datas.addValueEventListener(object : ValueEventListener
         {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                    val data1 = snapshot.child("1서울").child("data1")
-                    val temp1 = MatchData(
-                        data1.child("time").value.toString(),
-                        data1.child("mainImg").value.toString(),
-                        data1.child("group").value.toString(),
-                        data1.child("team").value.toString(),
-                        data1.child("num").value.toString(),
-                        false
+                for(ds in snapshot.children) {
+                    val data1 = ds.child(area).child("data1")
+                    val temp1 = MatchData(ds.key.toString().substring(1),
+                            data1.child("time").value.toString(),
+                            data1.child("mainImg").value.toString(),
+                            data1.child("group").value.toString(),
+                            data1.child("team").value.toString(),
+                            data1.child("num").value.toString(),
+                            false
 
                     )
                     item1.add(temp1)
-                    val data2 = snapshot.child("1서울").child("data2")
-                    val temp2 = MatchData(
-                        data2.child("time").value.toString(),
+                    val data2 = ds.child(area).child("data2")
+                    val temp2 = MatchData(ds.key.toString().substring(1),
+                            data2.child("time").value.toString(),
                             data2.child("mainImg").value.toString(),
-                        data2.child("group").value.toString(),
-                        data2.child("team").value.toString(),
+                            data2.child("group").value.toString(),
+                            data2.child("team").value.toString(),
                             data2.child("num").value.toString(),
-                        false
+                            false
                     )
                     item2.add(temp2)
-                    val data3 = snapshot.child("1서울").child("data3")
-                    val temp3 = MatchData(
-                        data3.child("time").value.toString(),
+                    val data3 = ds.child(area).child("data3")
+                    val temp3 = MatchData(ds.key.toString().substring(1),
+                            data3.child("time").value.toString(),
                             data3.child("mainImg").value.toString(),
-                        data3.child("group").value.toString(),
-                        data3.child("team").value.toString(),
+                            data3.child("group").value.toString(),
+                            data3.child("team").value.toString(),
                             data3.child("num").value.toString(),
-                        false
+                            false
                     )
 
                     item3.add(temp3)
@@ -85,16 +92,32 @@ class SportsMatchFragment : Fragment() {
                     datass.add(item2)
                     datass.add(item3)
                     data.add(datass)
+                }
 
-                    adapter4 = MatchingAdapter(data)
-                    binding.matchRecycler.adapter = adapter4
+
+                adapter4 = MatchingAdapter(data)
+                binding.matchRecycler.adapter = adapter4
 
                 adapter4.itemClickListener = object : MatchingAdapter.OnItemClickListener {
                     override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
                         val intent = Intent(context,AllActivity::class.java)
+
                         intent.putExtra("data",day)
-                        intent.putExtra("data2",event)
+                        if(event=="0전체") {
+                            if(holder.matchTitle.text=="축구"){
+                                intent.putExtra("data2","1축구")
+                            }
+                            if(holder.matchTitle.text=="농구"){
+                                intent.putExtra("data2","2농구")
+                            }
+
+                        }
+                        else {
+                            intent.putExtra("data2",event)
+                        }
+
                         intent.putExtra("data3",area)
+
 
                         startActivity(intent)
 
@@ -108,10 +131,7 @@ class SportsMatchFragment : Fragment() {
 
             }
         })
-        initData()
-        init()
-        return binding.root
-         }
+    }
 
     private fun initData() {
         binding.recyclerView.layoutManager = LinearLayoutManager(context,
@@ -132,17 +152,19 @@ class SportsMatchFragment : Fragment() {
         mydatas.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
+
                 val temp4 = snapshot.children
+
                 for(ds in temp4) {
-                    items.add(ds.key.toString().substring(1,3))
+                    items.add(ds.key.toString().substring(1))
                 }
                 adapter = TabItemRecyclerViewAdapter(items)
 
                 binding.recyclerView.adapter = adapter
-
+                items2.add("전체")
                 val temp2 = snapshot.child("11일").children
                 for (ds in temp2) {
-                    items2.add(ds.key.toString().substring(1, 3))
+                    items2.add(ds.key.toString().substring(1))
                 }
                 adapter2 = TabItemRecyclerViewAdapter2(items2)
                 binding.recyclerView2.adapter = adapter2
@@ -182,6 +204,11 @@ class SportsMatchFragment : Fragment() {
                         item1.clear()
                         item2.clear()
                         item3.clear()
+
+                        if (holder.idView.text == "전체" && holder.idView.isChecked) {
+                            event = "0전체"
+                            datachange(holder.idView.text.toString(), 1, 1000)
+                        }
 
                         if (holder.idView.text == "축구" && holder.idView.isChecked) {
                             event = "1축구"
@@ -230,6 +257,10 @@ class SportsMatchFragment : Fragment() {
 
 
     private fun init() {
+
+        binding.openBtn.setOnClickListener {
+
+        }
         //var datas = rdb.getReference("sportsData/18일/1축구")
 
 //        mydatas.child("11일").child("1축구").child("1서울").child("data1").setValue(MatchData("10:00",R.drawable.img33,"건국대학교","RALO팀","11:11",false))
@@ -273,49 +304,59 @@ class SportsMatchFragment : Fragment() {
 
     }
     fun datachange(title:String,num:Int,checknum:Int) {
-        var aaa = mydatas.child(day).child(event).child(area)
+
+        if(checknum==1000 && title=="전체") {
+            givemeAllData(area)
+        }
+        if(checknum==9999 && event =="0전체") {
+            givemeAllData(area)
+        }
+        if(checknum==99999 && event=="0전체") {
+            givemeAllData(area)
+        }
+        else {
+            if(checknum==1000) aaa = mydatas.child(day).child(num.toString() + title).child(area)
+            if(checknum==9999) aaa = mydatas.child(day).child(event).child(num.toString() + title)
+            if(checknum==99999) aaa = mydatas.child(num.toString() + title).child(event).child(area)
+
+            aaa.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val data1 = snapshot.child("data1")
+                    val temp1 = MatchData(event.substring(1),data1.child("time").value.toString(), data1.child("mainImg").value.toString(), data1.child("group").value.toString(), data1.child("team").value.toString(),
+                            data1.child("num").value.toString(), false)
+                    item1.add(temp1)
+                    val data2 = snapshot.child("data2")
+                    val temp2 = MatchData(event.substring(1),data2.child("time").value.toString(), data2.child("mainImg").value.toString(), data2.child("group").value.toString(), data2.child("team").value.toString(),
+                            data2.child("num").value.toString(), false)
+                    item2.add(temp2)
+                    val data3 = snapshot.child("data3")
+                    val temp3 = MatchData(event.substring(1),data3.child("time").value.toString(), data3.child("mainImg").value.toString(), data3.child("group").value.toString(), data3.child("team").value.toString(),
+                            data2.child("num").value.toString(), false)
+
+                    item3.add(temp3)
+                    datass.add(item1)
+                    datass.add(item2)
+                    datass.add(item3)
+                    data.add(datass)
 
 
-        if (checknum == 99999) {
-            aaa = mydatas.child(num.toString() + title).child(event).child(area)
-        } else if (checknum == 1000) {
-            aaa = mydatas.child(day).child(num.toString() + title).child(area)
-        } else aaa = mydatas.child(day).child(event).child(num.toString() + title)
+                    adapter4.notifyDataSetChanged()
+
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("error", "error")
+
+                }
+            })
+
+
+        }
 
 
 
-        aaa.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val data1 = snapshot.child("data1")
-                Log.i("data1", data1.toString())
-                val temp1 = MatchData(data1.child("time").value.toString(), data1.child("mainImg").value.toString(), data1.child("group").value.toString(), data1.child("team").value.toString(),
-                        data1.child("num").value.toString(), false)
-                item1.add(temp1)
-                val data2 = snapshot.child("data2")
-                val temp2 = MatchData(data2.child("time").value.toString(), data2.child("mainImg").value.toString(), data2.child("group").value.toString(), data2.child("team").value.toString(),
-                        data2.child("num").value.toString(), false)
-                item2.add(temp2)
-                val data3 = snapshot.child("data3")
-                val temp3 = MatchData(data3.child("time").value.toString(), data3.child("mainImg").value.toString(), data3.child("group").value.toString(), data3.child("team").value.toString(),
-                        data2.child("num").value.toString(), false)
 
-                item3.add(temp3)
-                datass.add(item1)
-                datass.add(item2)
-                datass.add(item3)
-                data.add(datass)
-
-
-                adapter4.notifyDataSetChanged()
-
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("error", "error")
-
-            }
-        })
     }
 }
 

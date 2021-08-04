@@ -70,7 +70,7 @@
 
         <Button
             android:id="@+id/matchingBtn"
-            android:layout_width="match_parent"
+            android:layout_width="70dp"
             android:layout_height="30dp"
             android:background="@drawable/btn"
             android:gravity="center|center_horizontal|center_vertical"

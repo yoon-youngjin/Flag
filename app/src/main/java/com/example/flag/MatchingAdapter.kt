@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -18,6 +19,7 @@ class MatchingAdapter(val data: ArrayList<ArrayList<ArrayList<MatchData>>>) : Re
 
 
         val matchTitle : TextView = view.findViewById(R.id.matchtitle)
+        val matchImg: ImageView = view.findViewById(R.id.matchImg)
         val allbtn : Button = view.findViewById(R.id.allbtn)
         val firstView : CustomView = view.findViewById(R.id.firstitem)
         val secondView : CustomView = view.findViewById(R.id.seconditem)
@@ -60,11 +62,20 @@ class MatchingAdapter(val data: ArrayList<ArrayList<ArrayList<MatchData>>>) : Re
 
 
 
+
         val item1 :ArrayList<MatchData> = data.get(position).get(0)
 
         val item2 :ArrayList<MatchData> = data.get(position).get(1)
         val item3 :ArrayList<MatchData> = data.get(position).get(2)
+        holder.matchTitle.text = item1[position].matchTitle
+        if(holder.matchTitle.text=="축구") {
+            holder.matchImg.setImageResource(R.drawable.football)
 
+        }
+        if(holder.matchTitle.text=="농구") {
+            holder.matchImg.setImageResource(R.drawable.basketball)
+
+        }
 
         holder.firstView.timeTitle.text = item1[position].time
 
