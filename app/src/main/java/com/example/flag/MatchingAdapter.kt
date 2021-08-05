@@ -1,5 +1,6 @@
 package com.example.flag
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,8 @@ class MatchingAdapter(val data: ArrayList<ArrayList<ArrayList<MatchData>>>) : Re
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        Log.i("check","cchchchch")
+
 
 
 
@@ -83,14 +86,26 @@ class MatchingAdapter(val data: ArrayList<ArrayList<ArrayList<MatchData>>>) : Re
         if(item1[position].group=="건국대학교") {
             holder.firstView.mainImg.setImageResource(R.drawable.img33)
         }
+        if(item1[position].group=="한양대학교") {
+            holder.firstView.mainImg.setImageResource(R.drawable.img44)
+        }
+        if(item1[position].group=="동국대학교") {
+            holder.firstView.mainImg.setImageResource(R.drawable.img55)
+        }
 
         holder.firstView.teamTitle.text = item1[position].team
         holder.firstView.numberText.text = item1[position].num
 
         holder.secondView.timeTitle.text = item2[position].time
         holder.secondView.schoolTitle.text = item2[position].group
+        if(item2[position].group=="건국대학교") {
+            holder.secondView.mainImg.setImageResource(R.drawable.img33)
+        }
         if(item2[position].group=="한양대학교") {
             holder.secondView.mainImg.setImageResource(R.drawable.img44)
+        }
+        if(item2[position].group=="동국대학교") {
+            holder.secondView.mainImg.setImageResource(R.drawable.img55)
         }
         holder.secondView.teamTitle.text = item2[position].team
         holder.secondView.numberText.text = item2[position].num
@@ -98,6 +113,12 @@ class MatchingAdapter(val data: ArrayList<ArrayList<ArrayList<MatchData>>>) : Re
         holder.thirdView.timeTitle.text = item3[position].time
 
         holder.thirdView.schoolTitle.text = item3[position].group
+        if(item3[position].group=="건국대학교") {
+            holder.thirdView.mainImg.setImageResource(R.drawable.img33)
+        }
+        if(item3[position].group=="한양대학교") {
+            holder.thirdView.mainImg.setImageResource(R.drawable.img44)
+        }
         if(item3[position].group=="동국대학교") {
             holder.thirdView.mainImg.setImageResource(R.drawable.img55)
         }

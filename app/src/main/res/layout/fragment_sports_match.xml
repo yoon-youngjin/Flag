@@ -26,11 +26,11 @@
 
         <ImageButton
             android:id="@+id/openBtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center|center_horizontal"
             android:layout_marginLeft="190dp"
-            android:backgroundTint="@color/white"
+            android:background="@android:color/transparent"
             android:scaleType="fitXY"
             android:src="@drawable/plus" />
     </LinearLayout>

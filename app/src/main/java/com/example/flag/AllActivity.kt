@@ -55,6 +55,9 @@ class AllActivity : AppCompatActivity() {
                 val temp = snapshot.child(day).child(event).child(area).children
 
                 for(ds in temp) {
+                    if(ds.key.toString()=="datanum") continue
+
+
                     items.add( MatchData(ds.key.toString(),ds.child("time").value.toString(),
                         ds.child("mainImg").value.toString(),
                         ds.child("group").value.toString(),

@@ -3,6 +3,7 @@ package com.example.flag
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -16,8 +17,10 @@ import com.google.firebase.database.ValueEventListener
 class RoomActivity : AppCompatActivity() {
     lateinit var binding: ActivityRoomBinding
     lateinit var adapter: ArrayAdapter<String>
+    var datanum:Int = 0
     var rdb: FirebaseDatabase = FirebaseDatabase.getInstance()
     var mydatas = rdb.getReference("sportsData")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRoomBinding.inflate(layoutInflater)
@@ -26,37 +29,16 @@ class RoomActivity : AppCompatActivity() {
 //        updateData()
     }
 
-//    private fun updateData() {
-//        var day = 0
-//        binding.spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                Log.i("day123","check")
-//
-//                day = position + 1
-//
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                TODO("Not yet implemented")
-//            }
-//        }
-//        Log.i("day",day.toString())
-////        mydatas.child(day)
-//
-//    }
 
     fun initData() {
-        var datanum = ""
-        var day2 = 0
-        var event = ""
-        var area2 = ""
-        var time2 = "15:00" // update
-        var num = "11:11" //update
+
+        var day2 = 1
+        var event = "1축구"
+        var area2 = "1서울"
+        var time2 = ""
+        var num = ""
         var group2 = binding.autoText.text
         var team2 = binding.teamEditText.text
-
-
-
 
 
         val area = resources.getStringArray(R.array.area_name)
@@ -121,12 +103,17 @@ class RoomActivity : AppCompatActivity() {
                 when(position) {
                     0 -> {
                         event = (position+1).toString() +"축구"
+                        num = "11:11"
+
+
                     }
                     1 -> {
                         event = (position+1).toString() +"농구"
+                        num = "5:5"
                     }
                     2 -> {
                         event = (position+1).toString() +"풋살"
+                        num = "5:5"
                     }
                 }
 
@@ -151,7 +138,7 @@ class RoomActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
+
             }
         }
 
@@ -161,6 +148,19 @@ class RoomActivity : AppCompatActivity() {
         val adapter3 = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,time)
 
         binding.spinner3.adapter = adapter3
+
+        Log.i("get",binding.spinner3.selectedItem.toString())
+
+        binding.spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                time2 = binding.spinner3.selectedItem.toString()
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
 
 
 
@@ -186,26 +186,43 @@ class RoomActivity : AppCompatActivity() {
 //            binding.teamEditText.text.clear()
 //        }
 
+        val data =
+            mydatas.child(day2.toString() + day2.toString() + "일").child(event).child(area2)
+
+
+        data.addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                datanum = snapshot.child("datanum").value.toString().toInt() + 1
+                Log.i("datanum",datanum.toString())
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
         binding.btn.setOnClickListener {
-            val data = mydatas.child(day2.toString()+day2.toString()+"일").child(event).child(area2)
-            data.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-//                    datanum = snapshot.child("datanum").value.toString().toInt() + 1
-                    datanum = "data5"
-                    data.child(datanum).setValue(MatchData(event.substring(1),time2,"",group2.toString(),team2.toString(),num,false)
-                    )
-                }
 
-                override fun onCancelled(error: DatabaseError) {
 
-                }
-            })
+            data.child("data" + datanum.toString()).setValue(
+                MatchData(
+                    event.substring(1),
+                    time2,
+                    "",
+                    group2.toString(),
+                    team2.toString(),
+                    num,
+                    false
+                )
+            )
+            data.child("datanum").setValue(datanum)
+
+
         }
 
 
 
-
-
-
     }
+
+
 }

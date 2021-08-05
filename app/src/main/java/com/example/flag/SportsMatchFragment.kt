@@ -23,8 +23,6 @@ class SportsMatchFragment : Fragment() {
     var rdb:FirebaseDatabase = FirebaseDatabase.getInstance()
     var mydatas = rdb.getReference("sportsData")
 
-    var datas = rdb.getReference("sportsData/11일")
-
     var area :String = "1서울"
     var event:String = "0전체"
     var day:String = "11일"
@@ -32,9 +30,9 @@ class SportsMatchFragment : Fragment() {
 
     var data =arrayListOf<ArrayList<ArrayList<MatchData>>>()
     var datass = ArrayList<ArrayList<MatchData>>()
-    val item1:ArrayList<MatchData> = ArrayList()
-    val item2:ArrayList<MatchData> = ArrayList()
-    val item3:ArrayList<MatchData> = ArrayList()
+    var item1:ArrayList<MatchData> = ArrayList()
+    var item2:ArrayList<MatchData> = ArrayList()
+    var item3:ArrayList<MatchData> = ArrayList()
 
 
     override fun onCreateView(
@@ -42,20 +40,24 @@ class SportsMatchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSportsMatchBinding.inflate(layoutInflater,container,false)
-        givemeAllData(area)
+        givemeAllData(day,area)
 
         initData()
         init()
         return binding.root
          }
 
-    private fun givemeAllData(area:String) {
-        datas.addValueEventListener(object : ValueEventListener
+    private fun givemeAllData(day:String,area:String) {
+        Log.i("check","check")
+
+        mydatas.addValueEventListener(object : ValueEventListener
         {
 
             override fun onDataChange(snapshot: DataSnapshot) {
+                val data3 = snapshot.child(day)
 
-                for(ds in snapshot.children) {
+                for(ds in data3.children) {
+                    Log.i("check1","check1")
                     val data1 = ds.child(area).child("data1")
                     val temp1 = MatchData(ds.key.toString().substring(1),
                             data1.child("time").value.toString(),
@@ -109,6 +111,9 @@ class SportsMatchFragment : Fragment() {
                             }
                             if(holder.matchTitle.text=="농구"){
                                 intent.putExtra("data2","2농구")
+                            }
+                            if(holder.matchTitle.text=="풋살"){
+                                intent.putExtra("data2","3풋살")
                             }
 
                         }
@@ -207,6 +212,7 @@ class SportsMatchFragment : Fragment() {
 
                         if (holder.idView.text == "전체" && holder.idView.isChecked) {
                             event = "0전체"
+                            Log.i("check2","check2")
                             datachange(holder.idView.text.toString(), 1, 1000)
                         }
 
@@ -217,6 +223,11 @@ class SportsMatchFragment : Fragment() {
                         if (holder.idView.text == "농구" && holder.idView.isChecked) {
                             event = "2농구"
                             datachange(holder.idView.text.toString(), 2, 1000)
+                        }
+
+                        if (holder.idView.text == "풋살" && holder.idView.isChecked) {
+                            event = "3풋살"
+                            datachange(holder.idView.text.toString(), 3, 1000)
                         }
                     }
 
@@ -265,14 +276,14 @@ class SportsMatchFragment : Fragment() {
         }
         //var datas = rdb.getReference("sportsData/18일/1축구")
 
-//        mydatas.child("11일").child("1축구").child("1서울").child("data1").setValue(MatchData("10:00",R.drawable.img33,"건국대학교","RALO팀","11:11",false))
-//        mydatas.child("11일").child("1축구").child("1서울").child("data2").setValue(MatchData("11:00",R.drawable.img44,"한양대학교","PAKA팀","11:11",false))
-//        mydatas.child("11일").child("1축구").child("1서울").child("data3").setValue(MatchData("11:30",R.drawable.img55,"동국대학교","DOPA팀","11:11",false))
-//
+//        mydatas.child("11일").child("3풋살").child("2경기").child("data1").setValue(MatchData("풋살","10:00","","건국대학교","RALO팀","5:5",false))
+//        mydatas.child("11일").child("3풋살").child("2경기").child("data2").setValue(MatchData("풋살","11:00","","한양대학교","PAKA팀","5:5",false))
+//        mydatas.child("11일").child("3풋살").child("2경기").child("data3").setValue(MatchData("풋살","11:30","","동국대학교","DOPA팀","5:5",false))
+
 //        mydatas.child("11일").child("1축구").child("2경기").child("data1").setValue(MatchData("10:00",R.drawable.img33,"건국대학교","RALO팀","11:11",false))
 //        mydatas.child("11일").child("1축구").child("2경기").child("data2").setValue(MatchData("11:00",R.drawable.img44,"한양대학교","PAKA팀","11:11",false))
 //        mydatas.child("11일").child("1축구").child("2경기").child("data3").setValue(MatchData("11:30",R.drawable.img55,"동국대학교","DOPA팀","11:11",false))
-//
+
 //        mydatas.child("11일").child("2농구").child("1서울").child("data1").setValue(MatchData("10:00",R.drawable.img33,"건국대학교","RALO팀","5:5",false))
 //        mydatas.child("11일").child("2농구").child("1서울").child("data2").setValue(MatchData("11:00",R.drawable.img44,"한양대학교","PAKA팀","5:5",false))
 //        mydatas.child("11일").child("2농구").child("1서울").child("data3").setValue(MatchData("11:30",R.drawable.img55,"동국대학교","DOPA팀","5:5",false))
@@ -307,14 +318,15 @@ class SportsMatchFragment : Fragment() {
     }
     fun datachange(title:String,num:Int,checknum:Int) {
 
-        if(checknum==1000 && title=="전체") {
-            givemeAllData(area)
+        if(checknum==1000 && event =="0전체") {
+            Log.i("check4","check4")
+            givemeAllData(day,area)
         }
         if(checknum==9999 && event =="0전체") {
-            givemeAllData(area)
+            givemeAllData(day,area)
         }
         if(checknum==99999 && event=="0전체") {
-            givemeAllData(area)
+            givemeAllData(day,area)
         }
         else {
             if(checknum==1000) aaa = mydatas.child(day).child(num.toString() + title).child(area)
