@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MatchingAdapter(val data: ArrayList<ArrayList<ArrayList<MatchData>>>) : RecyclerView.Adapter<MatchingAdapter.ViewHolder>() {
+class MatchingAdapter(val data: ArrayList<ArrayList<MatchData>>) : RecyclerView.Adapter<MatchingAdapter.ViewHolder>() {
     interface OnItemClickListener {
         fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View)
     }
@@ -61,16 +61,14 @@ class MatchingAdapter(val data: ArrayList<ArrayList<ArrayList<MatchData>>>) : Re
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        Log.i("check","cchchchch")
 
 
+        val item1 : MatchData = data.get(position).get(0)
 
+        val item2 :MatchData = data.get(position).get(1)
+        val item3 :MatchData = data.get(position).get(2)
 
-        val item1 :ArrayList<MatchData> = data.get(position).get(0)
-
-        val item2 :ArrayList<MatchData> = data.get(position).get(1)
-        val item3 :ArrayList<MatchData> = data.get(position).get(2)
-        holder.matchTitle.text = item1[position].matchTitle
+        holder.matchTitle.text = item1.matchTitle
         if(holder.matchTitle.text=="축구") {
             holder.matchImg.setImageResource(R.drawable.football)
 
@@ -79,55 +77,60 @@ class MatchingAdapter(val data: ArrayList<ArrayList<ArrayList<MatchData>>>) : Re
             holder.matchImg.setImageResource(R.drawable.basketball)
 
         }
+        if(holder.matchTitle.text=="풋살") {
+            holder.matchImg.setImageResource(R.drawable.football)
 
-        holder.firstView.timeTitle.text = item1[position].time
+        }
 
-        holder.firstView.schoolTitle.text = item1[position].group
-        if(item1[position].group=="건국대학교") {
+        holder.firstView.timeTitle.text = item1.time
+
+        holder.firstView.schoolTitle.text = item1.group
+        if(item1.group=="건국대학교") {
             holder.firstView.mainImg.setImageResource(R.drawable.img33)
         }
-        if(item1[position].group=="한양대학교") {
+        if(item1.group=="한양대학교") {
             holder.firstView.mainImg.setImageResource(R.drawable.img44)
         }
-        if(item1[position].group=="동국대학교") {
+        if(item1.group=="동국대학교") {
             holder.firstView.mainImg.setImageResource(R.drawable.img55)
         }
 
-        holder.firstView.teamTitle.text = item1[position].team
-        holder.firstView.numberText.text = item1[position].num
+        holder.firstView.teamTitle.text = item1.team
+        holder.firstView.numberText.text = item1.num
 
-        holder.secondView.timeTitle.text = item2[position].time
-        holder.secondView.schoolTitle.text = item2[position].group
-        if(item2[position].group=="건국대학교") {
+        holder.secondView.timeTitle.text = item2.time
+        holder.secondView.schoolTitle.text = item2.group
+        if(item2.group=="건국대학교") {
             holder.secondView.mainImg.setImageResource(R.drawable.img33)
         }
-        if(item2[position].group=="한양대학교") {
+        if(item2.group=="한양대학교") {
             holder.secondView.mainImg.setImageResource(R.drawable.img44)
         }
-        if(item2[position].group=="동국대학교") {
+        if(item2.group=="동국대학교") {
             holder.secondView.mainImg.setImageResource(R.drawable.img55)
         }
-        holder.secondView.teamTitle.text = item2[position].team
-        holder.secondView.numberText.text = item2[position].num
+        holder.secondView.teamTitle.text = item2.team
+        holder.secondView.numberText.text = item2.num
 
-        holder.thirdView.timeTitle.text = item3[position].time
+        holder.thirdView.timeTitle.text = item3.time
 
-        holder.thirdView.schoolTitle.text = item3[position].group
-        if(item3[position].group=="건국대학교") {
+        holder.thirdView.schoolTitle.text = item3.group
+        if(item3.group=="건국대학교") {
             holder.thirdView.mainImg.setImageResource(R.drawable.img33)
         }
-        if(item3[position].group=="한양대학교") {
+        if(item3.group=="한양대학교") {
             holder.thirdView.mainImg.setImageResource(R.drawable.img44)
         }
-        if(item3[position].group=="동국대학교") {
+        if(item3.group=="동국대학교") {
             holder.thirdView.mainImg.setImageResource(R.drawable.img55)
         }
-        holder.thirdView.teamTitle.text = item3[position].team
-        holder.thirdView.numberText.text = item3[position].num
+        holder.thirdView.teamTitle.text = item3.team
+        holder.thirdView.numberText.text = item3.num
 //
 //        holder.data_bind(holder,position)
 
-
+Log.i("size",data!!.size.toString())
+        Log.i("size2",data!!.toString())
 
 
     }

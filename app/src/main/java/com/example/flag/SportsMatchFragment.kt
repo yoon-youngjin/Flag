@@ -28,11 +28,11 @@ class SportsMatchFragment : Fragment() {
     var day:String = "11일"
 
 
-    var data =arrayListOf<ArrayList<ArrayList<MatchData>>>()
-    var datass = ArrayList<ArrayList<MatchData>>()
-    var item1:ArrayList<MatchData> = ArrayList()
-    var item2:ArrayList<MatchData> = ArrayList()
-    var item3:ArrayList<MatchData> = ArrayList()
+
+    var data = ArrayList<ArrayList<MatchData>>()
+    var datass = ArrayList<MatchData>()
+    var datass2 = ArrayList<MatchData>()
+    var datass3 = ArrayList<MatchData>()
 
 
     override fun onCreateView(
@@ -40,6 +40,7 @@ class SportsMatchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSportsMatchBinding.inflate(layoutInflater,container,false)
+
         givemeAllData(day,area)
 
         initData()
@@ -48,16 +49,18 @@ class SportsMatchFragment : Fragment() {
          }
 
     private fun givemeAllData(day:String,area:String) {
-        Log.i("check","check")
+
+        var i =0
 
         mydatas.addValueEventListener(object : ValueEventListener
         {
 
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 val data3 = snapshot.child(day)
 
                 for(ds in data3.children) {
-                    Log.i("check1","check1")
+
                     val data1 = ds.child(area).child("data1")
                     val temp1 = MatchData(ds.key.toString().substring(1),
                             data1.child("time").value.toString(),
@@ -68,7 +71,7 @@ class SportsMatchFragment : Fragment() {
                             false
 
                     )
-                    item1.add(temp1)
+
                     val data2 = ds.child(area).child("data2")
                     val temp2 = MatchData(ds.key.toString().substring(1),
                             data2.child("time").value.toString(),
@@ -78,7 +81,7 @@ class SportsMatchFragment : Fragment() {
                             data2.child("num").value.toString(),
                             false
                     )
-                    item2.add(temp2)
+
                     val data3 = ds.child(area).child("data3")
                     val temp3 = MatchData(ds.key.toString().substring(1),
                             data3.child("time").value.toString(),
@@ -89,15 +92,36 @@ class SportsMatchFragment : Fragment() {
                             false
                     )
 
-                    item3.add(temp3)
-                    datass.add(item1)
-                    datass.add(item2)
-                    datass.add(item3)
-                    data.add(datass)
+
+                    if(i==0) {
+                        datass.add(temp1)
+                        datass.add(temp2)
+                        datass.add(temp3)
+                        data.add(datass)
+                    }
+                    if(i==1) {
+                        datass2.add(temp1)
+                        datass2.add(temp2)
+                        datass2.add(temp3)
+                        data.add(datass2)
+                    }
+                    if(i==2) {
+                        datass3.add(temp1)
+                        datass3.add(temp2)
+                        datass3.add(temp3)
+                        data.add(datass3)
+                    }
+
+                    i++
+
+
                 }
 
 
+
                 adapter4 = MatchingAdapter(data)
+
+
                 binding.matchRecycler.adapter = adapter4
 
                 adapter4.itemClickListener = object : MatchingAdapter.OnItemClickListener {
@@ -187,9 +211,9 @@ class SportsMatchFragment : Fragment() {
 
                         data.clear()
                         datass.clear()
-                        item1.clear()
-                        item2.clear()
-                        item3.clear()
+                        datass2.clear()
+                        datass3.clear()
+
 
                         if (holder.idView.text == "1일" && holder.idView.isChecked) {
                             day = "11일"
@@ -206,9 +230,9 @@ class SportsMatchFragment : Fragment() {
                     override fun OnItemClick(holder: TabItemRecyclerViewAdapter2.ViewHolder, view: View) {
                         data.clear()
                         datass.clear()
-                        item1.clear()
-                        item2.clear()
-                        item3.clear()
+                        datass2.clear()
+                        datass3.clear()
+
 
                         if (holder.idView.text == "전체" && holder.idView.isChecked) {
                             event = "0전체"
@@ -242,9 +266,9 @@ class SportsMatchFragment : Fragment() {
                     override fun OnItemClick(holder: TabItemRecyclerViewAdapter2.ViewHolder, view: View) {
                         data.clear()
                         datass.clear()
-                        item1.clear()
-                        item2.clear()
-                        item3.clear()
+                        datass2.clear()
+                        datass3.clear()
+
                         if (holder.idView.text == "서울" && holder.idView.isChecked) {
                             area = "1서울"
                             datachange(holder.idView.text.toString(), 1, 9999)
@@ -319,38 +343,41 @@ class SportsMatchFragment : Fragment() {
     fun datachange(title:String,num:Int,checknum:Int) {
 
         if(checknum==1000 && event =="0전체") {
-            Log.i("check4","check4")
+
             givemeAllData(day,area)
         }
-        if(checknum==9999 && event =="0전체") {
+        else if(checknum==9999 && event =="0전체") {
             givemeAllData(day,area)
         }
-        if(checknum==99999 && event=="0전체") {
+        else if(checknum==99999 && event=="0전체") {
             givemeAllData(day,area)
         }
         else {
+
             if(checknum==1000) aaa = mydatas.child(day).child(num.toString() + title).child(area)
             if(checknum==9999) aaa = mydatas.child(day).child(event).child(num.toString() + title)
             if(checknum==99999) aaa = mydatas.child(num.toString() + title).child(event).child(area)
 
             aaa.addValueEventListener(object : ValueEventListener {
+
                 override fun onDataChange(snapshot: DataSnapshot) {
+
                     val data1 = snapshot.child("data1")
                     val temp1 = MatchData(event.substring(1),data1.child("time").value.toString(), data1.child("mainImg").value.toString(), data1.child("group").value.toString(), data1.child("team").value.toString(),
                             data1.child("num").value.toString(), false)
-                    item1.add(temp1)
+
                     val data2 = snapshot.child("data2")
                     val temp2 = MatchData(event.substring(1),data2.child("time").value.toString(), data2.child("mainImg").value.toString(), data2.child("group").value.toString(), data2.child("team").value.toString(),
                             data2.child("num").value.toString(), false)
-                    item2.add(temp2)
+
                     val data3 = snapshot.child("data3")
                     val temp3 = MatchData(event.substring(1),data3.child("time").value.toString(), data3.child("mainImg").value.toString(), data3.child("group").value.toString(), data3.child("team").value.toString(),
                             data2.child("num").value.toString(), false)
 
-                    item3.add(temp3)
-                    datass.add(item1)
-                    datass.add(item2)
-                    datass.add(item3)
+
+                    datass.add(temp1)
+                    datass.add(temp2)
+                    datass.add(temp3)
                     data.add(datass)
 
 
