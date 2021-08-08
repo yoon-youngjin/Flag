@@ -18,7 +18,7 @@ class SportsMatchFragment : Fragment() {
     lateinit var adapter3: TabItemRecyclerViewAdapter2
     lateinit var adapter4 : MatchingAdapter
     lateinit var aaa :DatabaseReference
-
+    lateinit var dialogView:View
     lateinit var binding:FragmentSportsMatchBinding
     var rdb:FirebaseDatabase = FirebaseDatabase.getInstance()
     var mydatas = rdb.getReference("sportsData")
@@ -40,6 +40,7 @@ class SportsMatchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSportsMatchBinding.inflate(layoutInflater,container,false)
+        dialogView = inflater.inflate(R.layout.custom_dialog, container, false)
 
         givemeAllData(day,area)
 
@@ -52,7 +53,7 @@ class SportsMatchFragment : Fragment() {
 
         var i =0
 
-        mydatas.addValueEventListener(object : ValueEventListener
+        mydatas.addListenerForSingleValueEvent(object : ValueEventListener
         {
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -68,7 +69,7 @@ class SportsMatchFragment : Fragment() {
                             data1.child("group").value.toString(),
                             data1.child("team").value.toString(),
                             data1.child("num").value.toString(),
-                            false
+                            data1.child("accept").value.toString().toBoolean()
 
                     )
 
@@ -79,7 +80,7 @@ class SportsMatchFragment : Fragment() {
                             data2.child("group").value.toString(),
                             data2.child("team").value.toString(),
                             data2.child("num").value.toString(),
-                            false
+                        data2.child("accept").value.toString().toBoolean()
                     )
 
                     val data3 = ds.child(area).child("data3")
@@ -89,7 +90,7 @@ class SportsMatchFragment : Fragment() {
                             data3.child("group").value.toString(),
                             data3.child("team").value.toString(),
                             data3.child("num").value.toString(),
-                            false
+                        data3.child("accept").value.toString().toBoolean()
                     )
 
 
@@ -152,6 +153,99 @@ class SportsMatchFragment : Fragment() {
 
                     }
                 }
+                adapter4.itemClickListener2 = object : MatchingAdapter.OnItemClickListener {
+                    override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
+//                        val mBuilder = AlertDialog.Builder(context)
+//                            .setView(dialogView)
+//                            .setCancelable(false)
+//                            .setTitle("단어 추가")
+//                        mBuilder.create()
+//                            .show()
+//
+//                        val groupname = dialogView.findViewById<TextView>(R.id.groupname)
+//
+//                        val teamname = dialogView.findViewById<TextView>(R.id.teamname)
+//                        val time = dialogView.findViewById<TextView>(R.id.time)
+//                        val sportsname = dialogView.findViewById<TextView>(R.id.sportsname)
+//
+//                        groupname.text = holder.firstView.schoolTitle.toString()
+//                        teamname.text = holder.firstView.teamTitle.toString()
+//                        sportsname.text = holder.matchTitle.toString()
+//                        time.text = holder.firstView.timeTitle.toString()
+//
+//
+//
+//                        val okButton = dialogView.findViewById<Button>(R.id.yesBtn)
+//                        val noButton = dialogView.findViewById<Button>(R.id.noBtn)
+//
+//                        okButton.setOnClickListener {
+//                        }
+
+                        var event = ""
+
+                        if(holder.matchTitle.text == "축구") {
+                            event = "1축구"
+                        }
+                        if(holder.matchTitle.text == "농구") {
+                            event = "2농구"
+                        }
+                        if(holder.matchTitle.text == "풋살") {
+                            event = "3풋살"
+                        }
+
+
+
+
+
+                        mydatas.child(day).child(event).child(area).child("data1").child("accept").setValue(false)
+
+                        holder.firstView.matchBtn.isClickable = false
+                        holder.firstView.matchBtn.text = "마감"
+
+                    }
+                }
+                adapter4.itemClickListener3 = object : MatchingAdapter.OnItemClickListener {
+                    override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
+                        var event = ""
+
+                        if(holder.matchTitle.text == "축구") {
+                            event = "1축구"
+                        }
+                        if(holder.matchTitle.text == "농구") {
+                            event = "2농구"
+                        }
+                        if(holder.matchTitle.text == "풋살") {
+                            event = "3풋살"
+                        }
+
+                        mydatas.child(day).child(event).child(area).child("data2").child("accept").setValue(false)
+
+                        holder.secondView.matchBtn.isClickable = false
+                        holder.secondView.matchBtn.text = "마감"
+
+                    }
+                }
+                adapter4.itemClickListener4 = object : MatchingAdapter.OnItemClickListener {
+                    override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
+                        var event = ""
+
+                        if(holder.matchTitle.text == "축구") {
+                            event = "1축구"
+                        }
+                        if(holder.matchTitle.text == "농구") {
+                            event = "2농구"
+                        }
+                        if(holder.matchTitle.text == "풋살") {
+                            event = "3풋살"
+                        }
+
+                        mydatas.child(day).child(event).child(area).child("data3").child("accept").setValue(false)
+
+                        holder.thirdView.matchBtn.isClickable = false
+                        holder.thirdView.matchBtn.text = "마감"
+
+                    }
+                }
 
 
             }
@@ -178,7 +272,7 @@ class SportsMatchFragment : Fragment() {
         val items2: ArrayList<String> = ArrayList()
         val items3: ArrayList<String> = ArrayList()
 
-        mydatas.addValueEventListener(object : ValueEventListener {
+        mydatas.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
 
@@ -298,6 +392,10 @@ class SportsMatchFragment : Fragment() {
             startActivity(intent)
 
         }
+
+
+
+
         //var datas = rdb.getReference("sportsData/18일/1축구")
 
 //        mydatas.child("11일").child("3풋살").child("2경기").child("data1").setValue(MatchData("풋살","10:00","","건국대학교","RALO팀","5:5",false))
@@ -358,21 +456,21 @@ class SportsMatchFragment : Fragment() {
             if(checknum==9999) aaa = mydatas.child(day).child(event).child(num.toString() + title)
             if(checknum==99999) aaa = mydatas.child(num.toString() + title).child(event).child(area)
 
-            aaa.addValueEventListener(object : ValueEventListener {
+            aaa.addListenerForSingleValueEvent(object : ValueEventListener {
 
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     val data1 = snapshot.child("data1")
                     val temp1 = MatchData(event.substring(1),data1.child("time").value.toString(), data1.child("mainImg").value.toString(), data1.child("group").value.toString(), data1.child("team").value.toString(),
-                            data1.child("num").value.toString(), false)
+                            data1.child("num").value.toString(), data1.child("accept").value.toString().toBoolean())
 
                     val data2 = snapshot.child("data2")
                     val temp2 = MatchData(event.substring(1),data2.child("time").value.toString(), data2.child("mainImg").value.toString(), data2.child("group").value.toString(), data2.child("team").value.toString(),
-                            data2.child("num").value.toString(), false)
+                            data2.child("num").value.toString(), data2.child("accept").value.toString().toBoolean())
 
                     val data3 = snapshot.child("data3")
                     val temp3 = MatchData(event.substring(1),data3.child("time").value.toString(), data3.child("mainImg").value.toString(), data3.child("group").value.toString(), data3.child("team").value.toString(),
-                            data2.child("num").value.toString(), false)
+                            data2.child("num").value.toString(), data3.child("accept").value.toString().toBoolean())
 
 
                     datass.add(temp1)
@@ -381,7 +479,10 @@ class SportsMatchFragment : Fragment() {
                     data.add(datass)
 
 
-                    adapter4.notifyDataSetChanged()
+                    adapter4 = MatchingAdapter(data)
+
+
+                    binding.matchRecycler.adapter = adapter4
 
 
                 }

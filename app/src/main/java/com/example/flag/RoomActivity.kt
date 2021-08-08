@@ -1,5 +1,7 @@
 package com.example.flag
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flag.databinding.ActivityRoomBinding
 import com.google.firebase.database.DataSnapshot
@@ -37,7 +40,7 @@ class RoomActivity : AppCompatActivity() {
         var area2 = "1서울"
         var time2 = ""
         var num = ""
-        var group2 = binding.autoText.text
+        var group2 = ""
         var team2 = binding.teamEditText.text
 
 
@@ -45,6 +48,7 @@ class RoomActivity : AppCompatActivity() {
         val adapter4 = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,area)
 
         binding.spinner4.adapter = adapter4
+        binding.spinner4.setSelection(0)
 
         binding.spinner4.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -56,14 +60,38 @@ class RoomActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
+
             }
         }
 
 
             val group = resources.getStringArray(R.array.group_name)
+
         adapter = ArrayAdapter(this,android.R.layout.simple_dropdown_item_1line,group)
         binding.autoText.setAdapter(adapter)
+
+        binding.autoText.addTextChangedListener(object:TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s!!.length>=1) {
+                    binding.deleteBtn2.visibility = View.VISIBLE
+                }
+                else {
+                    binding.deleteBtn2.visibility = View.INVISIBLE
+                }
+                group2 = s.toString()
+                Log.i("s",s.toString())
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+
+            }
+        })
 
         binding.teamEditText.addTextChangedListener(object:TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -86,6 +114,9 @@ class RoomActivity : AppCompatActivity() {
         binding.deleteBtn.setOnClickListener {
             binding.teamEditText.text.clear()
         }
+        binding.deleteBtn2.setOnClickListener {
+            binding.autoText.text.clear()
+        }
 
         val adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,ArrayList<String>())
 
@@ -94,6 +125,7 @@ class RoomActivity : AppCompatActivity() {
         adapter.add("풋살")
 
         binding.spinner.adapter = adapter
+        binding.spinner.setSelection(0)
 
 
 
@@ -129,6 +161,7 @@ class RoomActivity : AppCompatActivity() {
         val adapter2 = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,day)
 
         binding.spinner2.adapter = adapter2
+        binding.spinner2.setSelection(0)
 
         binding.spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -148,6 +181,7 @@ class RoomActivity : AppCompatActivity() {
         val adapter3 = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,time)
 
         binding.spinner3.adapter = adapter3
+        binding.spinner3.setSelection(0)
 
         Log.i("get",binding.spinner3.selectedItem.toString())
 
@@ -203,21 +237,37 @@ class RoomActivity : AppCompatActivity() {
         })
         binding.btn.setOnClickListener {
 
+            if (binding.autoText.text.isEmpty() || binding.teamEditText.text.isEmpty()) {
+                Toast.makeText(this, "전부 입력하세요.", Toast.LENGTH_SHORT).show()
 
-            data.child("data" + datanum.toString()).setValue(
-                MatchData(
-                    event.substring(1),
-                    time2,
-                    "",
-                    group2.toString(),
-                    team2.toString(),
-                    num,
-                    false
-                )
-            )
-            data.child("datanum").setValue(datanum)
+            } else {
+                val builder = AlertDialog.Builder(this)
+                builder.setMessage("방을 생성하시겠습니까?")
+                builder.setPositiveButton("네") { _, _ ->
+                    data.child("data" + datanum.toString()).setValue(
+                            MatchData(
+                                    event.substring(1),
+                                    time2,
+                                    "",
+                                    group2.toString(),
+                                    team2.toString(),
+                                    num,
+                                    false
+                            )
+                    )
+                    data.child("datanum").setValue(datanum)
+                    val intent = Intent(this,MatchActivity::class.java)
+                    intent.putExtra("matchevent","sports")
+                    startActivity(intent)
+
+                }
+                builder.setNegativeButton("아니요") { _, _ ->
+                }.show()
 
 
+
+
+            }
         }
 
 

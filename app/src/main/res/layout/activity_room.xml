@@ -55,12 +55,33 @@
             android:text="학교"
             android:textColor="@color/black"
             android:textSize="16dp" />
-
-        <AutoCompleteTextView
-            android:id="@+id/autoText"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent" />
+            android:orientation="horizontal">
+
+
+            <AutoCompleteTextView
+                android:id="@+id/autoText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="학교를 입력해주세요." />
+
+            <ImageButton
+                android:id="@+id/deleteBtn2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="110dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/delete" />
+
+        </LinearLayout>
+
+
 
         <View
             android:id="@+id/view4"
@@ -90,7 +111,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:ems="10" />
+                android:ems="10"
+                android:hint="팀명을 입력해주세요." />
 
             <ImageButton
                 android:id="@+id/deleteBtn"
@@ -194,9 +216,14 @@
 
         <Button
             android:id="@+id/btn"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:layout_gravity="center"
+            android:background="@drawable/radiobtn2"
+            android:gravity="center"
+            android:text="방 만들기"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
         <!--        <TextView-->
 <!--            android:id="@+id/textView9"-->

@@ -9,11 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MatchingAdapter(val data: ArrayList<ArrayList<MatchData>>) : RecyclerView.Adapter<MatchingAdapter.ViewHolder>() {
+class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.Adapter<MatchingAdapter.ViewHolder>() {
     interface OnItemClickListener {
         fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View)
     }
     var itemClickListener: OnItemClickListener? = null
+    var itemClickListener2: OnItemClickListener? = null
+    var itemClickListener3: OnItemClickListener? = null
+    var itemClickListener4: OnItemClickListener? = null
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -29,6 +32,16 @@ class MatchingAdapter(val data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
         init {
             allbtn.setOnClickListener {
                 itemClickListener!!.OnItemClick(this,it)
+            }
+            firstView.matchBtn.setOnClickListener {
+                itemClickListener2!!.OnItemClick(this,it)
+            }
+
+            secondView.matchBtn.setOnClickListener {
+                itemClickListener3!!.OnItemClick(this,it)
+            }
+            thirdView.matchBtn.setOnClickListener {
+                itemClickListener4!!.OnItemClick(this,it)
             }
         }
 
@@ -97,6 +110,14 @@ class MatchingAdapter(val data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
 
         holder.firstView.teamTitle.text = item1.team
         holder.firstView.numberText.text = item1.num
+        holder.firstView.matchBtn.isClickable = item1.accept
+        if(item1.accept==false) {
+            holder.firstView.matchBtn.text = "마감"
+        }
+        else {
+            holder.firstView.matchBtn.text = "신청가능"
+        }
+
 
         holder.secondView.timeTitle.text = item2.time
         holder.secondView.schoolTitle.text = item2.group
@@ -111,7 +132,11 @@ class MatchingAdapter(val data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
         }
         holder.secondView.teamTitle.text = item2.team
         holder.secondView.numberText.text = item2.num
+        holder.secondView.matchBtn.isClickable = item2.accept
 
+        if(item2.accept==false) {
+            holder.secondView.matchBtn.text = "마감"
+        }
         holder.thirdView.timeTitle.text = item3.time
 
         holder.thirdView.schoolTitle.text = item3.group
@@ -126,8 +151,10 @@ class MatchingAdapter(val data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
         }
         holder.thirdView.teamTitle.text = item3.team
         holder.thirdView.numberText.text = item3.num
-//
-//        holder.data_bind(holder,position)
+        holder.thirdView.matchBtn.isClickable = item3.accept
+        if(item3.accept==false) {
+            holder.thirdView.matchBtn.text = "마감"
+        }
 
 Log.i("size",data!!.size.toString())
         Log.i("size2",data!!.toString())

@@ -72,6 +72,12 @@ class CustomView : LinearLayout {
         val teamText = typedArray.getText(R.styleable.CustomViewData_teamText)
         teamTitle.text = teamText
 
+        val btnClick = typedArray.getBoolean(R.styleable.CustomViewData_btnClick,true)
+        if(matchBtn.isClickable == false) {
+            matchBtn.text = "마감"
+        }
+        matchBtn.isClickable = btnClick
+
         typedArray.recycle()
     }
 

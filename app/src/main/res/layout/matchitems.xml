@@ -57,6 +57,8 @@
         app:teamText="Ralo팀"
         app:timeTitleText="10:00">
 
+
+
     </com.example.flag.CustomView>
 
     <View

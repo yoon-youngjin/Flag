@@ -6,6 +6,7 @@
         <attr name="teamText" format="reference|string" />
         <attr name="numberText" format="reference|string" />
         <attr name="itemImg" format="reference|integer"/>
+        <attr name="btnClick" format="reference|boolean"/>
     </declare-styleable>
 
 </resources>
