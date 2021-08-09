@@ -1,5 +1,7 @@
 package com.example.flag
 
+import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +9,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.Adapter<MatchingAdapter.ViewHolder>() {
     interface OnItemClickListener {
         fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View)
     }
+    lateinit var context:Context
     var itemClickListener: OnItemClickListener? = null
     var itemClickListener2: OnItemClickListener? = null
     var itemClickListener3: OnItemClickListener? = null
@@ -34,6 +38,7 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
                 itemClickListener!!.OnItemClick(this,it)
             }
             firstView.matchBtn.setOnClickListener {
+                Log.i("check123","check")
                 itemClickListener2!!.OnItemClick(this,it)
             }
 
@@ -66,6 +71,7 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        context = parent.context
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.matchitems, parent, false)
 
@@ -84,7 +90,6 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
         holder.matchTitle.text = item1.matchTitle
         if(holder.matchTitle.text=="축구") {
             holder.matchImg.setImageResource(R.drawable.football)
-
         }
         if(holder.matchTitle.text=="농구") {
             holder.matchImg.setImageResource(R.drawable.basketball)
@@ -113,6 +118,10 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
         holder.firstView.matchBtn.isClickable = item1.accept
         if(item1.accept==false) {
             holder.firstView.matchBtn.text = "마감"
+            holder.firstView.matchBtn.setTextColor(Color.GRAY)
+            holder.firstView.matchBtn.background = ContextCompat.getDrawable(context,R.drawable.radiobtn)
+            holder.firstView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context,R.color.lightgrey)
+
         }
         else {
             holder.firstView.matchBtn.text = "신청가능"
@@ -136,6 +145,9 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
 
         if(item2.accept==false) {
             holder.secondView.matchBtn.text = "마감"
+            holder.secondView.matchBtn.setTextColor(Color.GRAY)
+            holder.secondView.matchBtn.background = ContextCompat.getDrawable(context,R.drawable.radiobtn)
+            holder.secondView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context,R.color.lightgrey)
         }
         holder.thirdView.timeTitle.text = item3.time
 
@@ -154,11 +166,10 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
         holder.thirdView.matchBtn.isClickable = item3.accept
         if(item3.accept==false) {
             holder.thirdView.matchBtn.text = "마감"
+            holder.thirdView.matchBtn.setTextColor(Color.GRAY)
+            holder.thirdView.matchBtn.background = ContextCompat.getDrawable(context,R.drawable.radiobtn)
+            holder.thirdView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context,R.color.lightgrey)
         }
-
-Log.i("size",data!!.size.toString())
-        Log.i("size2",data!!.toString())
-
 
     }
 

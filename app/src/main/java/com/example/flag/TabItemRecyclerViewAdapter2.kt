@@ -1,5 +1,6 @@
 package com.example.flag
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,10 +29,17 @@ class TabItemRecyclerViewAdapter2(val data: ArrayList<String>) : RecyclerView.Ad
             if(selectedPosition==-1&&position==0)
                 holder.idView.isChecked = true
             else
-                if(selectedPosition==position)
+                if(selectedPosition==position){
+                    holder.idView.setTextColor(Color.BLACK)
                     holder.idView.isChecked = true
-                else
+                }
+
+
+                else{
+                    holder.idView.setTextColor(Color.GRAY)
                     holder.idView.isChecked = false
+                }
+
 
             idView.setOnClickListener {
                 itemClickListener!!.OnItemClick(this,it)

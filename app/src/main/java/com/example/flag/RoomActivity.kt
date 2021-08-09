@@ -136,8 +136,6 @@ class RoomActivity : AppCompatActivity() {
                     0 -> {
                         event = (position+1).toString() +"축구"
                         num = "11:11"
-
-
                     }
                     1 -> {
                         event = (position+1).toString() +"농구"

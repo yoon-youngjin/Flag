@@ -1,11 +1,16 @@
 package com.example.flag
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flag.databinding.FragmentSportsMatchBinding
@@ -13,6 +18,12 @@ import com.google.firebase.database.*
 
 
 class SportsMatchFragment : Fragment() {
+
+//    override fun onResume() {
+//        givemeAllData(day, area)
+//        super.onResume()
+//    }
+
     lateinit var adapter: TabItemRecyclerViewAdapter
     lateinit var adapter2: TabItemRecyclerViewAdapter2
     lateinit var adapter3: TabItemRecyclerViewAdapter2
@@ -27,8 +38,6 @@ class SportsMatchFragment : Fragment() {
     var event:String = "0전체"
     var day:String = "11일"
 
-
-
     var data = ArrayList<ArrayList<MatchData>>()
     var datass = ArrayList<MatchData>()
     var datass2 = ArrayList<MatchData>()
@@ -39,10 +48,18 @@ class SportsMatchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSportsMatchBinding.inflate(layoutInflater,container,false)
-        dialogView = inflater.inflate(R.layout.custom_dialog, container, false)
 
-        givemeAllData(day,area)
+        binding = FragmentSportsMatchBinding.inflate(layoutInflater,container,false)
+        binding.recyclerView.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerView2.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerView3.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.HORIZONTAL, false)
+        binding.matchRecycler.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.VERTICAL, false)
+        dialogView = inflater.inflate(R.layout.custom_dialog, container, false)
+        givemeAllData(day, area)
 
         initData()
         init()
@@ -50,10 +67,8 @@ class SportsMatchFragment : Fragment() {
          }
 
     private fun givemeAllData(day:String,area:String) {
-
         var i =0
-
-        mydatas.addListenerForSingleValueEvent(object : ValueEventListener
+        mydatas.addValueEventListener(object : ValueEventListener
         {
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -70,7 +85,6 @@ class SportsMatchFragment : Fragment() {
                             data1.child("team").value.toString(),
                             data1.child("num").value.toString(),
                             data1.child("accept").value.toString().toBoolean()
-
                     )
 
                     val data2 = ds.child(area).child("data2")
@@ -112,140 +126,9 @@ class SportsMatchFragment : Fragment() {
                         datass3.add(temp3)
                         data.add(datass3)
                     }
-
                     i++
-
-
                 }
-
-
-
-                adapter4 = MatchingAdapter(data)
-
-
-                binding.matchRecycler.adapter = adapter4
-
-                adapter4.itemClickListener = object : MatchingAdapter.OnItemClickListener {
-                    override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
-                        val intent = Intent(context,AllActivity::class.java)
-
-                        intent.putExtra("data",day)
-                        if(event=="0전체") {
-                            if(holder.matchTitle.text=="축구"){
-                                intent.putExtra("data2","1축구")
-                            }
-                            if(holder.matchTitle.text=="농구"){
-                                intent.putExtra("data2","2농구")
-                            }
-                            if(holder.matchTitle.text=="풋살"){
-                                intent.putExtra("data2","3풋살")
-                            }
-
-                        }
-                        else {
-                            intent.putExtra("data2",event)
-                        }
-
-                        intent.putExtra("data3",area)
-
-
-                        startActivity(intent)
-
-                    }
-                }
-                adapter4.itemClickListener2 = object : MatchingAdapter.OnItemClickListener {
-                    override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
-//                        val mBuilder = AlertDialog.Builder(context)
-//                            .setView(dialogView)
-//                            .setCancelable(false)
-//                            .setTitle("단어 추가")
-//                        mBuilder.create()
-//                            .show()
-//
-//                        val groupname = dialogView.findViewById<TextView>(R.id.groupname)
-//
-//                        val teamname = dialogView.findViewById<TextView>(R.id.teamname)
-//                        val time = dialogView.findViewById<TextView>(R.id.time)
-//                        val sportsname = dialogView.findViewById<TextView>(R.id.sportsname)
-//
-//                        groupname.text = holder.firstView.schoolTitle.toString()
-//                        teamname.text = holder.firstView.teamTitle.toString()
-//                        sportsname.text = holder.matchTitle.toString()
-//                        time.text = holder.firstView.timeTitle.toString()
-//
-//
-//
-//                        val okButton = dialogView.findViewById<Button>(R.id.yesBtn)
-//                        val noButton = dialogView.findViewById<Button>(R.id.noBtn)
-//
-//                        okButton.setOnClickListener {
-//                        }
-
-                        var event = ""
-
-                        if(holder.matchTitle.text == "축구") {
-                            event = "1축구"
-                        }
-                        if(holder.matchTitle.text == "농구") {
-                            event = "2농구"
-                        }
-                        if(holder.matchTitle.text == "풋살") {
-                            event = "3풋살"
-                        }
-
-
-
-
-
-                        mydatas.child(day).child(event).child(area).child("data1").child("accept").setValue(false)
-
-                        holder.firstView.matchBtn.isClickable = false
-                        holder.firstView.matchBtn.text = "마감"
-
-                    }
-                }
-                adapter4.itemClickListener3 = object : MatchingAdapter.OnItemClickListener {
-                    override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
-                        var event = ""
-
-                        if(holder.matchTitle.text == "축구") {
-                            event = "1축구"
-                        }
-                        if(holder.matchTitle.text == "농구") {
-                            event = "2농구"
-                        }
-                        if(holder.matchTitle.text == "풋살") {
-                            event = "3풋살"
-                        }
-
-                        mydatas.child(day).child(event).child(area).child("data2").child("accept").setValue(false)
-
-                        holder.secondView.matchBtn.isClickable = false
-                        holder.secondView.matchBtn.text = "마감"
-
-                    }
-                }
-                adapter4.itemClickListener4 = object : MatchingAdapter.OnItemClickListener {
-                    override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
-                        var event = ""
-
-                        if(holder.matchTitle.text == "축구") {
-                            event = "1축구"
-                        }
-                        if(holder.matchTitle.text == "농구") {
-                            event = "2농구"
-                        }
-                        if(holder.matchTitle.text == "풋살") {
-                            event = "3풋살"
-                        }
-
-                        mydatas.child(day).child(event).child(area).child("data3").child("accept").setValue(false)
-
-                        holder.thirdView.matchBtn.isClickable = false
-                        holder.thirdView.matchBtn.text = "마감"
-
-                    }
-                }
+                adapter4init(data)
 
 
             }
@@ -256,26 +139,99 @@ class SportsMatchFragment : Fragment() {
         })
     }
 
+    private fun closedMatch(holder: MatchingAdapter.ViewHolder, num: Int) {
+
+        val mBuilder = AlertDialog.Builder(context)
+            .setView(dialogView)
+            .setCancelable(false)
+            .show()
+
+        val groupname = dialogView.findViewById<TextView>(R.id.groupname)
+        val teamname = dialogView.findViewById<TextView>(R.id.teamname)
+        val time = dialogView.findViewById<TextView>(R.id.time)
+        val sportsname = dialogView.findViewById<TextView>(R.id.sportsname)
+
+        sportsname.text = holder.matchTitle.text
+        if(num==1) {
+            groupname.text = holder.firstView.schoolTitle.text
+            teamname.text = holder.firstView.teamTitle.text
+            time.text = holder.firstView.timeTitle.text
+        }
+        else if(num==2) {
+            groupname.text = holder.secondView.schoolTitle.text
+            teamname.text = holder.secondView.teamTitle.text
+            time.text = holder.secondView.timeTitle.text
+        }
+        else {
+            groupname.text = holder.thirdView.schoolTitle.text
+            teamname.text = holder.thirdView.teamTitle.text
+            time.text = holder.thirdView.timeTitle.text
+        }
+
+        val okButton = dialogView.findViewById<Button>(R.id.yesBtn)
+        val noButton = dialogView.findViewById<Button>(R.id.noBtn)
+
+        okButton.setOnClickListener {
+            var event = ""
+
+            if(holder.matchTitle.text == "축구") {
+                event = "1축구"
+            }
+            if(holder.matchTitle.text == "농구") {
+                event = "2농구"
+            }
+            if(holder.matchTitle.text == "풋살") {
+                event = "3풋살"
+            }
+
+            if(num==1) {
+                mydatas.child(day).child(event).child(area).child("data1").child("accept").setValue(false)
+                holder.firstView.matchBtn.isClickable = false
+                holder.firstView.matchBtn.text = "마감"
+                holder.firstView.matchBtn.setTextColor(Color.GRAY)
+                holder.firstView.matchBtn.background = ContextCompat.getDrawable(requireContext(),R.drawable.radiobtn)
+                holder.firstView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.lightgrey)
+            }
+            else if(num==2) {
+                mydatas.child(day).child(event).child(area).child("data2").child("accept").setValue(false)
+                holder.secondView.matchBtn.isClickable = false
+                holder.secondView.matchBtn.text = "마감"
+                holder.secondView.matchBtn.setTextColor(Color.GRAY)
+                holder.secondView.matchBtn.background = ContextCompat.getDrawable(requireContext(),R.drawable.radiobtn)
+                holder.secondView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.lightgrey)
+            }
+            else {
+                mydatas.child(day).child(event).child(area).child("data3").child("accept").setValue(false)
+                holder.thirdView.matchBtn.isClickable = false
+                holder.thirdView.matchBtn.text = "마감"
+                holder.thirdView.matchBtn.setTextColor(Color.GRAY)
+                holder.thirdView.matchBtn.background = ContextCompat.getDrawable(requireContext(),R.drawable.radiobtn)
+                holder.thirdView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.lightgrey)
+            }
+
+            if (dialogView.getParent() != null) {
+                (dialogView.getParent() as ViewGroup).removeView(dialogView)
+            }
+            mBuilder.dismiss()
+
+        }
+        noButton.setOnClickListener {
+            if (dialogView.getParent() != null) {
+                (dialogView.getParent() as ViewGroup).removeView(dialogView)
+            }
+            mBuilder.dismiss()
+        }
+
+    }
+
     private fun initData() {
-        binding.recyclerView.layoutManager = LinearLayoutManager(context,
-                LinearLayoutManager.HORIZONTAL, false)
-        binding.recyclerView2.layoutManager = LinearLayoutManager(context,
-                LinearLayoutManager.HORIZONTAL, false)
-        binding.recyclerView3.layoutManager = LinearLayoutManager(context,
-                LinearLayoutManager.HORIZONTAL, false)
-        binding.matchRecycler.layoutManager = LinearLayoutManager(context,
-                LinearLayoutManager.VERTICAL, false)
 
-
-
-        val items:ArrayList<String> = ArrayList()
+        val items: ArrayList<String> = ArrayList()
         val items2: ArrayList<String> = ArrayList()
         val items3: ArrayList<String> = ArrayList()
 
         mydatas.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
-
                 val temp4 = snapshot.children
 
                 for(ds in temp4) {
@@ -377,7 +333,6 @@ class SportsMatchFragment : Fragment() {
 
             }
 
-
             override fun onCancelled(error: DatabaseError) {
 
             }
@@ -388,10 +343,13 @@ class SportsMatchFragment : Fragment() {
     private fun init() {
 
         binding.openBtn.setOnClickListener {
-            val intent = Intent(context,RoomActivity::class.java)
+            val intent = Intent(context, RoomActivity::class.java)
             startActivity(intent)
-
         }
+
+
+
+
 
 
 
@@ -434,14 +392,10 @@ class SportsMatchFragment : Fragment() {
 //
 
 
-
-
-
     }
     fun datachange(title:String,num:Int,checknum:Int) {
 
         if(checknum==1000 && event =="0전체") {
-
             givemeAllData(day,area)
         }
         else if(checknum==9999 && event =="0전체") {
@@ -478,11 +432,7 @@ class SportsMatchFragment : Fragment() {
                     datass.add(temp3)
                     data.add(datass)
 
-
-                    adapter4 = MatchingAdapter(data)
-
-
-                    binding.matchRecycler.adapter = adapter4
+                    adapter4init(data)
 
 
                 }
@@ -498,6 +448,53 @@ class SportsMatchFragment : Fragment() {
 
 
 
+
+    }
+
+    private fun adapter4init(data: ArrayList<ArrayList<MatchData>>) {
+        adapter4 = MatchingAdapter(data)
+        binding.matchRecycler.adapter = adapter4
+
+        adapter4.itemClickListener = object : MatchingAdapter.OnItemClickListener {
+            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
+                val intent = Intent(context,AllActivity::class.java)
+                intent.putExtra("data",day)
+                if(event=="0전체") {
+                    if(holder.matchTitle.text=="축구"){
+                        intent.putExtra("data2","1축구")
+                    }
+                    if(holder.matchTitle.text=="농구"){
+                        intent.putExtra("data2","2농구")
+                    }
+                    if(holder.matchTitle.text=="풋살"){
+                        intent.putExtra("data2","3풋살")
+                    }
+                }
+                else {
+                    intent.putExtra("data2",event)
+                }
+                intent.putExtra("data3",area)
+                startActivity(intent)
+
+            }
+        }
+        adapter4.itemClickListener2 = object : MatchingAdapter.OnItemClickListener {
+            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
+                closedMatch(holder,1)
+            }
+        }
+        adapter4.itemClickListener3 = object : MatchingAdapter.OnItemClickListener {
+            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
+                closedMatch(holder,2)
+
+            }
+        }
+        adapter4.itemClickListener4 = object : MatchingAdapter.OnItemClickListener {
+            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
+                closedMatch(holder,3)
+
+            }
+        }
 
     }
 }

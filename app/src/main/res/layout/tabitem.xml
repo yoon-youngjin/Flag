@@ -10,10 +10,11 @@
         android:id="@+id/tabicon"
         android:layout_width="80dp"
         android:layout_height="40dp"
-        android:layout_margin="5dp"
         android:background="@drawable/customradio"
+        android:textColor="#FFFFFF"
         android:textOff="@null"
-        android:textOn="@null" />
+        android:textOn="@null"
+        android:textStyle="bold" />
 
 
 

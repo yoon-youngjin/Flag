@@ -1,5 +1,7 @@
 package com.example.flag
 
+import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +9,7 @@ import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 
 class TabItemRecyclerViewAdapter(val data: ArrayList<String>) : RecyclerView.Adapter<TabItemRecyclerViewAdapter.ViewHolder>() {
-
+    lateinit var context:Context
     private var mSelectedItem = -1
 
     interface OnItemClickListener {
@@ -26,10 +28,14 @@ class TabItemRecyclerViewAdapter(val data: ArrayList<String>) : RecyclerView.Ada
             if(selectedPosition==-1&&position==0)
                 holder.idView.isChecked = true
             else
-                if(selectedPosition==position)
+                if(selectedPosition==position) {
+                    holder.idView.setTextColor(Color.WHITE)
                     holder.idView.isChecked = true
-                else
+                }
+                else {
+                    holder.idView.setTextColor(Color.GRAY)
                     holder.idView.isChecked = false
+                }
 
             idView.setOnClickListener {
                 itemClickListener!!.OnItemClick(this,it,adapterPosition)
@@ -49,6 +55,7 @@ class TabItemRecyclerViewAdapter(val data: ArrayList<String>) : RecyclerView.Ada
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        context = parent.context
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.tabitem, parent, false)
 

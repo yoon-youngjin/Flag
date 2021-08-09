@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MatchActivity">
-    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -15,6 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:foregroundGravity="center"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -22,6 +22,8 @@
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:foregroundGravity="center"
                 app:srcCompat="@drawable/flag" />
         </LinearLayout>
 
@@ -39,25 +41,27 @@
             android:id="@+id/spradio"
             android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/customradio"
             android:button="@drawable/btn"
             android:checked="true"
             android:gravity="center"
-            android:text="스포츠" />
+            android:text="스포츠"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
 
         <RadioButton
             android:id="@+id/espradio"
             android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
             android:background="@drawable/customradio"
             android:button="@drawable/btn"
             android:checked="false"
             android:gravity="center"
             android:text="E스포츠"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textStyle="bold" />
     </RadioGroup>
 
 

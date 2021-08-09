@@ -1,5 +1,6 @@
 package com.example.flag
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flag.databinding.ActivityMatchBinding
@@ -15,7 +16,6 @@ class MatchActivity : AppCompatActivity() {
             fragment.commit()
         }
         else {
-
             binding.espradio.isChecked = true
             val fragment = supportFragmentManager.beginTransaction()
             fragment.replace(R.id.framelayout,ESportsMatchFragment())
@@ -29,11 +29,16 @@ class MatchActivity : AppCompatActivity() {
         binding.group.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId) {
                 R.id.spradio -> {
+                    binding.spradio.setTextColor(Color.WHITE)
+                    binding.espradio.setTextColor(Color.BLACK)
+
                     val fragment = supportFragmentManager.beginTransaction()
                     fragment.replace(R.id.framelayout,SportsMatchFragment())
                     fragment.commit()
                 }
                 R.id.espradio -> {
+                    binding.espradio.setTextColor(Color.WHITE)
+                    binding.spradio.setTextColor(Color.BLACK)
                     val fragment = supportFragmentManager.beginTransaction()
                     fragment.replace(R.id.framelayout,ESportsMatchFragment())
                     fragment.commit()

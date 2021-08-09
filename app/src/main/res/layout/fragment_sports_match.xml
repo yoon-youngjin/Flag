@@ -14,14 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="스포츠 매치"
             android:textColor="@color/black"
-            android:textSize="28dp"
+            android:textSize="23dp"
             android:textStyle="bold" />
 
         <ImageButton
@@ -41,7 +42,7 @@
         android:layout_width="394dp"
         android:layout_height="40dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         tools:listitem="@layout/tabitem" />
 
@@ -49,7 +50,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
         android:layout_width="394dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginLeft="10dp"
         android:orientation="horizontal"
         tools:listitem="@layout/tabitem2" />
@@ -57,7 +58,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView3"
         android:layout_width="394dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="5dp"
         android:orientation="horizontal"
