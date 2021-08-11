@@ -1,6 +1,7 @@
 package com.example.flag
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -42,6 +43,14 @@ class AllActivity : AppCompatActivity() {
         init()
         setContentView(binding.root)
     }
+
+    override fun onBackPressed() {
+        val intent = Intent(this,MatchActivity::class.java)
+        intent.putExtra("matchevent","sports")
+        startActivity(intent)
+        super.onBackPressed()
+    }
+
     fun init() {
         binding.matchtitle.text = event.substring(1)
         if(event.substring(1)=="축구") {
@@ -77,7 +86,7 @@ class AllActivity : AppCompatActivity() {
 
                 adapter.itemClickListener = object :AllMatchAdapter.OnItemClickListener {
 
-                    override fun OnItemClick(holder: AllMatchAdapter.ViewHolder, view: View,position:Int) {
+                    override fun OnItemClick(holder: AllMatchAdapter.ViewHolder, view: View,position:Int,data:ArrayList<MatchData>) {
                         if (dialogView.getParent() != null) {
                             (dialogView.getParent() as ViewGroup).removeView(dialogView)
                         }
@@ -104,21 +113,22 @@ class AllActivity : AppCompatActivity() {
                             var event = ""
 
                             if(sportsname.text == "축구") {
-                                event = "1축구"
+                                event = "b축구"
                             }
                             if(sportsname.text == "농구") {
-                                event = "2농구"
+                                event = "c농구"
                             }
                             if(sportsname.text == "풋살") {
-                                event = "3풋살"
+                                event = "d풋살"
                             }
 
                             mydatas.child(day).child(event).child(area).child("data"+(position+1).toString()).child("accept").setValue(false)
-                            holder.matchBtn.isClickable = false
                             holder.matchBtn.text = "마감"
                             holder.matchBtn.setTextColor(Color.GRAY)
                             holder.matchBtn.background = ContextCompat.getDrawable(this@AllActivity,R.drawable.radiobtn)
                             holder.matchBtn.backgroundTintList = ContextCompat.getColorStateList(this@AllActivity,R.color.lightgrey)
+//                            data.get(position).accept = false
+//                            adapter.notifyDataSetChanged()
 
 
 

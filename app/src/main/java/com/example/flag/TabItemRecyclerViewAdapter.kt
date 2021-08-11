@@ -25,7 +25,7 @@ class TabItemRecyclerViewAdapter(val data: ArrayList<String>) : RecyclerView.Ada
 
             date.text = data[position]
 
-            if(selectedPosition==-1&&position==0)
+            if(selectedPosition==-1 && position==0)
                 holder.idView.isChecked = true
             else
                 if(selectedPosition==position) {

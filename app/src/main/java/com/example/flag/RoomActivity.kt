@@ -36,8 +36,8 @@ class RoomActivity : AppCompatActivity() {
     fun initData() {
 
         var day2 = 1
-        var event = "1축구"
-        var area2 = "1서울"
+        var event = "b축구"
+        var area2 = "a서울"
         var time2 = ""
         var num = ""
         var group2 = ""
@@ -53,8 +53,10 @@ class RoomActivity : AppCompatActivity() {
         binding.spinner4.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when(position) {
-                    0 -> area2 = (position+1).toString() + "서울"
-                    1 -> area2 = (position+1).toString() + "경기"
+
+                    0 -> area2 = "a서울"
+
+                    1 -> area2 = "b경기"
                 }
 
             }
@@ -134,15 +136,15 @@ class RoomActivity : AppCompatActivity() {
 
                 when(position) {
                     0 -> {
-                        event = (position+1).toString() +"축구"
+                        event = "b축구"
                         num = "11:11"
                     }
                     1 -> {
-                        event = (position+1).toString() +"농구"
+                        event = "c농구"
                         num = "5:5"
                     }
                     2 -> {
-                        event = (position+1).toString() +"풋살"
+                        event = "d풋살"
                         num = "5:5"
                     }
                 }
@@ -164,7 +166,7 @@ class RoomActivity : AppCompatActivity() {
         binding.spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-                day2 = position + 1
+                day2 = position
 
             }
 
@@ -181,7 +183,6 @@ class RoomActivity : AppCompatActivity() {
         binding.spinner3.adapter = adapter3
         binding.spinner3.setSelection(0)
 
-        Log.i("get",binding.spinner3.selectedItem.toString())
 
         binding.spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -219,14 +220,16 @@ class RoomActivity : AppCompatActivity() {
 //        }
 
         val data =
-            mydatas.child(day2.toString() + day2.toString() + "일").child(event).child(area2)
+            mydatas.child((day2+64).toChar() + (day2).toString() + "일").child(event).child(area2)
+
+        Log.i("day2",(day2+64).toChar().toString())
+        Log.i("day23",(day2).toString())
 
 
         data.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 datanum = snapshot.child("datanum").value.toString().toInt() + 1
-                Log.i("datanum",datanum.toString())
 
             }
             override fun onCancelled(error: DatabaseError) {
@@ -250,7 +253,7 @@ class RoomActivity : AppCompatActivity() {
                                     group2.toString(),
                                     team2.toString(),
                                     num,
-                                    false
+                                    true
                             )
                     )
                     data.child("datanum").setValue(datanum)

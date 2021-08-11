@@ -2,7 +2,6 @@ package com.example.flag
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,19 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flag.databinding.FragmentSportsMatchBinding
 import com.google.firebase.database.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SportsMatchFragment : Fragment() {
 
-//    override fun onResume() {
-//        givemeAllData(day, area)
-//        super.onResume()
-//    }
+
 
     lateinit var adapter: TabItemRecyclerViewAdapter
     lateinit var adapter2: TabItemRecyclerViewAdapter2
@@ -34,15 +32,20 @@ class SportsMatchFragment : Fragment() {
     var rdb:FirebaseDatabase = FirebaseDatabase.getInstance()
     var mydatas = rdb.getReference("sportsData")
 
-    var area :String = "1서울"
-    var event:String = "0전체"
-    var day:String = "11일"
+    var area :String = "a서울"
+    var event:String = "a전체"
+    var day:String = "K11일"
 
     var data = ArrayList<ArrayList<MatchData>>()
     var datass = ArrayList<MatchData>()
     var datass2 = ArrayList<MatchData>()
     var datass3 = ArrayList<MatchData>()
 
+//    override fun onResume() {
+//
+//        adapter4.notifyDataSetChanged()
+//        super.onResume()
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -129,8 +132,6 @@ class SportsMatchFragment : Fragment() {
                     i++
                 }
                 adapter4init(data)
-
-
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.e("error","error")
@@ -139,7 +140,7 @@ class SportsMatchFragment : Fragment() {
         })
     }
 
-    private fun closedMatch(holder: MatchingAdapter.ViewHolder, num: Int) {
+    private fun closedMatch(holder: MatchingAdapter.ViewHolder, num: Int,data: ArrayList<ArrayList<MatchData>>,position:Int) {
 
         val mBuilder = AlertDialog.Builder(context)
             .setView(dialogView)
@@ -175,38 +176,31 @@ class SportsMatchFragment : Fragment() {
             var event = ""
 
             if(holder.matchTitle.text == "축구") {
-                event = "1축구"
+                event = "b축구"
             }
             if(holder.matchTitle.text == "농구") {
-                event = "2농구"
+                event = "c농구"
             }
             if(holder.matchTitle.text == "풋살") {
-                event = "3풋살"
+                event = "d풋살"
             }
 
             if(num==1) {
                 mydatas.child(day).child(event).child(area).child("data1").child("accept").setValue(false)
-                holder.firstView.matchBtn.isClickable = false
-                holder.firstView.matchBtn.text = "마감"
-                holder.firstView.matchBtn.setTextColor(Color.GRAY)
-                holder.firstView.matchBtn.background = ContextCompat.getDrawable(requireContext(),R.drawable.radiobtn)
-                holder.firstView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.lightgrey)
+                data.get(position).get(0).accept = false
+                adapter4.notifyDataSetChanged()
+
+
             }
             else if(num==2) {
                 mydatas.child(day).child(event).child(area).child("data2").child("accept").setValue(false)
-                holder.secondView.matchBtn.isClickable = false
-                holder.secondView.matchBtn.text = "마감"
-                holder.secondView.matchBtn.setTextColor(Color.GRAY)
-                holder.secondView.matchBtn.background = ContextCompat.getDrawable(requireContext(),R.drawable.radiobtn)
-                holder.secondView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.lightgrey)
+                data.get(position).get(1).accept = false
+                adapter4.notifyDataSetChanged()
             }
             else {
                 mydatas.child(day).child(event).child(area).child("data3").child("accept").setValue(false)
-                holder.thirdView.matchBtn.isClickable = false
-                holder.thirdView.matchBtn.text = "마감"
-                holder.thirdView.matchBtn.setTextColor(Color.GRAY)
-                holder.thirdView.matchBtn.background = ContextCompat.getDrawable(requireContext(),R.drawable.radiobtn)
-                holder.thirdView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(requireContext(),R.color.lightgrey)
+                data.get(position).get(2).accept = false
+                adapter4.notifyDataSetChanged()
             }
 
             if (dialogView.getParent() != null) {
@@ -225,6 +219,17 @@ class SportsMatchFragment : Fragment() {
     }
 
     private fun initData() {
+        val long_now = System.currentTimeMillis()
+
+        // 현재 시간을 Date 타입으로 변환
+        val t_date = Date(long_now)
+        val t_dateFormat = SimpleDateFormat("yyyy-MM-dd kk:mm:ss E", Locale("ko", "KR"))
+        val str_date = t_dateFormat.format(t_date)
+
+        val today = str_date.substring(8,10).toInt()
+
+        Log.i("today",today.toString())
+
 
         val items: ArrayList<String> = ArrayList()
         val items2: ArrayList<String> = ArrayList()
@@ -235,20 +240,27 @@ class SportsMatchFragment : Fragment() {
                 val temp4 = snapshot.children
 
                 for(ds in temp4) {
-                    items.add(ds.key.toString().substring(1))
+                    val key = ds.key.toString().substring(1)
+                    if(today > key.substring(0,key.length-1).toInt()) {
+                        continue
+                    }
+
+                    items.add(key)
+
+
                 }
                 adapter = TabItemRecyclerViewAdapter(items)
 
                 binding.recyclerView.adapter = adapter
                 items2.add("전체")
-                val temp2 = snapshot.child("11일").children
+                val temp2 = snapshot.child("A1일").children
                 for (ds in temp2) {
                     items2.add(ds.key.toString().substring(1))
                 }
                 adapter2 = TabItemRecyclerViewAdapter2(items2)
                 binding.recyclerView2.adapter = adapter2
 
-                val temp = snapshot.child("11일").child("1축구").children
+                val temp = snapshot.child("A1일").child("b축구").children
                 for (ds in temp) {
                     items3.add(ds.key.toString().substring(1, 3))
                 }
@@ -264,15 +276,22 @@ class SportsMatchFragment : Fragment() {
                         datass2.clear()
                         datass3.clear()
 
+                        val key = holder.idView.text.toString()
 
-                        if (holder.idView.text == "1일" && holder.idView.isChecked) {
-                            day = "11일"
-                            datachange(holder.idView.text.toString(), 1, 99999)
-                        }
-                        if (holder.idView.text == "2일" && holder.idView.isChecked) {
-                            day = "22일"
-                            datachange(holder.idView.text.toString(), 2, 99999)
-                        }
+                        val key2 = key.substring(0,key.length-1).toInt()
+
+                        day = (key2+64).toChar().toString() + holder.idView.text.toString()
+                        datachange(holder.idView.text.toString(),(key2+64).toChar().toString(),99999)
+
+
+//                        if (holder.idView.text == "1일" && holder.idView.isChecked) {
+//                            day = "A1일"
+//                            datachange(holder.idView.text.toString(), "A", 99999)
+//                        }
+//                        if (holder.idView.text == "2일" && holder.idView.isChecked) {
+//                            day = "B2일"
+//                            datachange(holder.idView.text.toString(), "B", 99999)
+//                        }
                     }
 
                 }
@@ -285,28 +304,27 @@ class SportsMatchFragment : Fragment() {
 
 
                         if (holder.idView.text == "전체" && holder.idView.isChecked) {
-                            event = "0전체"
-                            Log.i("check2","check2")
-                            datachange(holder.idView.text.toString(), 1, 1000)
+                            event = "a전체"
+                            datachange(holder.idView.text.toString(), "a", 1000)
                         }
 
                         if (holder.idView.text == "축구" && holder.idView.isChecked) {
-                            event = "1축구"
-                            datachange(holder.idView.text.toString(), 1, 1000)
+                            event = "b축구"
+                            datachange(holder.idView.text.toString(), "b", 1000)
                         }
                         if (holder.idView.text == "농구" && holder.idView.isChecked) {
-                            event = "2농구"
-                            datachange(holder.idView.text.toString(), 2, 1000)
+                            event = "c농구"
+                            datachange(holder.idView.text.toString(), "c", 1000)
                         }
 
                         if (holder.idView.text == "풋살" && holder.idView.isChecked) {
-                            event = "3풋살"
-                            datachange(holder.idView.text.toString(), 3, 1000)
+                            event = "d풋살"
+                            datachange(holder.idView.text.toString(), "d", 1000)
                         }
                     }
 
                 }
-                val temp3 = snapshot.child("1축구").children
+                val temp3 = snapshot.child("b축구").children
                 for (ds in temp3) {
                     items3.add(ds.key.toString().substring(1, 3))
                 }
@@ -320,12 +338,12 @@ class SportsMatchFragment : Fragment() {
                         datass3.clear()
 
                         if (holder.idView.text == "서울" && holder.idView.isChecked) {
-                            area = "1서울"
-                            datachange(holder.idView.text.toString(), 1, 9999)
+                            area = "a서울"
+                            datachange(holder.idView.text.toString(), "a", 9999)
                         }
                         if (holder.idView.text == "경기" && holder.idView.isChecked) {
-                            area = "2경기"
-                            datachange(holder.idView.text.toString(), 2, 9999)
+                            area = "b경기"
+                            datachange(holder.idView.text.toString(), "b", 9999)
                         }
                     }
 
@@ -347,68 +365,59 @@ class SportsMatchFragment : Fragment() {
             startActivity(intent)
         }
 
-
-
-
-
-
-
-
         //var datas = rdb.getReference("sportsData/18일/1축구")
 
-//        mydatas.child("11일").child("3풋살").child("2경기").child("data1").setValue(MatchData("풋살","10:00","","건국대학교","RALO팀","5:5",false))
-//        mydatas.child("11일").child("3풋살").child("2경기").child("data2").setValue(MatchData("풋살","11:00","","한양대학교","PAKA팀","5:5",false))
-//        mydatas.child("11일").child("3풋살").child("2경기").child("data3").setValue(MatchData("풋살","11:30","","동국대학교","DOPA팀","5:5",false))
 
-//        mydatas.child("11일").child("1축구").child("2경기").child("data1").setValue(MatchData("10:00",R.drawable.img33,"건국대학교","RALO팀","11:11",false))
-//        mydatas.child("11일").child("1축구").child("2경기").child("data2").setValue(MatchData("11:00",R.drawable.img44,"한양대학교","PAKA팀","11:11",false))
-//        mydatas.child("11일").child("1축구").child("2경기").child("data3").setValue(MatchData("11:30",R.drawable.img55,"동국대학교","DOPA팀","11:11",false))
 
-//        mydatas.child("11일").child("2농구").child("1서울").child("data1").setValue(MatchData("10:00",R.drawable.img33,"건국대학교","RALO팀","5:5",false))
-//        mydatas.child("11일").child("2농구").child("1서울").child("data2").setValue(MatchData("11:00",R.drawable.img44,"한양대학교","PAKA팀","5:5",false))
-//        mydatas.child("11일").child("2농구").child("1서울").child("data3").setValue(MatchData("11:30",R.drawable.img55,"동국대학교","DOPA팀","5:5",false))
+//        mydatas.child("L12일").child("b축구").child("a서울").child("data1").setValue(MatchData("축구","10:00","","건국대학교","RALO팀","11:11",true))
+//        mydatas.child("L12일").child("b축구").child("a서울").child("data2").setValue(MatchData("축구","11:00","","한양대학교","PAKA팀","11:11",true))
+//        mydatas.child("L12일").child("b축구").child("a서울").child("data3").setValue(MatchData("축구","11:30","","동국대학교","DOPA팀","11:1",true))
+//        mydatas.child("L12일").child("b축구").child("a서울").child("datanum").setValue(3)
 //
-//        mydatas.child("11일").child("2농구").child("2경기").child("data1").setValue(MatchData("10:00",R.drawable.img33,"건국대학교","RALO팀","5:5",false))
-//        mydatas.child("11일").child("2농구").child("2경기").child("data2").setValue(MatchData("11:00",R.drawable.img44,"한양대학교","PAKA팀","5:5",false))
-//        mydatas.child("11일").child("2농구").child("2경기").child("data3").setValue(MatchData("11:30",R.drawable.img55,"동국대학교","DOPA팀","5:5",false))
+//        mydatas.child("L12일").child("b축구").child("b경기").child("data1").setValue(MatchData("축구","10:00","","건국대학교","RALO팀","11:11",true))
+//        mydatas.child("L12일").child("b축구").child("b경기").child("data2").setValue(MatchData("축구","11:00","","한양대학교","PAKA팀","11:11",true))
+//        mydatas.child("L12일").child("b축구").child("b경기").child("data3").setValue(MatchData("축구","11:30","","동국대학교","DOPA팀","11:11",true))
+//        mydatas.child("L12일").child("b축구").child("b경기").child("datanum").setValue(3)
 //
-//        mydatas.child("22일").child("1축구").child("1서울").child("data1").setValue(MatchData("10:00",R.drawable.img33,"건국대학교","RALO팀","11:11",false))
-//        mydatas.child("22일").child("1축구").child("1서울").child("data2").setValue(MatchData("11:00",R.drawable.img44,"한양대학교","PAKA팀","11:11",false))
-//        mydatas.child("22일").child("1축구").child("1서울").child("data3").setValue(MatchData("11:30",R.drawable.img55,"동국대학교","DOPA팀","11:11",false))
+//        mydatas.child("L12일").child("c농구").child("a서울").child("data1").setValue(MatchData("농구","10:00","","건국대학교","RALO팀","5:5",true))
+//        mydatas.child("L12일").child("c농구").child("a서울").child("data2").setValue(MatchData("농구","11:00","","한양대학교","PAKA팀","5:5",true))
+//        mydatas.child("L12일").child("c농구").child("a서울").child("data3").setValue(MatchData("농구","11:30","","동국대학교","DOPA팀","5:5",true))
+//        mydatas.child("L12일").child("c농구").child("a서울").child("datanum").setValue(3)
 //
-//        mydatas.child("22일").child("1축구").child("2경기").child("data1").setValue(MatchData("10:00",R.drawable.img33,"건국대학교","RALO팀","11:11",false))
-//        mydatas.child("22일").child("1축구").child("2경기").child("data2").setValue(MatchData("11:00",R.drawable.img44,"한양대학교","PAKA팀","11:11",false))
-//        mydatas.child("22일").child("1축구").child("2경기").child("data3").setValue(MatchData("11:30",R.drawable.img55,"동국대학교","DOPA팀","11:11",false))
+//        mydatas.child("L12일").child("c농구").child("b경기").child("data1").setValue(MatchData("농구","10:00","","건국대학교","RALO팀","5:5",true))
+//        mydatas.child("L12일").child("c농구").child("b경기").child("data2").setValue(MatchData("농구","11:00","","한양대학교","PAKA팀","5:5",true))
+//        mydatas.child("L12일").child("c농구").child("b경기").child("data3").setValue(MatchData("농구","11:30","","동국대학교","DOPA팀","5:5",true))
+//        mydatas.child("L12일").child("c농구").child("b경기").child("datanum").setValue(3)
 //
-//        mydatas.child("22일").child("2농구").child("1서울").child("data1").setValue(MatchData("10:00",R.drawable.img33,"건국대학교","RALO팀","5:5",false))
-//        mydatas.child("22일").child("2농구").child("1서울").child("data2").setValue(MatchData("11:00",R.drawable.img44,"한양대학교","PAKA팀","5:5",false))
-//        mydatas.child("22일").child("2농구").child("1서울").child("data3").setValue(MatchData("11:30",R.drawable.img55,"동국대학교","DOPA팀","5:5",false))
+//        mydatas.child("L12일").child("d풋살").child("a서울").child("data1").setValue(MatchData("농구","10:00","","건국대학교","RALO팀","5:5",true))
+//        mydatas.child("L12일").child("d풋살").child("a서울").child("data2").setValue(MatchData("농구","11:00","","한양대학교","PAKA팀","5:5",true))
+//        mydatas.child("L12일").child("d풋살").child("a서울").child("data3").setValue(MatchData("농구","11:30","","동국대학교","DOPA팀","5:5",true))
+//        mydatas.child("L12일").child("d풋살").child("a서울").child("datanum").setValue(3)
 //
-//        mydatas.child("22일").child("2농구").child("2경기").child("data1").setValue(MatchData("10:00",R.drawable.img33,"건국대학교","RALO팀","5:5",false))
-//        mydatas.child("22일").child("2농구").child("2경기").child("data2").setValue(MatchData("11:00",R.drawable.img44,"한양대학교","PAKA팀","5:5",false))
-//        mydatas.child("22일").child("2농구").child("2경기").child("data3").setValue(MatchData("11:30",R.drawable.img55,"동국대학교","DOPA팀","5:5",false))
-//
-//
-//
+//        mydatas.child("L12일").child("d풋살").child("b경기").child("data1").setValue(MatchData("농구","10:00","","건국대학교","RALO팀","5:5",true))
+//        mydatas.child("L12일").child("d풋살").child("b경기").child("data2").setValue(MatchData("농구","11:00","","한양대학교","PAKA팀","5:5",true))
+//        mydatas.child("L12일").child("d풋살").child("b경기").child("data3").setValue(MatchData("농구","11:30","","동국대학교","DOPA팀","5:5",true))
+//        mydatas.child("L12일").child("d풋살").child("b경기").child("datanum").setValue(3)
+////
 
 
     }
-    fun datachange(title:String,num:Int,checknum:Int) {
+    fun datachange(title:String,num:String,checknum:Int) {
 
-        if(checknum==1000 && event =="0전체") {
+        if(checknum==1000 && event =="a전체") {
             givemeAllData(day,area)
         }
-        else if(checknum==9999 && event =="0전체") {
+        else if(checknum==9999 && event =="a전체") {
             givemeAllData(day,area)
         }
-        else if(checknum==99999 && event=="0전체") {
+        else if(checknum==99999 && event=="a전체") {
             givemeAllData(day,area)
         }
         else {
 
-            if(checknum==1000) aaa = mydatas.child(day).child(num.toString() + title).child(area)
-            if(checknum==9999) aaa = mydatas.child(day).child(event).child(num.toString() + title)
-            if(checknum==99999) aaa = mydatas.child(num.toString() + title).child(event).child(area)
+            if(checknum==1000) aaa = mydatas.child(day).child(num + title).child(area)
+            if(checknum==9999) aaa = mydatas.child(day).child(event).child(num + title)
+            if(checknum==99999) aaa = mydatas.child(num + title).child(event).child(area)
 
             aaa.addListenerForSingleValueEvent(object : ValueEventListener {
 
@@ -424,7 +433,7 @@ class SportsMatchFragment : Fragment() {
 
                     val data3 = snapshot.child("data3")
                     val temp3 = MatchData(event.substring(1),data3.child("time").value.toString(), data3.child("mainImg").value.toString(), data3.child("group").value.toString(), data3.child("team").value.toString(),
-                            data2.child("num").value.toString(), data3.child("accept").value.toString().toBoolean())
+                            data3.child("num").value.toString(), data3.child("accept").value.toString().toBoolean())
 
 
                     datass.add(temp1)
@@ -456,18 +465,18 @@ class SportsMatchFragment : Fragment() {
         binding.matchRecycler.adapter = adapter4
 
         adapter4.itemClickListener = object : MatchingAdapter.OnItemClickListener {
-            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
+            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View,data: ArrayList<ArrayList<MatchData>>,position:Int) {
                 val intent = Intent(context,AllActivity::class.java)
                 intent.putExtra("data",day)
-                if(event=="0전체") {
+                if(event=="a전체") {
                     if(holder.matchTitle.text=="축구"){
-                        intent.putExtra("data2","1축구")
+                        intent.putExtra("data2","b축구")
                     }
                     if(holder.matchTitle.text=="농구"){
-                        intent.putExtra("data2","2농구")
+                        intent.putExtra("data2","c농구")
                     }
                     if(holder.matchTitle.text=="풋살"){
-                        intent.putExtra("data2","3풋살")
+                        intent.putExtra("data2","d풋살")
                     }
                 }
                 else {
@@ -475,23 +484,24 @@ class SportsMatchFragment : Fragment() {
                 }
                 intent.putExtra("data3",area)
                 startActivity(intent)
+                activity!!.finish()
 
             }
         }
         adapter4.itemClickListener2 = object : MatchingAdapter.OnItemClickListener {
-            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
-                closedMatch(holder,1)
+            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View,data: ArrayList<ArrayList<MatchData>>,position:Int) {
+                closedMatch(holder,1,data,position)
             }
         }
         adapter4.itemClickListener3 = object : MatchingAdapter.OnItemClickListener {
-            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
-                closedMatch(holder,2)
+            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View,data: ArrayList<ArrayList<MatchData>>,position:Int) {
+                closedMatch(holder,2,data,position)
 
             }
         }
         adapter4.itemClickListener4 = object : MatchingAdapter.OnItemClickListener {
-            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View) {
-                closedMatch(holder,3)
+            override fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View,data: ArrayList<ArrayList<MatchData>>,position:Int) {
+                closedMatch(holder,3,data,position)
 
             }
         }

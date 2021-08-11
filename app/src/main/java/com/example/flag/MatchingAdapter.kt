@@ -2,7 +2,6 @@ package com.example.flag
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.Adapter<MatchingAdapter.ViewHolder>() {
     interface OnItemClickListener {
-        fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View)
+        fun OnItemClick(holder: MatchingAdapter.ViewHolder, view: View,data: ArrayList<ArrayList<MatchData>>,position: Int)
     }
     lateinit var context:Context
     var itemClickListener: OnItemClickListener? = null
@@ -35,18 +34,17 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
 
         init {
             allbtn.setOnClickListener {
-                itemClickListener!!.OnItemClick(this,it)
+                itemClickListener!!.OnItemClick(this,it,data,adapterPosition)
             }
             firstView.matchBtn.setOnClickListener {
-                Log.i("check123","check")
-                itemClickListener2!!.OnItemClick(this,it)
+                itemClickListener2!!.OnItemClick(this,it,data,adapterPosition)
             }
 
             secondView.matchBtn.setOnClickListener {
-                itemClickListener3!!.OnItemClick(this,it)
+                itemClickListener3!!.OnItemClick(this,it,data,adapterPosition)
             }
             thirdView.matchBtn.setOnClickListener {
-                itemClickListener4!!.OnItemClick(this,it)
+                itemClickListener4!!.OnItemClick(this,it,data,adapterPosition)
             }
         }
 
