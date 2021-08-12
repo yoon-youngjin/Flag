@@ -35,8 +35,8 @@ class CustomView : LinearLayout {
 
         timeTitle = view.findViewById(R.id.timeText)
         mainImg = view.findViewById(R.id.mainImg)
-        schoolTitle = view.findViewById(R.id.schoolTitle)
-        teamTitle = view.findViewById(R.id.teamTitle)
+        schoolTitle = view.findViewById(R.id.eventTitle)
+        teamTitle = view.findViewById(R.id.num)
         numberText = view.findViewById(R.id.numberText)
         matchBtn = view.findViewById(R.id.matchingBtn)
     }

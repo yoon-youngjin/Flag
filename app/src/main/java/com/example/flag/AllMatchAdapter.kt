@@ -24,8 +24,8 @@ class AllMatchAdapter(val data: ArrayList<MatchData>) : RecyclerView.Adapter<All
 
         val time: TextView = view.findViewById(R.id.timeText)
         val img: ImageView = view.findViewById(R.id.mainImg)
-        val group: TextView = view.findViewById(R.id.schoolTitle)
-        val team: TextView = view.findViewById(R.id.teamTitle)
+        val group: TextView = view.findViewById(R.id.eventTitle)
+        val team: TextView = view.findViewById(R.id.num)
         val matchBtn: Button = view.findViewById(R.id.matchingBtn)
         val num: TextView = view.findViewById(R.id.numberText)
 
