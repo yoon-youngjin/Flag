@@ -77,7 +77,9 @@ class AllActivity : AppCompatActivity() {
                     items.add( MatchData(ds.key.toString(),ds.child("time").value.toString(),
                         ds.child("mainImg").value.toString(),
                         ds.child("group").value.toString(),
+                        ds.child("group2").value.toString(),
                         ds.child("team").value.toString(),
+                        ds.child("team2").value.toString(),
                         ds.child("num").value.toString(),
                         ds.child("accept").value.toString().toBoolean()))
                 }

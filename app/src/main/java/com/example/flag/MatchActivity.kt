@@ -17,6 +17,8 @@ class MatchActivity : AppCompatActivity() {
         }
         else {
             binding.espradio.isChecked = true
+            binding.spradio.setTextColor(Color.BLACK)
+            binding.espradio.setTextColor(Color.WHITE)
             val fragment = supportFragmentManager.beginTransaction()
             fragment.replace(R.id.framelayout,ESportsMatchFragment())
             fragment.commit()

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,6 +61,7 @@
             android:layout_marginBottom="10dp"
             android:gravity="center">
 
+
             <Button
                 android:id="@+id/spBtn"
                 android:layout_width="0dp"
@@ -69,7 +71,6 @@
                 android:background="@drawable/btn"
                 android:gravity="top|left"
                 android:padding="8dp"
-                android:shadowColor="#FFFFFF"
                 android:text="스포츠 \n 축구,농구,풋살 \n 매치는 이곳에"
                 android:textColor="@color/black"
                 android:textSize="13dp"
@@ -78,7 +79,6 @@
 
 
             </Button>
-
 
             <Button
                 android:id="@+id/espBtn"
@@ -208,6 +208,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -215,6 +216,7 @@
             android:padding="8dp">
 
             <LinearLayout
+                android:id="@+id/layout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -343,6 +345,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
@@ -471,6 +474,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">

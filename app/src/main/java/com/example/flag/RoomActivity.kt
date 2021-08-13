@@ -251,9 +251,10 @@ class RoomActivity : AppCompatActivity() {
                                     time2,
                                     "",
                                     group2.toString(),
+                                    "",
                                     team2.toString(),
-                                    num,
-                                    true
+                                    "",num,true
+
                             )
                     )
                     data.child("datanum").setValue(datanum)
