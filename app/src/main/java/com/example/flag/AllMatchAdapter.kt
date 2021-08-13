@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 class AllMatchAdapter(val data: ArrayList<MatchData>) : RecyclerView.Adapter<AllMatchAdapter.ViewHolder>() {
     lateinit var context: Context
     interface OnItemClickListener {
+
         fun OnItemClick(holder: ViewHolder, view: View,position: Int,data: ArrayList<MatchData>)
     }
     var itemClickListener: OnItemClickListener? = null
