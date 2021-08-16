@@ -12,15 +12,22 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flag.databinding.FragmentSportsMatchBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class SportsMatchFragment : Fragment() {
-    val group = "건국대학교"
-    val team = "YOON팀"
+    lateinit var group :String
+    lateinit var team :String
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+
+
     val long_now = System.currentTimeMillis()
 
     // 현재 시간을 Date 타입으로 변환
@@ -61,6 +68,17 @@ class SportsMatchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        auth = FirebaseAuth.getInstance()
+        database = Firebase.database.reference
+        val uid = auth.currentUser?.uid.toString()
+        database.child("users").child(uid).get().addOnSuccessListener {
+            group = it.child("school").value.toString()
+            team = it.child("team").value.toString()
+
+            Log.i("group2",group.toString())
+            Log.i("team",team.toString())
+        }
+
 
         binding = FragmentSportsMatchBinding.inflate(layoutInflater,container,false)
         binding.recyclerView.layoutManager = LinearLayoutManager(context,

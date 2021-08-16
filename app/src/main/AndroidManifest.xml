@@ -11,9 +11,11 @@
         android:theme="@style/Theme.Flag">
         <activity android:name=".RoomActivity"></activity>
         <activity android:name=".AllActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".MatchActivity" />
-        <activity android:name=".MatchAtivity" />
-        <activity android:name=".SecondActivity">
+        <activity android:name=".SecondActivity"/>
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

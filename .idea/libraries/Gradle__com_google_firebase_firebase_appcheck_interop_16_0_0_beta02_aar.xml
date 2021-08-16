@@ -1,9 +1,10 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.firebase:firebase-appcheck-interop:16.0.0-beta02@aar">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/7572be01355d4a5c44b317e785790f22/jetified-firebase-appcheck-interop-16.0.0-beta02/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/7572be01355d4a5c44b317e785790f22/jetified-firebase-appcheck-interop-16.0.0-beta02/res" />
-      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/7572be01355d4a5c44b317e785790f22/jetified-firebase-appcheck-interop-16.0.0-beta02/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/2f66392ee4c685ddb4c4470d0a004195/jetified-firebase-appcheck-interop-16.0.0-beta02/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/2f66392ee4c685ddb4c4470d0a004195/jetified-firebase-appcheck-interop-16.0.0-beta02/res" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/2f66392ee4c685ddb4c4470d0a004195/jetified-firebase-appcheck-interop-16.0.0-beta02/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-appcheck-interop/16.0.0-beta02/7f3387a8931f360ef964123f9fae6ac0281ab0b5/firebase-appcheck-interop-16.0.0-beta02-javadoc.jar!/" />

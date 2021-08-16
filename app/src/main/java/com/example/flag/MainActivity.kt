@@ -1,52 +1,77 @@
 package com.example.flag
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.flag.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
+
+
+
 
 class MainActivity : AppCompatActivity() {
-    val DATABASE_VERSION = 1
-    val DATABASE_NAME = "LocalDB.db"
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var localDB: LocalDB
-    //    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//
-//    }
+
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        binding = ActivityMainBinding.inflate(layoutInflater)    // 뷰바인딩 사용
-        val view = binding.root
-        setContentView(view)
 
-        localDB= LocalDB(this, DATABASE_NAME,null, DATABASE_VERSION) // SQLite 모듈 생성
+        auth = FirebaseAuth.getInstance()
+        database = Firebase.database.reference
 
-//        binding.btnLogin.setOnClickListener { view->
-//            val id = binding.editId.text.toString()
-//            val passwd = binding.editPw.text.toString()
-//            val exist = localDB.logIn(id,passwd) // 로그인 실행
-//            if(exist){ // 로그인 성공
-//                val intent =Intent(this,SecondActivity::class.java)
-//                startActivity(intent)
-//            }else{ // 실패
-//                Toast.makeText(this@MainActivity, "아이디나 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-        binding.btnLogin.setOnClickListener {
-            startActivity(Intent(this,SecondActivity::class.java))
-        }
-        binding.btnRegister.setOnClickListener { view->
-            val intent =Intent(this,RegisterActivity::class.java)
-            startActivity(intent)
+        val uid = auth.currentUser?.uid.toString()
 
-        }
+        getUserData(uid)
+//        auth.uid?.let { createMatch("21.08.14", "08:00", "futsal", "건국대학교", it, "") }
 
+        getMatchData()
     }
-    override fun onDestroy() {// 엑티비티가 종료시 close
-        localDB.close()
-        super.onDestroy()
+
+    // 파이어베이스 사용자 데이터 읽기
+    private fun getUserData(uid: String) {
+        database.child("users").child(uid).get().addOnSuccessListener {
+            Log.d("getUserData", "Got value ${it.value}")
+            val user = it.getValue<User>()
+        }.addOnFailureListener {
+            Log.e("getUserData", it.toString())
+        }
+    }
+
+
+    // 사용자 데이터 변경
+    private fun setUserData(uid: String, field: String, newData: String) {
+        database.child("users").child(uid).child(field).setValue(newData).addOnCompleteListener() {
+            Log.d("setData", "success")
+        }
+    }
+
+    // 경기 데이터 생성
+//    private fun createMatch(
+//        date: String,
+//        time: String,
+//        event: String,
+//        group: String,
+//        homeUid: String,
+//        awayUid: String
+//    ) {
+//        val newRef = database.push();
+//        val matchId = newRef.key
+//        val match = FieldClassification.Match(matchId, date, time, event, group, homeUid, awayUid)
+//
+//        matchId?.let { database.child("match").child(it).setValue(match) }
+//    }
+
+    private fun getMatchData() {
+        database.child("match/date").get().addOnSuccessListener {
+            Log.i("getMatchData", "Got value ${it.value}")
+        }.addOnFailureListener{
+            Log.e("getMatchData", "Error getting data", it)
+        }
     }
 }

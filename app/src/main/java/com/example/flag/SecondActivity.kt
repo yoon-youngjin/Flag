@@ -6,10 +6,11 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flag.databinding.ActivitySecondBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -22,8 +23,7 @@ class SecondActivity : AppCompatActivity() {
 
     val today = str_date.substring(8,10).toInt()
     var day:String = (today+64).toChar().toString() + today.toString()+"일"
-
-    var group = "건국대학교"
+    lateinit var group :String
     var check = false
 
     var MyData =  ArrayList<MatchData>()
@@ -31,15 +31,44 @@ class SecondActivity : AppCompatActivity() {
     var mydatas = rdb.getReference("sportsData")
     lateinit var binding: ActivitySecondBinding
     lateinit var adapter: ViewPagerAdapter
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+        database = Firebase.database.reference
+        val uid = auth.currentUser?.uid.toString()
+        Log.i("uid",uid)
+        database.child("users").child(uid).get().addOnSuccessListener {
+
+            group = it.child("school").value.toString()
+            Log.i("group",group.toString())
+        }
+
+
+        //getUserData(uid)
+//        auth.uid?.let { createMatch("21.08.14", "08:00", "futsal", "건국대학교", it, "") }
+
+        //getMatchData()
         binding = ActivitySecondBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
 
     }
 
+
+    private fun getUserData(uid: String) {
+        database.child("users").child(uid).get().addOnSuccessListener {
+            group = it.child("school").value.toString()
+
+            val user = it.getValue<User>()
+        }.addOnFailureListener {
+            Log.e("getUserData", it.toString())
+        }
+    }
+
     fun init() {
+
 
 
         var data: ArrayList<Int> = arrayListOf<Int>(R.drawable.img2, R.drawable.img1)
@@ -57,38 +86,20 @@ class SecondActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-        mydatas.orderByKey().startAt(day).addListenerForSingleValueEvent(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val item = snapshot.children.iterator()
-                while(item.hasNext()) {
-                    Log.i("key",item.next().toString())
-                }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
-
-
-
-        mydatas.orderByKey().startAt(day).addListenerForSingleValueEvent(object :ValueEventListener{
-
-
+        mydatas.orderByKey().startAt(day).addListenerForSingleValueEvent(object :
+            ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(ds0 in snapshot.children) {
                     if (check == true) break
                     for (ds in ds0.children) {
-
                         if (check == true) break
                         for (ds2 in ds.children) {
-
                             if (check == true) break
-                            ds2.ref.orderByChild("accept").equalTo(false).addListenerForSingleValueEvent(object : ValueEventListener {
+                            ds2.ref.orderByChild("accept").equalTo(false).addListenerForSingleValueEvent(object :
+                                ValueEventListener {
+
                                 override fun onDataChange(snapshot: DataSnapshot) {
+
                                     val data = snapshot.children.iterator()
 
                                     while (data.hasNext()) {
@@ -125,8 +136,6 @@ class SecondActivity : AppCompatActivity() {
                             })
                         }
 
-
-
                     }
                 }
             }
@@ -135,6 +144,8 @@ class SecondActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         })
+
+
 
     }
 
