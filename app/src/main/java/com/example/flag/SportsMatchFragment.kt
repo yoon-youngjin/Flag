@@ -28,6 +28,7 @@ class SportsMatchFragment : Fragment() {
     val t_dateFormat = SimpleDateFormat("yyyy-MM-dd kk:mm:ss E", Locale("ko", "KR"))
     val str_date = t_dateFormat.format(t_date)
 
+
     val today = str_date.substring(8,10).toInt()
     var day:String = (today+64).toChar().toString() + today.toString()+"일"
 
