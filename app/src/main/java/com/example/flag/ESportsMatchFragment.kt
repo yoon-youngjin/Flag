@@ -8,7 +8,21 @@ import androidx.fragment.app.Fragment
 
 
 class ESportsMatchFragment : Fragment() {
-
+//    private lateinit var callback: OnBackPressedCallback
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        callback = object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                startActivity(Intent(context,AllActivity::class.java))
+//            }
+//        }
+//        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+//    }
+//
+//    override fun onDetach() {
+//        super.onDetach()
+//        callback.remove()
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

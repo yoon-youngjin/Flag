@@ -99,6 +99,48 @@ class SportsMatchFragment : Fragment() {
 
     private fun givemeAllData(day:String,area:String) {
         var i =0
+
+        Log.i("day",day)
+
+        mydatas.child(day).child("b축구").child(area).addValueEventListener(object :ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+                        snapshot.ref.orderByValue().addValueEventListener(object :ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                Log.i("Dasd",snapshot.toString())
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+                        })
+                        for(ds in snapshot.children){
+                            Log.i("dadad",ds.toString())
+                        }
+                        Log.i("dadad",snapshot.toString())
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+
+//                for(ds in data.children) {
+//                    val data1 = ds.child(area).ref.orderByValue().addValueEventListener(object :ValueEventListener{
+//                        override fun onDataChange(snapshot: DataSnapshot) {
+//                            Log.i("dadad",snapshot.toString())
+//                        }
+//
+//                        override fun onCancelled(error: DatabaseError) {
+//                            TODO("Not yet implemented")
+//                        }
+//                    })
+//                }
+
+
+
+
+
         mydatas.addValueEventListener(object : ValueEventListener
         {
 
