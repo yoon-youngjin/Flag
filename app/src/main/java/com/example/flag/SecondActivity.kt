@@ -108,21 +108,29 @@ class SecondActivity : AppCompatActivity() {
                                         val item3 = data2.child("group2").value
 
                                         if (item2.toString().equals(group) || item3.toString().equals(group)) {
+
                                             val item = MatchData(data2.child("matchTitle").value.toString(), data2.child("time").value.toString(), "", data2.child("group").value.toString(), data2.child("group2").value.toString(), data2.child("team").value.toString(), data2.child("team2").value.toString(), data2.child("num").value.toString(), false)
                                             MyData.add(item)
-                                        }
+                                            if (MyData.size == 3) {
+                                                Log.i("check", "check")
+                                                initData(MyData, 3)
+                                                check = true
+                                                break
+                                            }
 
-                                        if (MyData.size == 3) {
-                                            Log.i("check", "check")
-                                            initData(MyData, 3)
-                                            check = true
-                                            break
-                                        } else if (MyData.size == 2) {
+
+
+                                        }
+                                        Log.i("data",MyData.toString())
+
+                                        if (MyData.size == 2) {
                                             Log.i("check2", "check2")
                                             initData(MyData, 2)
                                         } else if (MyData.size == 1) {
+                                            Log.i("check3", "check3")
                                             initData(MyData, 1)
-                                        } else {
+                                        } else if(MyData.size == 0) {
+                                            Log.i("check4", "check4")
                                             initData(MyData, 0)
                                         }
 
@@ -154,7 +162,7 @@ class SecondActivity : AppCompatActivity() {
         if(num!=0) {
 
             if(num>=1) {
-                binding.layout.visibility = View.VISIBLE
+                binding.layout1.visibility = View.VISIBLE
 
                 binding.group12.text = data.get(0).group
                 if (binding.group12.text == "건국대학교") binding.matchImg3.setImageResource(R.drawable.img33)
@@ -175,7 +183,6 @@ class SecondActivity : AppCompatActivity() {
 
             if(num>=2) {
                 binding.layout2.visibility = View.VISIBLE
-                binding.layout3.visibility = View.VISIBLE
                 binding.group33.text = data.get(1).group
                 if (binding.group33.text == "건국대학교") binding.matchImg6.setImageResource(R.drawable.img33)
                 else if (binding.group33.text == "한양대학교") binding.matchImg6.setImageResource(R.drawable.img44)
@@ -191,11 +198,6 @@ class SecondActivity : AppCompatActivity() {
                 else if (binding.group44.text == "동국대학교") binding.matchImg7.setImageResource(R.drawable.img55)
                 binding.team44.text = data.get(1).team2
             }
-            else {
-                binding.layout2.visibility = View.GONE
-                binding.layout3.visibility = View.GONE
-            }
-
 
             if (num>=3) {
                 binding.layout3.visibility = View.VISIBLE
@@ -214,12 +216,9 @@ class SecondActivity : AppCompatActivity() {
                 else if (binding.group66.text == "동국대학교") binding.matchImg9.setImageResource(R.drawable.img55)
                 binding.team66.text = data.get(2).team2
             }
-            else {
-                binding.layout3.visibility = View.GONE
-            }
+
         }
         else {
-
             binding.layout.visibility = View.GONE
         }
 
