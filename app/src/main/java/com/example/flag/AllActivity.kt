@@ -66,22 +66,18 @@ class AllActivity : AppCompatActivity() {
 
         val items:ArrayList<MatchData> = ArrayList()
 
-        mydatas.addListenerForSingleValueEvent(object : ValueEventListener {
+        mydatas.child(day).child(event).child(area).orderByChild("time").startAt(1000.0).addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                val temp = snapshot.child(day).child(event).child(area).children
-
-                for(ds in temp) {
+                for(ds in snapshot.children) {
                     if(ds.key.toString()=="datanum") continue
-
-
                     items.add( MatchData(ds.key.toString(),ds.child("time").value.toString(),
-                        ds.child("mainImg").value.toString(),
-                        ds.child("group").value.toString(),
-                        ds.child("group2").value.toString(),
-                        ds.child("team").value.toString(),
-                        ds.child("team2").value.toString(),
-                        ds.child("num").value.toString(),
-                        ds.child("accept").value.toString().toBoolean()))
+                            ds.child("mainImg").value.toString(),
+                            ds.child("group").value.toString(),
+                            ds.child("group2").value.toString(),
+                            ds.child("team").value.toString(),
+                            ds.child("team2").value.toString(),
+                            ds.child("num").value.toString(),
+                            ds.child("accept").value.toString().toBoolean()))
                 }
                 adapter = AllMatchAdapter(items)
                 binding.recycle.adapter = adapter
@@ -94,9 +90,9 @@ class AllActivity : AppCompatActivity() {
                         }
 
                         val mBuilder = AlertDialog.Builder(this@AllActivity)
-                            .setView(dialogView)
-                            .setCancelable(false)
-                            .show()
+                                .setView(dialogView)
+                                .setCancelable(false)
+                                .show()
 
                         val groupname = dialogView.findViewById<TextView>(R.id.groupname)
                         val teamname = dialogView.findViewById<TextView>(R.id.teamname)
@@ -148,17 +144,12 @@ class AllActivity : AppCompatActivity() {
                         }
                     }
                 }
-
-
             }
-            override fun onCancelled(error: DatabaseError) {
 
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
             }
         })
-
-
-
-
 
 
     }

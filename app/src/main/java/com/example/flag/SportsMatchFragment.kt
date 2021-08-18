@@ -98,122 +98,109 @@ class SportsMatchFragment : Fragment() {
          }
 
     private fun givemeAllData(day:String,area:String) {
-        var i =0
 
-        Log.i("day",day)
 
-        mydatas.child(day).child("b축구").child(area).addValueEventListener(object :ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-
-                        snapshot.ref.orderByValue().addValueEventListener(object :ValueEventListener{
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                Log.i("Dasd",snapshot.toString())
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-                                TODO("Not yet implemented")
-                            }
-                        })
-                        for(ds in snapshot.children){
-                            Log.i("dadad",ds.toString())
-                        }
-                        Log.i("dadad",snapshot.toString())
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-                })
-
-//                for(ds in data.children) {
-//                    val data1 = ds.child(area).ref.orderByValue().addValueEventListener(object :ValueEventListener{
-//                        override fun onDataChange(snapshot: DataSnapshot) {
-//                            Log.i("dadad",snapshot.toString())
-//                        }
-//
-//                        override fun onCancelled(error: DatabaseError) {
-//                            TODO("Not yet implemented")
-//                        }
-//                    })
+//        Log.i("day",day)
+//        mydatas.child(day).child("b축구").child(area).orderByChild("time").startAt(1300.0).addValueEventListener(object:ValueEventListener{
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                for(ds in snapshot.children) {
+//                    Log.i("DDDD",ds.child("time").toString())
+//                    Log.i("Dddd",ds.toString())
 //                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//        })
 
 
 
 
 
-        mydatas.addValueEventListener(object : ValueEventListener
+
+        mydatas.addListenerForSingleValueEvent(object : ValueEventListener
         {
 
             override fun onDataChange(snapshot: DataSnapshot) {
-
+                var k = 0
                 val data3 = snapshot.child(day)
 
-                for(ds in data3.children) {
+                for (ds in data3.children) { // 축구 / 농구 / 풋살
+                    Log.i("ds.leng",ds.childrenCount.toString())
+                    ds.child(area).ref.orderByChild("time").startAt(900.0).addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            Log.i("Dddd",snapshot.toString())
 
-                    val data1 = ds.child(area).child("data1")
-                    val temp1 = MatchData(ds.key.toString().substring(1),
-                            data1.child("time").value.toString(),
-                            data1.child("mainImg").value.toString(),
-                            data1.child("group").value.toString(),
-                            data1.child("group2").value.toString(),
-                            data1.child("team").value.toString(),
-                            data1.child("team2").value.toString(),
-                            data1.child("num").value.toString(),
-                            data1.child("accept").value.toString().toBoolean()
-                    )
+                            dataSet(snapshot, 3,k)
+                            k++
 
-                    val data2 = ds.child(area).child("data2")
-                    val temp2 = MatchData(ds.key.toString().substring(1),
-                            data2.child("time").value.toString(),
-                            data2.child("mainImg").value.toString(),
-                            data2.child("group").value.toString(),
-                            data2.child("group2").value.toString(),
-                            data2.child("team").value.toString(),
-                            data2.child("team2").value.toString(),
-                            data2.child("num").value.toString(),
-                        data2.child("accept").value.toString().toBoolean()
-                    )
-
-                    val data3 = ds.child(area).child("data3")
-                    val temp3 = MatchData(ds.key.toString().substring(1),
-                            data3.child("time").value.toString(),
-                            data3.child("mainImg").value.toString(),
-                            data3.child("group").value.toString(),
-                            data3.child("group2").value.toString(),
-                            data3.child("team").value.toString(),
-                            data3.child("team2").value.toString(),
-                            data3.child("num").value.toString(),
-                        data3.child("accept").value.toString().toBoolean()
-                    )
-
-
-                    if(i==0) {
-                        datass.add(temp1)
-                        datass.add(temp2)
-                        datass.add(temp3)
-                        data.add(datass)
-                    }
-                    if(i==1) {
-                        datass2.add(temp1)
-                        datass2.add(temp2)
-                        datass2.add(temp3)
-                        data.add(datass2)
-                    }
-                    if(i==2) {
-                        datass3.add(temp1)
-                        datass3.add(temp2)
-                        datass3.add(temp3)
-                        data.add(datass3)
-                    }
-                    i++
+                        }
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
                 }
-                adapter4init(data)
+
+
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.e("error","error")
 
             }
+
         })
+
+    }
+
+    private fun dataSet(snapshot: DataSnapshot, i: Int, k: Int) {
+
+
+        if(i==3) {
+            for(ds in snapshot.children) { // data
+
+                if(ds.childrenCount.equals(3)) {
+
+                }
+
+                var temp = MatchData(ds.child("matchTitle").value.toString(),
+                        ds.child("time").value.toString(),
+                        ds.child("mainImg").value.toString(),
+                        ds.child("group").value.toString(),
+                        ds.child("group2").value.toString(),
+                        ds.child("team").value.toString(),
+                        ds.child("team2").value.toString(),
+                        ds.child("num").value.toString(),
+                        ds.child("accept").value.toString().toBoolean()
+                )
+
+
+                if(k==0) {
+                    datass.add(temp) // 축구
+
+                }
+                if(k==1) {
+                    datass2.add(temp) // 농구
+
+                }
+                if(k==2) {
+                    datass3.add(temp) // 풋살
+                }
+            }
+            if(k==0) {
+                data.add(datass)
+            }
+            if(k==1) {
+                data.add(datass2)
+            }
+            if(k==2) {
+                data.add(datass3)
+                adapter4init(data)
+            }
+
+        }
+
+
     }
 
     private fun closedMatch(holder: MatchingAdapter.ViewHolder, num: Int,data: ArrayList<ArrayList<MatchData>>,position:Int) {
@@ -438,40 +425,44 @@ class SportsMatchFragment : Fragment() {
 
 
 
-//        mydatas.child("Q17일").child("b축구").child("a서울").child("data1").setValue(MatchData("축구","10:00","","건국대학교","","RALO팀","","11:11",true))
-//        mydatas.child("Q17일").child("b축구").child("a서울").child("data2").setValue(MatchData("축구","11:00","","한양대학교","","PAKA팀","","11:11",true))
-//        mydatas.child("Q17일").child("b축구").child("a서울").child("data3").setValue(MatchData("축구","11:30","","동국대학교","","DOPA팀","","11:1",true))
-//        mydatas.child("Q17일").child("b축구").child("a서울").child("datanum").setValue(3)
+//        mydatas.child("R18일").child("b축구").child("a서울").child("data4").setValue(MatchData("축구","10:00","","건국대학교","","RALO팀","","11:11",true))
+//        mydatas.child("S19일").child("b축구").child("a서울").child("data1").setValue(MatchData("축구","10:00","","건국대학교","","RALO팀","","11:11",true))
+//        mydatas.child("S19일").child("b축구").child("a서울").child("data2").setValue(MatchData("축구","11:00","","한양대학교","","PAKA팀","","11:11",true))
+//        mydatas.child("S19일").child("b축구").child("a서울").child("data3").setValue(MatchData("축구","11:30","","동국대학교","","DOPA팀","","11:1",true))
+//        mydatas.child("S19일").child("b축구").child("a서울").child("datanum").setValue(3)
 //
-//        mydatas.child("Q17일").child("b축구").child("b경기").child("data1").setValue(MatchData("축구","10:00","","건국대학교","","RALO팀","","11:11",true))
-//        mydatas.child("Q17일").child("b축구").child("b경기").child("data2").setValue(MatchData("축구","11:00","","한양대학교","","PAKA팀","","11:11",true))
-//        mydatas.child("Q17일").child("b축구").child("b경기").child("data3").setValue(MatchData("축구","11:30","","동국대학교","","DOPA팀","","11:11",true))
-//        mydatas.child("Q17일").child("b축구").child("b경기").child("datanum").setValue(3)
+//        mydatas.child("S19일").child("b축구").child("b경기").child("data1").setValue(MatchData("축구","10:00","","건국대학교","","RALO팀","","11:11",true))
+//        mydatas.child("S19일").child("b축구").child("b경기").child("data2").setValue(MatchData("축구","11:00","","한양대학교","","PAKA팀","","11:11",true))
+//        mydatas.child("S19일").child("b축구").child("b경기").child("data3").setValue(MatchData("축구","11:30","","동국대학교","","DOPA팀","","11:11",true))
+//        mydatas.child("S19일").child("b축구").child("b경기").child("datanum").setValue(3)
 //
-//        mydatas.child("Q17일").child("c농구").child("a서울").child("data1").setValue(MatchData("농구","10:00","","건국대학교","","RALO팀","","5:5",true))
-//        mydatas.child("Q17일").child("c농구").child("a서울").child("data2").setValue(MatchData("농구","11:00","","한양대학교","","PAKA팀","","5:5",true))
-//        mydatas.child("Q17일").child("c농구").child("a서울").child("data3").setValue(MatchData("농구","11:30","","동국대학교","","DOPA팀","","5:5",true))
-//        mydatas.child("Q17일").child("c농구").child("a서울").child("datanum").setValue(3)
+//        mydatas.child("S19일").child("c농구").child("a서울").child("data1").setValue(MatchData("농구","10:00","","건국대학교","","RALO팀","","5:5",true))
+//        mydatas.child("S19일").child("c농구").child("a서울").child("data2").setValue(MatchData("농구","11:00","","한양대학교","","PAKA팀","","5:5",true))
+//        mydatas.child("S19일").child("c농구").child("a서울").child("data3").setValue(MatchData("농구","11:30","","동국대학교","","DOPA팀","","5:5",true))
+//        mydatas.child("S19일").child("c농구").child("a서울").child("datanum").setValue(3)
 //
-//        mydatas.child("Q17일").child("c농구").child("b경기").child("data1").setValue(MatchData("농구","10:00","","건국대학교","","RALO팀","","5:5",true))
-//        mydatas.child("Q17일").child("c농구").child("b경기").child("data2").setValue(MatchData("농구","11:00","","한양대학교","","PAKA팀","","5:5",true))
-//        mydatas.child("Q17일").child("c농구").child("b경기").child("data3").setValue(MatchData("농구","11:30","","동국대학교","","DOPA팀","","5:5",true))
-//        mydatas.child("Q17일").child("c농구").child("b경기").child("datanum").setValue(3)
+//        mydatas.child("S19일").child("c농구").child("b경기").child("data1").setValue(MatchData("농구","10:00","","건국대학교","","RALO팀","","5:5",true))
+//        mydatas.child("S19일").child("c농구").child("b경기").child("data2").setValue(MatchData("농구","11:00","","한양대학교","","PAKA팀","","5:5",true))
+//        mydatas.child("S19일").child("c농구").child("b경기").child("data3").setValue(MatchData("농구","11:30","","동국대학교","","DOPA팀","","5:5",true))
+//        mydatas.child("S19일").child("c농구").child("b경기").child("datanum").setValue(3)
 //
-//        mydatas.child("Q17일").child("d풋살").child("a서울").child("data1").setValue(MatchData("풋살","10:00","","건국대학교","","RALO팀","","5:5",true))
-//        mydatas.child("Q17일").child("d풋살").child("a서울").child("data2").setValue(MatchData("풋살","11:00","","한양대학교","","PAKA팀","","5:5",true))
-//        mydatas.child("Q17일").child("d풋살").child("a서울").child("data3").setValue(MatchData("풋살","11:30","","동국대학교","","DOPA팀","","5:5",true))
-//        mydatas.child("Q17일").child("d풋살").child("a서울").child("datanum").setValue(3)
+//        mydatas.child("S19일").child("d풋살").child("a서울").child("data1").setValue(MatchData("풋살","10:00","","건국대학교","","RALO팀","","5:5",true))
+//        mydatas.child("S19일").child("d풋살").child("a서울").child("data2").setValue(MatchData("풋살","11:00","","한양대학교","","PAKA팀","","5:5",true))
+//        mydatas.child("S19일").child("d풋살").child("a서울").child("data3").setValue(MatchData("풋살","11:30","","동국대학교","","DOPA팀","","5:5",true))
+//        mydatas.child("S19일").child("d풋살").child("a서울").child("datanum").setValue(3)
 //
-//        mydatas.child("Q17일").child("d풋살").child("b경기").child("data1").setValue(MatchData("풋살","10:00","","건국대학교","","RALO팀","","5:5",true))
-//        mydatas.child("Q17일").child("d풋살").child("b경기").child("data2").setValue(MatchData("풋살","11:00","","한양대학교","","PAKA팀","","5:5",true))
-//        mydatas.child("Q17일").child("d풋살").child("b경기").child("data3").setValue(MatchData("풋살","11:30","","동국대학교","","DOPA팀","","5:5",true))
-//        mydatas.child("Q17일").child("d풋살").child("b경기").child("datanum").setValue(3)
+//        mydatas.child("S19일").child("d풋살").child("b경기").child("data1").setValue(MatchData("풋살","10:00","","건국대학교","","RALO팀","","5:5",true))
+//        mydatas.child("S19일").child("d풋살").child("b경기").child("data2").setValue(MatchData("풋살","11:00","","한양대학교","","PAKA팀","","5:5",true))
+//        mydatas.child("S19일").child("d풋살").child("b경기").child("data3").setValue(MatchData("풋살","11:30","","동국대학교","","DOPA팀","","5:5",true))
+//        mydatas.child("S19일").child("d풋살").child("b경기").child("datanum").setValue(3)
+
 ////
 
 
     }
     fun datachange(title:String,num:String,checknum:Int) {
+
+
 
         if(checknum==1000 && event =="a전체") {
             givemeAllData(day,area)
@@ -484,30 +475,28 @@ class SportsMatchFragment : Fragment() {
         }
         else {
 
-            if(checknum==1000) aaa = mydatas.child(day).child(num + title).child(area)
-            if(checknum==9999) aaa = mydatas.child(day).child(event).child(num + title)
-            if(checknum==99999) aaa = mydatas.child(num + title).child(event).child(area)
+            if(checknum==1000) aaa = mydatas.child(day).child(num + title).child(area).ref
+            if(checknum==9999) aaa = mydatas.child(day).child(event).child(num + title).ref
+            if(checknum==99999) aaa = mydatas.child(num + title).child(event).child(area).ref
 
-            aaa.addListenerForSingleValueEvent(object : ValueEventListener {
+            aaa.orderByChild("time").startAt(900.0).addListenerForSingleValueEvent(object : ValueEventListener {
 
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    for(ds in snapshot.children){
+                        var temp = MatchData(ds.child("matchTitle").value.toString(),
+                                ds.child("time").value.toString(),
+                                ds.child("mainImg").value.toString(),
+                                ds.child("group").value.toString(),
+                                ds.child("group2").value.toString(),
+                                ds.child("team").value.toString(),
+                                ds.child("team2").value.toString(),
+                                ds.child("num").value.toString(),
+                                ds.child("accept").value.toString().toBoolean()
+                        )
+                        datass.add(temp)
+                    }
 
-                    val data1 = snapshot.child("data1")
-                    val temp1 = MatchData(event.substring(1),data1.child("time").value.toString(), data1.child("mainImg").value.toString(), data1.child("group").value.toString(),data1.child("group2").value.toString(), data1.child("team").value.toString(),data1.child("team").value.toString(),
-                            data1.child("num").value.toString(), data1.child("accept").value.toString().toBoolean())
 
-                    val data2 = snapshot.child("data2")
-                    val temp2 = MatchData(event.substring(1),data2.child("time").value.toString(), data2.child("mainImg").value.toString(), data2.child("group").value.toString(),data2.child("group2").value.toString(), data2.child("team").value.toString(),data2.child("team").value.toString(),
-                            data2.child("num").value.toString(), data2.child("accept").value.toString().toBoolean())
-
-                    val data3 = snapshot.child("data3")
-                    val temp3 = MatchData(event.substring(1),data3.child("time").value.toString(), data3.child("mainImg").value.toString(), data3.child("group").value.toString(),data3.child("group2").value.toString(), data3.child("team").value.toString(),data3.child("team").value.toString(),
-                            data3.child("num").value.toString(), data3.child("accept").value.toString().toBoolean())
-
-
-                    datass.add(temp1)
-                    datass.add(temp2)
-                    datass.add(temp3)
                     data.add(datass)
 
                     adapter4init(data)

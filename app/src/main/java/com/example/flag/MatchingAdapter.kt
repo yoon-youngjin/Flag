@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +25,7 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
-
+        val mainLayout : LinearLayout = view.findViewById(R.id.Layout)
         val matchTitle : TextView = view.findViewById(R.id.matchtitle)
         val matchImg: ImageView = view.findViewById(R.id.matchImg)
         val allbtn : Button = view.findViewById(R.id.allbtn)
@@ -78,97 +79,135 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        holder.firstView.visibility = View.GONE
+        holder.secondView.visibility = View.GONE
+        holder.thirdView.visibility = View.GONE
 
 
-        val item1 : MatchData = data.get(position).get(0)
+        dataSet(holder,data.get(position).size,position)
 
-        val item2 :MatchData = data.get(position).get(1)
-        val item3 :MatchData = data.get(position).get(2)
 
-        holder.matchTitle.text = item1.matchTitle
-        if(holder.matchTitle.text=="축구") {
-            holder.matchImg.setImageResource(R.drawable.football)
-        }
-        if(holder.matchTitle.text=="농구") {
-            holder.matchImg.setImageResource(R.drawable.basketball)
 
-        }
-        if(holder.matchTitle.text=="풋살") {
-            holder.matchImg.setImageResource(R.drawable.football)
+    }
 
-        }
+    private fun dataSet(holder: ViewHolder, i: Int, position: Int) {
+        if(i!=0) {
 
-        holder.firstView.timeTitle.text = item1.time
+            if (i >= 1) {
+                holder.firstView.visibility = View.VISIBLE
+                val item1: MatchData = data.get(position).get(0)
+                holder.matchTitle.text = item1.matchTitle
+                if (holder.matchTitle.text == "축구") {
+                    holder.matchImg.setImageResource(R.drawable.football)
+                }
+                if (holder.matchTitle.text == "농구") {
+                    holder.matchImg.setImageResource(R.drawable.basketball)
 
-        holder.firstView.schoolTitle.text = item1.group
-        if(item1.group=="건국대학교") {
-            holder.firstView.mainImg.setImageResource(R.drawable.img33)
-        }
-        if(item1.group=="한양대학교") {
-            holder.firstView.mainImg.setImageResource(R.drawable.img44)
-        }
-        if(item1.group=="동국대학교") {
-            holder.firstView.mainImg.setImageResource(R.drawable.img55)
-        }
+                }
+                if (holder.matchTitle.text == "풋살") {
+                    holder.matchImg.setImageResource(R.drawable.football)
 
-        holder.firstView.teamTitle.text = item1.team
-        holder.firstView.numberText.text = item1.num
-        holder.firstView.matchBtn.isClickable = item1.accept
-        if(item1.accept==false) {
-            holder.firstView.matchBtn.text = "마감"
-            holder.firstView.matchBtn.setTextColor(Color.GRAY)
-            holder.firstView.matchBtn.background = ContextCompat.getDrawable(context,R.drawable.radiobtn)
-            holder.firstView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context,R.color.lightgrey)
+                }
+
+                if(item1.time.length==3) {
+                    holder.firstView.timeTitle.text = item1.time.substring(0,1) +":" +item1.time.substring(1,3)
+                }
+                else {
+                    holder.firstView.timeTitle.text = item1.time.substring(0,2) +":" +item1.time.substring(2,4)
+                }
+
+                holder.firstView.schoolTitle.text = item1.group
+                if (item1.group == "건국대학교") {
+                    holder.firstView.mainImg.setImageResource(R.drawable.img33)
+                }
+                if (item1.group == "한양대학교") {
+                    holder.firstView.mainImg.setImageResource(R.drawable.img44)
+                }
+                if (item1.group == "동국대학교") {
+                    holder.firstView.mainImg.setImageResource(R.drawable.img55)
+                }
+
+                holder.firstView.teamTitle.text = item1.team
+                holder.firstView.numberText.text = item1.num
+                holder.firstView.matchBtn.isClickable = item1.accept
+                if (item1.accept == false) {
+                    holder.firstView.matchBtn.text = "마감"
+                    holder.firstView.matchBtn.setTextColor(Color.GRAY)
+                    holder.firstView.matchBtn.background = ContextCompat.getDrawable(context, R.drawable.radiobtn)
+                    holder.firstView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context, R.color.lightgrey)
+
+                } else {
+                    holder.firstView.matchBtn.text = "신청가능"
+                }
+            }
+            if (i >= 2) {
+                holder.secondView.visibility = View.VISIBLE
+                val item2: MatchData = data.get(position).get(1)
+                if(item2.time.length==3) {
+                    holder.secondView.timeTitle.text = item2.time.substring(0,1) +":" +item2.time.substring(1,3)
+                }
+                else {
+                    holder.secondView.timeTitle.text = item2.time.substring(0,2) +":" +item2.time.substring(2,4)
+                }
+
+                holder.secondView.schoolTitle.text = item2.group
+                if (item2.group == "건국대학교") {
+                    holder.secondView.mainImg.setImageResource(R.drawable.img33)
+                }
+                if (item2.group == "한양대학교") {
+                    holder.secondView.mainImg.setImageResource(R.drawable.img44)
+                }
+                if (item2.group == "동국대학교") {
+                    holder.secondView.mainImg.setImageResource(R.drawable.img55)
+                }
+                holder.secondView.teamTitle.text = item2.team
+                holder.secondView.numberText.text = item2.num
+                holder.secondView.matchBtn.isClickable = item2.accept
+
+                if (item2.accept == false) {
+                    holder.secondView.matchBtn.text = "마감"
+                    holder.secondView.matchBtn.setTextColor(Color.GRAY)
+                    holder.secondView.matchBtn.background = ContextCompat.getDrawable(context, R.drawable.radiobtn)
+                    holder.secondView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context, R.color.lightgrey)
+                }
+            }
+            if (i >= 3) {
+                holder.thirdView.visibility = View.VISIBLE
+                val item3: MatchData = data.get(position).get(2)
+
+
+                if(item3.time.length==3) {
+                    holder.thirdView.timeTitle.text = item3.time.substring(0,1) +":" +item3.time.substring(1,3)
+                }
+                else {
+                    holder.thirdView.timeTitle.text = item3.time.substring(0,2) +":" +item3.time.substring(2,4)
+                }
+
+                holder.thirdView.schoolTitle.text = item3.group
+                if (item3.group == "건국대학교") {
+                    holder.thirdView.mainImg.setImageResource(R.drawable.img33)
+                }
+                if (item3.group == "한양대학교") {
+                    holder.thirdView.mainImg.setImageResource(R.drawable.img44)
+                }
+                if (item3.group == "동국대학교") {
+                    holder.thirdView.mainImg.setImageResource(R.drawable.img55)
+                }
+                holder.thirdView.teamTitle.text = item3.team
+                holder.thirdView.numberText.text = item3.num
+                holder.thirdView.matchBtn.isClickable = item3.accept
+                if (item3.accept == false) {
+                    holder.thirdView.matchBtn.text = "마감"
+                    holder.thirdView.matchBtn.setTextColor(Color.GRAY)
+                    holder.thirdView.matchBtn.background = ContextCompat.getDrawable(context, R.drawable.radiobtn)
+                    holder.thirdView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context, R.color.lightgrey)
+                }
+            }
 
         }
         else {
-            holder.firstView.matchBtn.text = "신청가능"
+            holder.mainLayout.visibility = View.GONE
         }
-
-
-        holder.secondView.timeTitle.text = item2.time
-        holder.secondView.schoolTitle.text = item2.group
-        if(item2.group=="건국대학교") {
-            holder.secondView.mainImg.setImageResource(R.drawable.img33)
-        }
-        if(item2.group=="한양대학교") {
-            holder.secondView.mainImg.setImageResource(R.drawable.img44)
-        }
-        if(item2.group=="동국대학교") {
-            holder.secondView.mainImg.setImageResource(R.drawable.img55)
-        }
-        holder.secondView.teamTitle.text = item2.team
-        holder.secondView.numberText.text = item2.num
-        holder.secondView.matchBtn.isClickable = item2.accept
-
-        if(item2.accept==false) {
-            holder.secondView.matchBtn.text = "마감"
-            holder.secondView.matchBtn.setTextColor(Color.GRAY)
-            holder.secondView.matchBtn.background = ContextCompat.getDrawable(context,R.drawable.radiobtn)
-            holder.secondView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context,R.color.lightgrey)
-        }
-        holder.thirdView.timeTitle.text = item3.time
-
-        holder.thirdView.schoolTitle.text = item3.group
-        if(item3.group=="건국대학교") {
-            holder.thirdView.mainImg.setImageResource(R.drawable.img33)
-        }
-        if(item3.group=="한양대학교") {
-            holder.thirdView.mainImg.setImageResource(R.drawable.img44)
-        }
-        if(item3.group=="동국대학교") {
-            holder.thirdView.mainImg.setImageResource(R.drawable.img55)
-        }
-        holder.thirdView.teamTitle.text = item3.team
-        holder.thirdView.numberText.text = item3.num
-        holder.thirdView.matchBtn.isClickable = item3.accept
-        if(item3.accept==false) {
-            holder.thirdView.matchBtn.text = "마감"
-            holder.thirdView.matchBtn.setTextColor(Color.GRAY)
-            holder.thirdView.matchBtn.background = ContextCompat.getDrawable(context,R.drawable.radiobtn)
-            holder.thirdView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context,R.color.lightgrey)
-        }
-
     }
 
     override fun getItemCount(): Int = data!!.size
