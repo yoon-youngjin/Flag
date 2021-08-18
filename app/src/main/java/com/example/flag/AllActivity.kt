@@ -82,6 +82,7 @@ class AllActivity : AppCompatActivity() {
                 adapter = AllMatchAdapter(items)
                 binding.recycle.adapter = adapter
 
+
                 adapter.itemClickListener = object :AllMatchAdapter.OnItemClickListener {
 
                     override fun OnItemClick(holder: AllMatchAdapter.ViewHolder, view: View,position:Int,data:ArrayList<MatchData>) {
