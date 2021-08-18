@@ -64,6 +64,7 @@ class AllActivity : AppCompatActivity() {
 
 
 
+
         val items:ArrayList<MatchData> = ArrayList()
 
         mydatas.child(day).child(event).child(area).orderByChild("time").startAt(1000.0).addListenerForSingleValueEvent(object :ValueEventListener{
