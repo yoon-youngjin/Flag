@@ -71,7 +71,7 @@ class AllActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(ds in snapshot.children) {
                     if(ds.key.toString()=="datanum") continue
-                    items.add( MatchData(ds.key.toString(),ds.child("time").value.toString(),
+                    items.add( MatchData(ds.key.toString(),ds.child("time").value.toString().toInt(),
                             ds.child("mainImg").value.toString(),
                             ds.child("group").value.toString(),
                             ds.child("group2").value.toString(),

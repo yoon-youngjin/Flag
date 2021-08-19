@@ -160,7 +160,6 @@ class RoomActivity : AppCompatActivity() {
         binding.spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 day = (position+1).toString()
-                Log.i("day222", day.toString())
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -169,7 +168,14 @@ class RoomActivity : AppCompatActivity() {
 
         binding.spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                time = binding.spinner3.selectedItem.toString()
+                val timedata = binding.spinner3.selectedItem.toString()
+
+                if(binding.spinner3.selectedItem.toString().length == 4) {
+                    time = timedata.substring(0,1) + timedata.substring(2,4)
+                }
+                else {
+                    time = timedata.substring(0,2) + timedata.substring(3,5)
+                }
 
             }
 
@@ -216,7 +222,7 @@ class RoomActivity : AppCompatActivity() {
                     data.child("data" + datanum.toString()).setValue(
                             MatchData(
                                     event.substring(1),
-                                    time,
+                                    time.toInt(),
                                     "",
                                     group.toString(),
                                     "",

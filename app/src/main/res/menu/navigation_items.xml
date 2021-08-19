@@ -11,7 +11,11 @@
 
     <item android:id="@+id/search_page"
         android:title="Search"
-        android:icon="@drawable/search" />
+        android:icon="@drawable/support" />
+
+    <item android:id="@+id/community_page"
+        android:title="Community"
+        android:icon="@drawable/chat"/>
 
     <item android:id="@+id/user_page"
         android:title="User"

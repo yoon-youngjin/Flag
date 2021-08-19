@@ -1,11 +1,18 @@
 package com.example.flag
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flag.databinding.ActivityMatchBinding
 
 class MatchActivity : AppCompatActivity() {
+    override fun onBackPressed() {
+        val intent = Intent(this,SecondActivity::class.java)
+        startActivity(intent)
+        super.onBackPressed()
+    }
+
     lateinit var binding:ActivityMatchBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

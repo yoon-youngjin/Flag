@@ -109,11 +109,11 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
 
                 }
 
-                if(item1.time.length==3) {
-                    holder.firstView.timeTitle.text = item1.time.substring(0,1) +":" +item1.time.substring(1,3)
+                if(item1.time.toString().length==3) {
+                    holder.firstView.timeTitle.text = item1.time.toString().substring(0,1) +":" +item1.time.toString().substring(1,3)
                 }
                 else {
-                    holder.firstView.timeTitle.text = item1.time.substring(0,2) +":" +item1.time.substring(2,4)
+                    holder.firstView.timeTitle.text = item1.time.toString().substring(0,2) +":" +item1.time.toString().substring(2,4)
                 }
 
                 holder.firstView.schoolTitle.text = item1.group
@@ -143,11 +143,11 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
             if (i >= 2) {
                 holder.secondView.visibility = View.VISIBLE
                 val item2: MatchData = data.get(position).get(1)
-                if(item2.time.length==3) {
-                    holder.secondView.timeTitle.text = item2.time.substring(0,1) +":" +item2.time.substring(1,3)
+                if(item2.time.toString().length==3) {
+                    holder.secondView.timeTitle.text = item2.time.toString().substring(0,1) +":" +item2.time.toString().substring(1,3)
                 }
                 else {
-                    holder.secondView.timeTitle.text = item2.time.substring(0,2) +":" +item2.time.substring(2,4)
+                    holder.secondView.timeTitle.text = item2.time.toString().substring(0,2) +":" +item2.time.toString().substring(2,4)
                 }
 
                 holder.secondView.schoolTitle.text = item2.group
@@ -176,11 +176,11 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
                 val item3: MatchData = data.get(position).get(2)
 
 
-                if(item3.time.length==3) {
-                    holder.thirdView.timeTitle.text = item3.time.substring(0,1) +":" +item3.time.substring(1,3)
+                if(item3.time.toString().length==3) {
+                    holder.thirdView.timeTitle.text = item3.time.toString().substring(0,1) +":" +item3.time.toString().substring(1,3)
                 }
                 else {
-                    holder.thirdView.timeTitle.text = item3.time.substring(0,2) +":" +item3.time.substring(2,4)
+                    holder.thirdView.timeTitle.text = item3.time.toString().substring(0,2) +":" +item3.time.toString().substring(2,4)
                 }
 
                 holder.thirdView.schoolTitle.text = item3.group

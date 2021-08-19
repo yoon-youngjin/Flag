@@ -75,15 +75,23 @@ class SecondActivity : AppCompatActivity() {
         adapter = ViewPagerAdapter(data)
         binding.viewpager.adapter = adapter
 
+        binding.addteamBtn.setOnClickListener {
+            val intent = Intent(this,TeamActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         binding.spBtn.setOnClickListener {
             val intent = Intent(this, MatchActivity::class.java)
             intent.putExtra("matchevent", "sports")
             startActivity(intent)
+            finish()
         }
         binding.espBtn.setOnClickListener {
             val intent = Intent(this, MatchActivity::class.java)
             intent.putExtra("matchevent", "esports")
             startActivity(intent)
+            finish()
         }
 
         mydatas.orderByKey().startAt(day).addListenerForSingleValueEvent(object :
@@ -109,7 +117,7 @@ class SecondActivity : AppCompatActivity() {
 
                                         if (item2.toString().equals(group) || item3.toString().equals(group)) {
 
-                                            val item = MatchData(data2.child("matchTitle").value.toString(), data2.child("time").value.toString(), "", data2.child("group").value.toString(), data2.child("group2").value.toString(), data2.child("team").value.toString(), data2.child("team2").value.toString(), data2.child("num").value.toString(), false)
+                                            val item = MatchData(data2.child("matchTitle").value.toString(), data2.child("time").value.toString().toInt(), "", data2.child("group").value.toString(), data2.child("group2").value.toString(), data2.child("team").value.toString(), data2.child("team2").value.toString(), data2.child("num").value.toString(), false)
                                             MyData.add(item)
                                             if (MyData.size == 3) {
                                                 Log.i("check", "check")

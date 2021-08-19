@@ -1,7 +1,7 @@
 package com.example.flag
 
 data class MatchData(var matchTitle:String
-                        ,var time:String
+                        ,var time:Int
                         , var mainImg:String
                         , var group:String
                         ,var group2:String
