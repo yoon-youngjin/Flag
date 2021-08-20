@@ -48,6 +48,8 @@ class MainActivity : AppCompatActivity() {
     private fun setUserData(uid: String, field: String, newData: String) {
         database.child("users").child(uid).child(field).setValue(newData).addOnCompleteListener() {
             Log.d("setData", "success")
+
+
         }
     }
 
