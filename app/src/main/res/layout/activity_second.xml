@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            tools:context=".SecondActivity"
+            tools:context=".view.activity.SecondActivity"
             android:layout_width="match_parent"
 
             android:layout_height="match_parent"

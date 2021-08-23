@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".RoomActivity">
+    tools:context=".view.activity.RoomActivity">
 
 <!--    <androidx.appcompat.widget.Toolbar-->
 <!--        android:id="@+id/toolbar"-->
@@ -63,17 +63,19 @@
 
             <AutoCompleteTextView
                 android:id="@+id/autoText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="10"
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:hint="학교를 입력해주세요." />
 
             <ImageButton
                 android:id="@+id/deleteBtn2"
-                android:layout_width="20dp"
+                android:layout_width="0dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="110dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
                 android:visibility="invisible"
@@ -108,17 +110,19 @@
 
             <EditText
                 android:id="@+id/teamEditText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="10"
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:hint="팀명을 입력해주세요." />
 
             <ImageButton
                 android:id="@+id/deleteBtn"
-                android:layout_width="20dp"
+                android:layout_width="0dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="110dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
                 android:visibility="invisible"
