@@ -3,6 +3,7 @@ package com.example.flag.view.fragment
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.example.flag.adapter.TabItemRecyclerViewAdapter2
 import com.example.flag.adapter.TeamAdapter
 import com.example.flag.data.TeamData
 import com.example.flag.databinding.FragmentSportsTeamBinding
+import com.example.flag.view.activity.StartApplyActivity
 import com.example.flag.view.activity.addTeamActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -40,6 +42,7 @@ class SportsTeamFragment : Fragment() {
     val database = Firebase.database.reference
     lateinit var dialogView:View
     val uid = auth.currentUser?.uid.toString()
+    var event = "b축구"
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -72,6 +75,13 @@ class SportsTeamFragment : Fragment() {
 
     fun init() {
 
+        binding.StartApplyBtn.setOnClickListener {
+            val intent = Intent(context, StartApplyActivity::class.java)
+            intent.putExtra("event",event)
+            startActivity(intent)
+            activity?.finish()
+        }
+
         binding.openBtn2.setOnClickListener {
             val intent = Intent(context, addTeamActivity::class.java)
             startActivity(intent)
@@ -102,7 +112,15 @@ class SportsTeamFragment : Fragment() {
                         holder: TabItemRecyclerViewAdapter2.ViewHolder,
                         view: View
                     ) {
-                        datas.clear()
+                        if(holder.idView.text.toString()=="축구"){
+                            event = "b축구"
+                        }
+                        else if(holder.idView.text.toString()=="농구"){
+                            event = "c농구"
+                        }
+                        else {
+                            event = "d풋살"
+                        }
                         dataChange(holder.idView.text.toString(),check)
                     }
                 }
@@ -130,11 +148,12 @@ class SportsTeamFragment : Fragment() {
                     datas.clear()
 
                     for (ds in snapshot.children) {
+                        if(ds.child("accept").value.toString().toBoolean()==false) continue
 
                         val temp = TeamData(ds.child("teamTitle").value.toString(),
                                 ds.child("area").value.toString(),
                                 ds.child("record").value.toString(),
-                                "", "", group, ds.child("uid").value.toString(), ds.child("accept").value.toString().toBoolean())
+                            ds.child("teamImg").value.toString(), "", group, ds.child("uid").value.toString(), ds.child("accept").value.toString().toBoolean())
                         datas.add(temp)
                     }
 
@@ -185,6 +204,9 @@ class SportsTeamFragment : Fragment() {
 
 
     private fun showDlg(item: TeamAdapter.ViewHolder, item1: String, snapshot: DataSnapshot) {
+        if (dialogView.getParent() != null) {
+            (dialogView.getParent() as ViewGroup).removeView(dialogView)
+        }
         val mBuilder = AlertDialog.Builder(context)
                 .setView(dialogView)
                 .setCancelable(false)
@@ -220,7 +242,19 @@ class SportsTeamFragment : Fragment() {
 
     private fun goApply(item: String, key: String) {
         mydatas.child(item).child(key).child("member").setValue(uid)
-        myusers.child(uid).child("team").setValue(key)
+        myusers.child(uid).child("team").get().addOnSuccessListener {
+            var key = key
+            var myteam = it.value.toString()
+            Log.i("myteam",it.value.toString())
+            if(myteam!="null")  {
+                key = myteam +"/" + key
+                Log.i("key",key)
+                myusers.child(uid).child("team").setValue(key)
+            }
+            else myusers.child(uid).child("team").setValue(key)
+
+        }
+
     }
 
 }

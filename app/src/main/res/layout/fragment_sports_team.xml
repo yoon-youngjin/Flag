@@ -56,18 +56,34 @@
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
-        tools:listitem="@layout/tabitem2" />
+        tools:listitem="@layout/tabitem2" >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
 <!--    <View-->
 <!--        android:id="@+id/view2"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="1dp"-->
 <!--        android:background="#73baff" />-->
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/teamRecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:listitem="@layout/customview2" />
+
+    <Button
+        android:id="@+id/StartApplyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="팀원 모집 시작" />
 
 
 </LinearLayout>

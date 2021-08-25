@@ -13,6 +13,7 @@ class TeamActivity : AppCompatActivity() {
 
 
     lateinit var binding:ActivityTeamBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val fragment = supportFragmentManager.beginTransaction()
@@ -20,8 +21,11 @@ class TeamActivity : AppCompatActivity() {
         fragment.commit()
         binding = ActivityTeamBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         init()
+
     }
+
 
     override fun onBackPressed() {
         val intent = Intent(this, SecondActivity::class.java)
@@ -30,6 +34,7 @@ class TeamActivity : AppCompatActivity() {
     }
 
     fun init() {
+
 
         binding.group2.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId) {
@@ -50,6 +55,8 @@ class TeamActivity : AppCompatActivity() {
                 }
             }
         }
+
+
 
     }
 

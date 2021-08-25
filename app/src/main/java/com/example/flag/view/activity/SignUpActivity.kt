@@ -7,8 +7,8 @@ import android.util.Log
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.flag.data.User
 import com.example.flag.data.SchoolData
+import com.example.flag.data.User
 import com.example.flag.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -236,7 +236,7 @@ class SignUpActivity : AppCompatActivity() {
                     val domain = user?.email?.split("@")?.get(1)
 //                    val school = findSchoolName(domain)
                     if (user != null) {
-                        writeNewUser(user.uid, name, email, "건국대학교", "", "")
+                        writeNewUser(user.uid, name, email, "건국대학교", "null", "")
                     }
                     startActivity(Intent(this, LoginActivity::class.java))
                 }

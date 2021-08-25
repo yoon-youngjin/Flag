@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.flag.R
 import com.example.flag.data.TeamData
 
@@ -51,6 +52,7 @@ class TeamAdapter (val data: ArrayList<TeamData>) : RecyclerView.Adapter<TeamAda
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Glide.with(holder.itemView).load(data[position].teamImg).into(holder.teamImg)
         holder.uid = data[position].uid
 
         holder.teamTitle.text = data[position].teamTitle

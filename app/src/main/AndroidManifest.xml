@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Flag">
-        <activity android:name=".view.activity.addTeamActivity"></activity>
+        <activity android:name=".view.activity.StartApplyActivity"></activity>
+        <activity android:name=".view.activity.addTeamActivity" />
         <activity android:name=".view.activity.TeamActivity" />
         <activity android:name=".view.activity.RoomActivity" />
         <activity android:name=".view.activity.AllActivity" />

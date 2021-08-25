@@ -12,9 +12,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.flag.R
 import com.example.flag.adapter.AllMatchAdapter
 import com.example.flag.data.MatchData
-import com.example.flag.R
 import com.example.flag.databinding.ActivityAllBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -34,8 +34,6 @@ class AllActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         binding = ActivityAllBinding.inflate(layoutInflater)
         dialogView = LayoutInflater.from(applicationContext).inflate(R.layout.custom_dialog,binding.root,false)
         day = intent.getStringExtra("data").toString()
@@ -60,8 +58,11 @@ class AllActivity : AppCompatActivity() {
             binding.matchImg2.setImageResource(R.drawable.football)
         }
 
-        if(event.substring(1)=="농구") {
+        else if(event.substring(1)=="농구") {
             binding.matchImg2.setImageResource(R.drawable.basketball)
+        }
+        else {
+            binding.matchImg2.setImageResource(R.drawable.football)
         }
         binding.recycle.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
 

@@ -6,9 +6,9 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flag.R
-import com.example.flag.data.User
 import com.example.flag.adapter.ViewPagerAdapter
 import com.example.flag.data.MatchData
+import com.example.flag.data.User
 import com.example.flag.databinding.ActivitySecondBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -130,8 +130,6 @@ class SecondActivity : AppCompatActivity() {
                                                 break
                                             }
 
-
-
                                         }
                                         Log.i("data",MyData.toString())
 
@@ -174,6 +172,8 @@ class SecondActivity : AppCompatActivity() {
         if(num!=0) {
 
             if(num>=1) {
+                Log.i("mydata",data.toString())
+                Log.i("check344","check3")
                 binding.layout1.visibility = View.VISIBLE
 
                 binding.group12.text = data.get(0).group
@@ -194,6 +194,7 @@ class SecondActivity : AppCompatActivity() {
             }
 
             if(num>=2) {
+                Log.i("check455","check4")
                 binding.layout2.visibility = View.VISIBLE
                 binding.group33.text = data.get(1).group
                 if (binding.group33.text == "건국대학교") binding.matchImg6.setImageResource(R.drawable.img33)
@@ -230,9 +231,7 @@ class SecondActivity : AppCompatActivity() {
             }
 
         }
-        else {
-            binding.layout.visibility = View.GONE
-        }
+
 
 
 
