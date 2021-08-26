@@ -65,7 +65,7 @@
                 android:id="@+id/autoText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="10"
+                android:layout_weight="12"
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:hint="학교를 입력해주세요." />
@@ -112,7 +112,7 @@
                 android:id="@+id/teamEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="10"
+                android:layout_weight="12"
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:hint="팀명을 입력해주세요." />
