@@ -8,7 +8,7 @@
     android:padding="8dp"
     tools:context=".view.fragment.SportsMatchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,19 +71,22 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/teamRecycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/customview2" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:listitem="@layout/customview2">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/StartApplyBtn"
         android:layout_width="wrap_content"
-        android:layout_height="28dp"
+        android:layout_height="25dp"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
         android:background="@drawable/btn"
         android:gravity="center"
-        android:textStyle="bold"
-        android:text="팀원 모집 시작" />
+        android:text="팀원 모집 시작"
+        android:textStyle="bold" />
+
 
 
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.flag.R
@@ -16,10 +17,7 @@ import com.example.flag.data.TeamData
 class TeamApplyAdapter(val data: ArrayList<TeamData>) : RecyclerView.Adapter<TeamApplyAdapter.ViewHolder>() {
     lateinit var context: Context
     lateinit var view1:View
-    fun removeItem(pos: Int) {
-        data.removeAt(pos)
-        notifyItemRemoved(pos)
-    }
+
     interface OnItemClickListener {
 
         fun OnItemClick(holder: ViewHolder, view: View, position: Int, data: ArrayList<TeamData>)
@@ -70,7 +68,24 @@ class TeamApplyAdapter(val data: ArrayList<TeamData>) : RecyclerView.Adapter<Tea
         holder.area.text =data[position].area
         holder.record.text = data[position].record
 
-        holder.addBtn.text = "모집시작"
+        if(data[position].accept==true) {
+            holder.addBtn.text = "모집중"
+            holder.addBtn.background = ContextCompat.getDrawable(context,
+                    R.drawable.radiobtn
+            )
+            holder.addBtn.backgroundTintList = ContextCompat.getColorStateList(context,
+                    R.color.lightgrey)
+        }
+        if(data[position].accept==false) {
+            holder.addBtn.text = "모집가능"
+            holder.addBtn.background = ContextCompat.getDrawable(context,
+                    R.drawable.radiobtn
+            )
+            holder.addBtn.backgroundTintList = ContextCompat.getColorStateList(context,
+                    R.color.mainblue)
+        }
+
+
 
 
 

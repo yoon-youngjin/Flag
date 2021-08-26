@@ -52,7 +52,10 @@ class TeamAdapter (val data: ArrayList<TeamData>) : RecyclerView.Adapter<TeamAda
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         Glide.with(holder.itemView).load(data[position].teamImg).into(holder.teamImg)
+//        holder.teamImg.background = ContextCompat.getDrawable(context,
+//            R.drawable.roundimg)
         holder.uid = data[position].uid
 
         holder.teamTitle.text = data[position].teamTitle

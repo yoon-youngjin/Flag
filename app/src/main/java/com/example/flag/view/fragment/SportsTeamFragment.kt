@@ -242,16 +242,16 @@ class SportsTeamFragment : Fragment() {
 
     private fun goApply(item: String, key: String) {
         mydatas.child(item).child(key).child("member").setValue(uid)
-        myusers.child(uid).child("team").get().addOnSuccessListener {
+        myusers.child(uid).child("team").child(event).get().addOnSuccessListener {
             var key = key
             var myteam = it.value.toString()
             Log.i("myteam",it.value.toString())
             if(myteam!="null")  {
                 key = myteam +"/" + key
                 Log.i("key",key)
-                myusers.child(uid).child("team").setValue(key)
+                myusers.child(uid).child("team").child(event).setValue(key)
             }
-            else myusers.child(uid).child("team").setValue(key)
+            else myusers.child(uid).child("team").child(event).setValue(key)
 
         }
 

@@ -85,13 +85,11 @@
     </LinearLayout>
 
 
-
-
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/myEdit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
 
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="신청하신 팀 정보가 맞습니까?" />
 
