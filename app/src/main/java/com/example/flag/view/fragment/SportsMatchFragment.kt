@@ -52,7 +52,6 @@ class SportsMatchFragment : Fragment() {
     lateinit var binding:FragmentSportsMatchBinding
     var rdb:FirebaseDatabase = FirebaseDatabase.getInstance()
     var mydatas = rdb.getReference("sportsData")
-    var myteam = rdb.getReference("teamData")
     var day:String = ""
 
     var area :String = "a서울"
@@ -459,9 +458,8 @@ class SportsMatchFragment : Fragment() {
             if(checknum==99999) aaa = mydatas.child(num + title).child(event).child(area).ref
 
             aaa.orderByChild("time").startAt(900.0).addListenerForSingleValueEvent(object : ValueEventListener {
-//                val temp = myteam.child(event).
-                override fun onDataChange(snapshot: DataSnapshot) {
 
+                override fun onDataChange(snapshot: DataSnapshot) {
                     for(ds in snapshot.children){
                         var temp = MatchData(ds.child("matchTitle").value.toString(),
                                 ds.child("time").value.toString().toInt(),

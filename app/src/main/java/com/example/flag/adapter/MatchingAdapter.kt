@@ -16,7 +16,7 @@ import com.example.flag.CustomView
 import com.example.flag.R
 import com.example.flag.data.MatchData
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.*
 
 class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) :
     RecyclerView.Adapter<MatchingAdapter.ViewHolder>() {
@@ -86,25 +86,30 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-
-//        Log.i("11", "1")
-//
-//        Log.i("22", "2")
-//        val item = data.get(position).get(0).matchTitle
-//        if (item == "축구") event = "b축구"
-//        else if (item == "농구") event = "c농구"
-//        else event = "d풋살"
-//        holder.firstView.visibility = View.GONE
-//        holder.secondView.visibility = View.GONE
-//        holder.thirdView.visibility = View.GONE
-//
-//        teamDataChange(position, holder, data.get(position).size)
+        val item = data.get(position).get(0).matchTitle
+        if (item == "축구") event = "b축구"
+        else if (item == "농구") event = "c농구"
+        else event = "d풋살"
 
         holder.firstView.visibility = View.GONE
         holder.secondView.visibility = View.GONE
         holder.thirdView.visibility = View.GONE
-        dataSet(holder, data.get(position).size, position)
+
+        GlobalScope.launch {
+            val job = launch {
+                teamDataChange(position, holder, data.get(position).size)
+            }
+            delay(1000)
+            launch {
+                withContext(Dispatchers.Main) {
+
+                    dataSet(holder, data.get(position).size, position)
+                }
+
+            }
+
+
+        }
 
     }
 
@@ -115,12 +120,11 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) :
         val teamuid = data.get(position).get(0).team
         myteams.child(event).child(teamuid).get().addOnSuccessListener {
             data.get(position).get(0).team = it.child("teamTitle").value.toString()
-
         }
+
         val teamuid2 = data.get(position).get(1).team
         myteams.child(event).child(teamuid2).get().addOnSuccessListener {
             data.get(position).get(1).team = it.child("teamTitle").value.toString()
-
         }
         val teamuid3 = data.get(position).get(2).team
         myteams.child(event).child(teamuid3).get().addOnSuccessListener {
@@ -129,8 +133,9 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) :
         }
 
 
-        Log.i("Data222", data.get(position).get(0).team)
-
+//        Log.i("Data223", data.get(position).get(0).team)
+//        dataSet(holder, data.get(position).size, position)
+//        Log.i("Data233", data.get(position).get(0).team)
 
     }
 
@@ -138,7 +143,6 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) :
 
         Log.i("Data", data.get(position).get(0).team)
         Log.i("44", "4")
-
 
         if (i != 0) {
 
@@ -283,9 +287,8 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) :
         } else {
             holder.mainLayout.visibility = View.GONE
         }
-
-
     }
+
 
     override fun getItemCount(): Int = data!!.size
 }
