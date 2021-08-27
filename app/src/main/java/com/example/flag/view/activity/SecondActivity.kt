@@ -26,7 +26,8 @@ class SecondActivity : AppCompatActivity() {
     val str_date = t_dateFormat.format(t_date)
 
     val today = str_date.substring(8,10).toInt()
-    var day:String = (today+64).toChar().toString() + today.toString()+"일"
+    var day:String = ""
+
     lateinit var group :String
     var check = false
 
@@ -42,7 +43,10 @@ class SecondActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.reference
         val uid = auth.currentUser?.uid.toString()
-        Log.i("uid",uid)
+
+        if(today<=26) day = (today+64).toChar().toString() + today.toString()+"일"
+        else day = (today+70).toChar().toString() + today.toString()+"일"
+
         database.child("users").child(uid).get().addOnSuccessListener {
 
             group = it.child("school").value.toString()
@@ -159,7 +163,7 @@ class SecondActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
 

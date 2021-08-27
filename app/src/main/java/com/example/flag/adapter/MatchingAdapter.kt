@@ -2,6 +2,7 @@ package com.example.flag.adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,60 +15,64 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.flag.CustomView
 import com.example.flag.R
 import com.example.flag.data.MatchData
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.GlobalScope
 
-class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.Adapter<MatchingAdapter.ViewHolder>() {
+class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) :
+    RecyclerView.Adapter<MatchingAdapter.ViewHolder>() {
+    var event: String = ""
+
+    val scope = GlobalScope
+
+    var rdb: FirebaseDatabase = FirebaseDatabase.getInstance()
+    var mydatas = rdb.getReference("sportsData")
+    var myteams = rdb.getReference("teamData")
+
     interface OnItemClickListener {
-        fun OnItemClick(holder: ViewHolder, view: View, data: ArrayList<ArrayList<MatchData>>, position: Int)
+        fun OnItemClick(
+            holder: ViewHolder,
+            view: View,
+            data: ArrayList<ArrayList<MatchData>>,
+            position: Int
+        )
     }
-    lateinit var context:Context
+
+
+    lateinit var context: Context
     var itemClickListener: OnItemClickListener? = null
     var itemClickListener2: OnItemClickListener? = null
     var itemClickListener3: OnItemClickListener? = null
     var itemClickListener4: OnItemClickListener? = null
 
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
-        val mainLayout : LinearLayout = view.findViewById(R.id.Layout)
-        val matchTitle : TextView = view.findViewById(R.id.matchtitle)
+        val mainLayout: LinearLayout = view.findViewById(R.id.Layout)
+        val matchTitle: TextView = view.findViewById(R.id.matchtitle)
         val matchImg: ImageView = view.findViewById(R.id.matchImg)
-        val allbtn : Button = view.findViewById(R.id.allbtn)
-        val firstView : CustomView = view.findViewById(R.id.firstitem)
-        val secondView : CustomView = view.findViewById(R.id.seconditem)
-        val thirdView : CustomView = view.findViewById(R.id.thirditem)
+        val allbtn: Button = view.findViewById(R.id.allbtn)
+        val firstView: CustomView = view.findViewById(R.id.firstitem)
+        val secondView: CustomView = view.findViewById(R.id.seconditem)
+        val thirdView: CustomView = view.findViewById(R.id.thirditem)
+
 
         init {
             allbtn.setOnClickListener {
-                itemClickListener!!.OnItemClick(this,it,data,adapterPosition)
+                itemClickListener!!.OnItemClick(this, it, data, adapterPosition)
             }
             firstView.matchBtn.setOnClickListener {
-                itemClickListener2!!.OnItemClick(this,it,data,adapterPosition)
+                itemClickListener2!!.OnItemClick(this, it, data, adapterPosition)
             }
 
             secondView.matchBtn.setOnClickListener {
-                itemClickListener3!!.OnItemClick(this,it,data,adapterPosition)
+                itemClickListener3!!.OnItemClick(this, it, data, adapterPosition)
             }
             thirdView.matchBtn.setOnClickListener {
-                itemClickListener4!!.OnItemClick(this,it,data,adapterPosition)
+                itemClickListener4!!.OnItemClick(this, it, data, adapterPosition)
             }
         }
 
-//        fun data_bind(holder:ViewHolder,position: Int) {
-//
-//            val item1 :ArrayList<MatchData> = data.get(position).get(0)
-//
-//            val item2 :ArrayList<MatchData> = data.get(position).get(1)
-//            val item3 :ArrayList<MatchData> = data.get(position).get(2)
-//
-//            val mainImg = holder.firstView.mainImg
-//            val mainImg2 = holder.secondView.mainImg
-//            val mainImg3 = holder.thirdView.mainImg
-//
-//            Glide.with(itemView).load(item1[position].mainImg).into(mainImg)
-//            Glide.with(itemView).load(item2[position].mainImg).into(mainImg2)
-//            Glide.with(itemView).load(item3[position].mainImg).into(mainImg3)
-//
-//        }
 
     }
 
@@ -82,19 +87,60 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+
+//        Log.i("11", "1")
+//
+//        Log.i("22", "2")
+//        val item = data.get(position).get(0).matchTitle
+//        if (item == "축구") event = "b축구"
+//        else if (item == "농구") event = "c농구"
+//        else event = "d풋살"
+//        holder.firstView.visibility = View.GONE
+//        holder.secondView.visibility = View.GONE
+//        holder.thirdView.visibility = View.GONE
+//
+//        teamDataChange(position, holder, data.get(position).size)
+
         holder.firstView.visibility = View.GONE
         holder.secondView.visibility = View.GONE
         holder.thirdView.visibility = View.GONE
+        dataSet(holder, data.get(position).size, position)
+
+    }
 
 
-        dataSet(holder,data.get(position).size,position)
+    private fun teamDataChange(position: Int, holder: ViewHolder, size: Int) {
 
+
+        val teamuid = data.get(position).get(0).team
+        myteams.child(event).child(teamuid).get().addOnSuccessListener {
+            data.get(position).get(0).team = it.child("teamTitle").value.toString()
+
+        }
+        val teamuid2 = data.get(position).get(1).team
+        myteams.child(event).child(teamuid2).get().addOnSuccessListener {
+            data.get(position).get(1).team = it.child("teamTitle").value.toString()
+
+        }
+        val teamuid3 = data.get(position).get(2).team
+        myteams.child(event).child(teamuid3).get().addOnSuccessListener {
+            data.get(position).get(2).team = it.child("teamTitle").value.toString()
+//            dataSet(holder, data.get(position).size, position)
+        }
+
+
+        Log.i("Data222", data.get(position).get(0).team)
 
 
     }
 
-    private fun dataSet(holder: ViewHolder, i: Int, position: Int) {
-        if(i!=0) {
+    fun dataSet(holder: ViewHolder, i: Int, position: Int) {
+
+        Log.i("Data", data.get(position).get(0).team)
+        Log.i("44", "4")
+
+
+        if (i != 0) {
 
             if (i >= 1) {
                 holder.firstView.visibility = View.VISIBLE
@@ -112,11 +158,14 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
 
                 }
 
-                if(item1.time.toString().length==3) {
-                    holder.firstView.timeTitle.text = item1.time.toString().substring(0,1) +":" +item1.time.toString().substring(1,3)
-                }
-                else {
-                    holder.firstView.timeTitle.text = item1.time.toString().substring(0,2) +":" +item1.time.toString().substring(2,4)
+                if (item1.time.toString().length == 3) {
+                    holder.firstView.timeTitle.text =
+                        item1.time.toString().substring(0, 1) + ":" + item1.time.toString()
+                            .substring(1, 3)
+                } else {
+                    holder.firstView.timeTitle.text =
+                        item1.time.toString().substring(0, 2) + ":" + item1.time.toString()
+                            .substring(2, 4)
                 }
 
                 holder.firstView.schoolTitle.text = item1.group
@@ -136,10 +185,12 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
                 if (item1.accept == false) {
                     holder.firstView.matchBtn.text = "마감"
                     holder.firstView.matchBtn.setTextColor(Color.GRAY)
-                    holder.firstView.matchBtn.background = ContextCompat.getDrawable(context,
+                    holder.firstView.matchBtn.background = ContextCompat.getDrawable(
+                        context,
                         R.drawable.radiobtn
                     )
-                    holder.firstView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context,
+                    holder.firstView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(
+                        context,
                         R.color.lightgrey
                     )
 
@@ -150,11 +201,14 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
             if (i >= 2) {
                 holder.secondView.visibility = View.VISIBLE
                 val item2: MatchData = data.get(position).get(1)
-                if(item2.time.toString().length==3) {
-                    holder.secondView.timeTitle.text = item2.time.toString().substring(0,1) +":" +item2.time.toString().substring(1,3)
-                }
-                else {
-                    holder.secondView.timeTitle.text = item2.time.toString().substring(0,2) +":" +item2.time.toString().substring(2,4)
+                if (item2.time.toString().length == 3) {
+                    holder.secondView.timeTitle.text =
+                        item2.time.toString().substring(0, 1) + ":" + item2.time.toString()
+                            .substring(1, 3)
+                } else {
+                    holder.secondView.timeTitle.text =
+                        item2.time.toString().substring(0, 2) + ":" + item2.time.toString()
+                            .substring(2, 4)
                 }
 
                 holder.secondView.schoolTitle.text = item2.group
@@ -174,10 +228,12 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
                 if (item2.accept == false) {
                     holder.secondView.matchBtn.text = "마감"
                     holder.secondView.matchBtn.setTextColor(Color.GRAY)
-                    holder.secondView.matchBtn.background = ContextCompat.getDrawable(context,
+                    holder.secondView.matchBtn.background = ContextCompat.getDrawable(
+                        context,
                         R.drawable.radiobtn
                     )
-                    holder.secondView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context,
+                    holder.secondView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(
+                        context,
                         R.color.lightgrey
                     )
                 }
@@ -187,11 +243,14 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
                 val item3: MatchData = data.get(position).get(2)
 
 
-                if(item3.time.toString().length==3) {
-                    holder.thirdView.timeTitle.text = item3.time.toString().substring(0,1) +":" +item3.time.toString().substring(1,3)
-                }
-                else {
-                    holder.thirdView.timeTitle.text = item3.time.toString().substring(0,2) +":" +item3.time.toString().substring(2,4)
+                if (item3.time.toString().length == 3) {
+                    holder.thirdView.timeTitle.text =
+                        item3.time.toString().substring(0, 1) + ":" + item3.time.toString()
+                            .substring(1, 3)
+                } else {
+                    holder.thirdView.timeTitle.text =
+                        item3.time.toString().substring(0, 2) + ":" + item3.time.toString()
+                            .substring(2, 4)
                 }
 
                 holder.thirdView.schoolTitle.text = item3.group
@@ -210,19 +269,22 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) : RecyclerView.
                 if (item3.accept == false) {
                     holder.thirdView.matchBtn.text = "마감"
                     holder.thirdView.matchBtn.setTextColor(Color.GRAY)
-                    holder.thirdView.matchBtn.background = ContextCompat.getDrawable(context,
+                    holder.thirdView.matchBtn.background = ContextCompat.getDrawable(
+                        context,
                         R.drawable.radiobtn
                     )
-                    holder.thirdView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(context,
+                    holder.thirdView.matchBtn.backgroundTintList = ContextCompat.getColorStateList(
+                        context,
                         R.color.lightgrey
                     )
                 }
             }
 
-        }
-        else {
+        } else {
             holder.mainLayout.visibility = View.GONE
         }
+
+
     }
 
     override fun getItemCount(): Int = data!!.size
