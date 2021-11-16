@@ -100,6 +100,7 @@ class MatchingAdapter(var data: ArrayList<ArrayList<MatchData>>) :
                 teamDataChange(position, holder, data.get(position).size)
             }
             delay(1000)
+
             launch {
                 withContext(Dispatchers.Main) {
 
