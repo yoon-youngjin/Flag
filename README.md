@@ -5,11 +5,6 @@
     1. sports & esports 실시간 매칭
     2. 팀 생성 & 팀 가입
 
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/83503188/162750521-a2084de6-5b6f-47a3-9039-abbf8cf48686.jpg" width="200px" />
-</p>
-
 ## 화면 구성
 <p align="center">
 <a>
