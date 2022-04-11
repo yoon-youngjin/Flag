@@ -4,7 +4,9 @@
 - [x] 주 기능
     1. sports & esports 실시간 매칭
     2. 팀 생성 & 팀 가입
-
+<p align="center">
+ <img src="https://user-images.githubusercontent.com/83503188/162800423-bb20aba1-000e-40e0-9814-ab6251ff1b70.png"  width="200px" />
+ </p>
 ## 화면 구성
 <p align="center">
 <a>
