@@ -7,7 +7,7 @@
 
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/83503188/162750521-a2084de6-5b6f-47a3-9039-abbf8cf48686.jpg" />
+  <img src="https://user-images.githubusercontent.com/83503188/162750521-a2084de6-5b6f-47a3-9039-abbf8cf48686.jpg" width="150px" />
 </p>
 
 ## 화면 구성
