@@ -31,12 +31,13 @@
 ### sports & esports 실시간 매칭 화면
 
 <p align="center">
+ <a>
+  <img src="https://user-images.githubusercontent.com/83503188/162801394-632e892a-b872-44e1-9fa2-eb6ae1efd14c.jpg" width="200px" />
+</a>
 <a>
   <img src="https://user-images.githubusercontent.com/83503188/162801409-1acb0804-cb9f-493d-bfc0-fe9e7edde2ac.jpg" width="200px" />
 </a>
-<a>
-  <img src="https://user-images.githubusercontent.com/83503188/162801394-632e892a-b872-44e1-9fa2-eb6ae1efd14c.jpg" width="200px" />
-</a>
+
 </p>
 
 ### 팀 생성 & 팀 가입 화면
